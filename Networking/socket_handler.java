@@ -39,6 +39,10 @@ public class socket_handler implements Runnable
 
 			new Thread(new message_sender_thread(this)).start();
 
+			Timer timer = new Timer();
+
+			timer.schedule(new connectivity_check(this),2000);
+
 			while(true)
 			{
 				byte[] incomingData = new byte[1024];
@@ -92,6 +96,27 @@ public class socket_handler implements Runnable
 						System.out.println(key);
 			    	}
 	            }
+	            else if (decode[0].equals("Check-Connectivity"))
+	            {
+	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
+
+	            	// Probably write a send response code here
+	            	this.connect_list.get(decode[1]).send_message("Connection-verified;"+this.my_ip_address);
+	            }
+	            else if (decode[0].equals("Connection-verified"))
+	            {
+	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
+
+	            	// Probably write a send response code here
+	            	this.connect_list.get(decode[1]).received = true;
+	            }
+	            else if (decode[0].equals("User-Disconnected"))
+	            {
+	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
+
+	            	// Probably write a send response code here
+	            	this.connect_list.get(decode[1]).is_human = false;
+	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
 		}
@@ -143,7 +168,8 @@ public class socket_handler implements Runnable
     {
     	for (String key: this.connect_list.keySet()) 
     	{
-			this.connect_list.get(key).send_message(message);    		
+			if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+				this.connect_list.get(key).send_message(message);    		
     	}
     }
 
@@ -168,6 +194,8 @@ class indiv_connection_handler
 {
 	public InetAddress IPAddress;
 	public DatagramSocket socket = null;
+	public boolean received = true;
+	public boolean is_human = true;
 
 	public indiv_connection_handler (String ip_address) throws Exception
 	{
@@ -212,5 +240,38 @@ class message_sender_thread implements Runnable
 		{
 			e.printStackTrace();
 		}
+	}
+}
+
+class connectivity_check extends TimerTask
+{
+	public socket_handler sh;
+
+	public connectivity_check(socket_handler s)
+	{
+		this.sh = s;
+	}
+
+	public void run()
+	{
+		try
+		{
+			for (String key: this.sh.connect_list.keySet()) 
+	    	{
+				if (this.sh.connect_list.get(key).is_human && !this.sh.connect_list.get(key).received)
+				{
+					this.sh.connect_list.get(key).is_human = false;
+					this.sh.send_message_to_all("User-Disconnected;"+key);
+				}
+
+				this.sh.connect_list.get(key).received = false;
+	    	}
+
+	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
+	    }
+	    catch (Exception e)
+	    {
+	    	e.printStackTrace();
+	    }
 	}
 }
