@@ -4,7 +4,7 @@ import java.util.*;
 
 public class socket_handler implements Runnable 
 {
-	public String my_ip_address = "10.192.45.162";
+	public String my_ip_address;
 
 	public DatagramSocket socket = null;
 
@@ -14,11 +14,23 @@ public class socket_handler implements Runnable
 
 	public String choice;
 
+	public String getIp() throws SocketException 
+	{
+
+    	return Collections.list(NetworkInterface.getNetworkInterfaces()).stream()
+            .flatMap(i -> Collections.list(i.getInetAddresses()).stream())
+            .filter(ip -> ip instanceof Inet4Address && ip.isSiteLocalAddress())
+            .findFirst().orElseThrow(RuntimeException::new)
+            .getHostAddress();
+	}
+
 	public socket_handler(String input_choice) throws SocketException
 	{
 		this.socket = new DatagramSocket(9876);
 		this.connect_list = new HashMap<String,indiv_connection_handler>();
 		this.choice = input_choice;
+		// this.my_ip_address = "10.192.45.162";
+		this.my_ip_address = this.getIp();
 	}
 
 	public void run()
