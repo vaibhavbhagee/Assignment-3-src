@@ -1,0 +1,578 @@
+\documentclass{article}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{scrextend}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+\lstset{
+	frame=tb, % draw a frame at the top and bottom of the code block
+   	tabsize=4, % tab space width
+   	showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{red}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{green} % string color
+}
+
+\title{COP290: Multi Player Ping Pong Game}
+\author{Aayan Kumar (2014CS10201) \\ Shreyan Gupta (2014CS10485) \\ Vaibhav Bhagee (2014CS50297) }
+\date{6 April, 2016}
+
+\begin{document}
+
+\maketitle
+ 
+\tableofcontents
+\newpage
+\section{Introduction}
+    \par
+    In this assignment we try to implement a 4-player Ping Pong game. This app will to students who are interested in wasting their time.
+    \par 
+    One or more people, who have nothing else to do in their lives, can play either with an AI or other players over a Wi-Fi/LAN network. A game is visible to all people connected to each other, directly or indirectly, and all such users can play the game.
+    \par
+    The game is played as follows: there are 4 paddles. The bottom paddle on the screen is the current player. The current player uses his mouse to move the paddles. There is also a ball moving around. The job of each player is to use the paddle to deflect the ball and prevent it from hitting from his/her wall. In case a player lets the ball hit his/her wall thrice, he/she would lose the game. If there are not enough players to control all 4 paddles, the paddles would be controlled by an AI.
+    
+\section{Scope of Assignment}
+    \hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+    \subsection{Current Aim}
+        Currently we are focusing on making a basic desktop app which can simulate basic gameplay, with limited GUI as of now, and basic P2P networking.
+    \subsection{Possible future improvements}
+        \begin{itemize}
+        \item
+        The app can be extended to involve gameplay with more than one ball. An array of balls has been declared, whose size can be modified later.
+        \item
+        The app can be made more dynamic by making a ball go off at higher speeds or imparting spin onto the ball to make the trajectories unpredictable and make the game more exciting. This could happen, for example, when the paddle moves at a high velocity while hitting the ball. A mouse click could activate a power-up which makes the ball go at high speeds.
+        \item
+        The 2D interface can be converted into 3D graphics. So, instead of 2D motion, the balls can move around all 3 axes, for example it could bounce up in the air etc.
+        \item
+        We can also include special power-ups to make the game more expansive like high speed ball, gravity well, elongate/ reduce paddle size etc.
+        \item
+        The assignment can be further extended to mobile apps alongside desktop clients for further reach.
+        \item Exhaustive network tests can be constructed and simulated to test the game on High Latency Low Bandwidth networks, packet loss and disconnection of peers
+        \end{itemize}
+    \end{minipage}
+    
+\section{Implementation Details}
+    %\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+    \subsection{User Interface}
+        The UI would be implemented as follows:
+        \begin{itemize}
+            \item The \textbf{SWING Library} will be used for rendering objects etc.
+            \item The \textbf{MouseClickOrMotion} class has a constructor which initialises all the frames, panels etc. which shall be used to render the board, paddles, balls, obstacles etc. It implements several Listener interfaces which help the various graphic elements respond to mouse events, imparting controllability to the paddles.
+            \item The \textbf{Rectangle, Circle} classes are used to maintain rectangles(paddles, board etc) and circles(balls etc) respectively. They also contain some functions which call appropriate drawing functions which help render the shapes on the screen.
+            \item The \textbf{BlankArea} class is used to create the whole window on which the game will be rendered.
+        \end{itemize}
+    \subsection{Game Engine}
+        The game engine handles the physics of the game which includes the reflection, velocity management, AI (Computer Player), updating position, collision, etc.
+        \begin{itemize}
+            \item The class \textbf{Board} handles the interface between the Networks and UI. It contains appropriate functions to do the same.
+            \item \textbf{Interface with Networks} - There are 3 basic functions which interace with the server side to send and receive information about other players
+            \begin{itemize}
+                \item \textbf{is\_pseudo\_server()} - This functions returns whether the current player is the pseudo server or not.
+                \item \textbf{broadcast()} - This function is used to broadcast information about the current player to all the other players connected to the network.
+                \item \textbf{get\_all\_messages()} - This function is used to receive all messages from other players.
+            \end{itemize}
+            \item \textbf{Interface with UI} - There are 2 basic functions which interact with the UI.
+            \begin{itemize}
+                \item update() - This function is periodically called at a frequency of about 20Hz to 60Hz. This updates the position of the ball, take care of all state updates, collisions, etc. It returns an Object with would be used to render the position of components and pass information about collisions etc.
+                \item move\_paddle() - This functions is called to update the position of the paddle of the current_player.
+            \end{itemize}
+            \item The Aritficial Intelligence component takes care of the motion of the paddles which are not connected to any player.
+            \item The update function renders the position of the components (balls) only when the current player is the \textbf{pseudo server}. Otherwise the broadcasted message from the pseudo server is used to update the position of the components.
+            \item The basic laws of reflection would be used to render the motion of the ball. Collision detection (for multiple balls) would use the relative closeness of the coordinates of every pair of balls. Appropriate function would handle these.
+        \end{itemize}
+    \subsection{Networking}
+    \begin{itemize}
+    \item \textbf{Connection Protocol} The P2P connections will be managed and implemented using UDP (User Datagram Protocol). The use of UDP is justified here as this game as the frequency of exchanging messages (Packets) among the peers is quite high (roughly 40 - 60 times in one second) and hence fast exchange of packets is required. Even if some packets get lost due to Network Latency Issues, the flow of the game will not be hampered much. Further details of handling Network Latency Issues have been discussed below.
+    
+    \item \textbf{Basic Message Types} The basic structure of the P2P networking requires messages to be exchanged between all peers on a notionally personal basis rather than a client requesting a server. In our case, there will broadly be 2 classes of messages exchanged - 
+    \begin{itemize}
+        \item  \textbf{Network related messages} Related to the connection of new peers to the game, disconnection of existing peers from the game etc
+        \item  \textbf{Game State Related Messages} sent by the physics engine to update the ball position, paddle position etc
+    \end{itemize}
+    
+    \item  \textbf{Maintaining Game state across the peers} We have also introduced the concept of a pseudo server - which will be the client with the minimum IP address - which will house the computer player(s). In order to maintain the continuity of the motion of the ball, all the peers will update their paddle positions and the position of the ball(s) returned to them by the physics engine. However, in order to ensure that the same game state is seen by the peers, the peers will exchange and update the paddle positions of their own as well as the other peers, but only the pseudo server will be allowed to share the updated ball(s) position with the other peers through the network.
+
+    \item  \textbf{Basic implementation ideas} The clients will have a main RequestHandler class will will provide a port for connecting with the other peers and a run() method. The run method will look for incoming connections and upon recieving one, it spawns a new thread of the ConnectionHandler class and adds the details of the new connection to the hashtable of the former and generates a server message. Upon receiving this message, the other peers will send the request to the IP address of the new peer added and suitably update their hashtables. Finally, to maintain uniformity in the order in which the clients joined the game, the pseudo server will send a message specifying the order of joining and all the other peers will update.
+
+    \item  \textbf{Eventflow of messages over the network} The main Thread class which will form the interface between the physics engine and the network threads is the RequestHandler class. This class provides the method broadcast(String message) to broadcast the message to the connected peers. When the physics engine need to broadcast the update game state to the other peers, it calls the function broadcast() to broadcast the message to other peers. When a connected peer receives a message, the ConnectionHandler thread will check for the type of message - if it is a network related message, then the suitable action will be taken at the network side. If it is a game state related message, then it will be enqueued in the queue, which will be returned to the physics engine when it asks for it for subsequent action.
+
+    \item  \textbf{Network Latency and Peer Disconnection} To handle issues of disconnection of a peer, the main RequestHandler thread provides a method ping\_all\_clients(). This method will ping the peers connected with itself with a dummy packet and wait for the response. If the response does not come within a time period of 1s, then the peer will be assumed to be disconnected. A message will be generated by the ConnectionHandler thread in this regard and sent to the peers. The peers on receiving this message will update the status of the disconnected peer to a computer player and also recompute the pseudo server. This info will be added to the queue to make it available to the physics engine for updation. So now basically the current game will split into 2 games - 1 with 3 human players and a computer player replacing the disconnected person and the other with the disconnected person and 3 computer players.
+    
+    \item \textbf{Basic Testing} Basic testing for packet loss and Network latency will be added in the form of packets being accepted with some probability p. Other basic tests include disconnection of a peer during a game.
+    %\end{minipage}
+    \end{itemize}
+
+\section{Class Structures}
+
+The classes used:
+
+
+\subsection{UI Classes}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Rectangle}]
+
+public class Rectangle{
+
+	private int midpoint_x;
+	private int midpoint_y;
+	private int length;
+	private int thickness;
+
+	public Rectangle(int midx, int midy, int l, int t)
+	{
+		//Set the values of all the above variables
+	}
+
+	public void draw(Graphics g) 
+	{
+		//Call function to render a rectangle with necessary
+		//parameters
+    }
+
+    	//Get and Set Methods for the following variables
+	public int getMidX(){return midpoint_x;}
+
+	public int getMidY(){return midpoint_y;}
+
+	public int getLength(){return length;}
+
+	public int getThickness(){return thickness;}
+
+	public void setMidX(int x){midpoint_x = x;}
+
+	public void setMidY(int y){midpoint_y = y;}
+
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Circle}]
+
+public class Circle{
+
+	private int center_x;
+	private int center_y;
+	private int diameter;
+	
+	public Rectangle(int midx, int midy, int d)
+	{
+		//Set the values of all the above variables
+	}
+
+	public void draw(Graphics g) 
+	{
+		//Call function to render a rectangle with necessary 
+		//parameters
+    }
+
+    	//Get and Set Methods for the following variables
+	public int getCenterX(){return center_x;}
+
+	public int getCenterY(){return center_y;}
+
+	public int getLength(){return diameter;}
+
+	public void setCenterX(int x){center_x = x;}
+
+	public void setCenterY(int y){center_y = y;}
+
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for MouseClickOrMotion}]
+
+public class MouseClickOrMotion extends JPanel implements 
+            MouseMotionListener, MouseListener{
+
+	private BlankArea blankArea = new BlankArea();
+    private int board_side;
+    private int ball_radius;
+    private int[] paddle_length = new int[4];
+    private int[] paddle_height = new int[4];
+    private JTextArea textArea;
+    private final static String newline = "\n";
+    Rectangle p1;
+    Rectangle p2,p3,p4;
+    Rectangle board;
+    Board game_board;
+    private static MouseClickOrMotion newContentPane;
+
+    private static JFrame frame = new JFrame();
+
+    private int min(int a, int b)
+    {
+    	//return min of a and b   
+    }
+
+    public MouseClickOrMotion() {
+        //Constructor function, initialises all necessary panels, 
+        //set sizes, adds event handler to the board panel and sets 
+        //default values to the paddles.
+    }
+    
+    private void update_coordinates(){
+        //Calls game_board.update() to update positions of all 
+        //objects on the board
+    }
+
+	public void mousePressed(MouseEvent e) {
+       //Event handler
+    }
+
+    public void mouseReleased(MouseEvent e) {
+       //Event handler
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    	//Event handler
+    }
+
+    public void mouseExited(MouseEvent e) {
+		//Event handler
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        //Event handler
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        //Event handler, gets the position of the mouse pointer and 
+        //uses the x coordinate to update the position of the 
+        //current player's paddle
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        //Event handler, gets the position of the mouse pointer and 
+        //uses the x coordinate to update the position of the 
+        //current player's paddle
+    }
+
+    private static void createAndShowGUI() {
+        //Declares all frames, necessary panels, window event handlers
+    }
+
+    public static void main(String[] args) {
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        //Also create another thread which calls the 
+        //update_coordinates function at 60Hz and updates
+        //the positions of all objects on the board
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Blank Area}]
+
+public class BlankArea extends JLabel {
+    Dimension minSize = new Dimension(100, 100);
+    Dimension prefsize = new Dimension(1920,1080);
+    Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0);
+    Circle b[]
+
+    public BlankArea(Color color) {
+        //Constructor, set basic background stuff
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        //Draw all the rectangles
+    }
+
+    public void newRect(Rectangle board,Rectangle bottom, Rectangle 
+    left, Rectangle right, Rectangle top) {
+        //Redraw the rec
+    }
+
+    public Dimension getMinimumSize() {
+		//returns minsize
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+		//returns prefsize
+	}
+}
+\end{lstlisting}
+
+\subsection{Game Engine Classes}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Ball}]
+ 
+public class Ball{
+	double posX;	// x coordinate of ball
+	double posY;	// y coordinate of ball
+	double velX;	// x coordinate velocity
+	double velY;	// y coordinate velocity
+	double radius;	// radius of ball
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Paddle}]
+public class Paddle{
+	int orientation;	// 1 for horizontal and 2 for vertical
+	double posX1;		// end point 1
+	double posX2;
+	double posY1;		// end point 2
+	double posY2;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Player}]
+public class Player{
+	String name;
+	int player_number;	// defined as 0,1,2,3 Needed for orientation
+	boolean is_AI;		// current_player isn't AI
+	int level_AI;		// defined the difficulty level of the AI
+	int score; 			// if required
+	int lives; 			// number of lives left
+	Paddle p;
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Board}]
+public class Board{
+	double width;			// width of the board
+	double height;			// height of the board
+	double energy;			// brief value of the velocity of every ball
+	ArrayList<Ball> ball_list;
+	Player[] plr = new Player[4];	// player[0] is the current_player
+
+	Object update(){
+	    // called by UI
+		// update the position of the ball
+		// take care of reflections
+		// return an Object to render the board
+
+		broadcast();
+		get_all_messages();
+	}
+		void move_paddle(){
+		// called by UI to update the position of the paddle
+	}
+
+	void artificial_intelligence(int i){
+		if(plr[i].is_AI){
+			// i is the player who's paddle has to be updated
+		}
+	}
+
+	boolean is_pseudo_server(){
+		// returns true depending on whether the current player is 
+		// the pseudo server
+		return RequestHandler.is_pseudo_server();
+	}
+
+
+
+	void broadcast(){
+		if(is_pseudo_server()){
+			// broadcast the position of the ball and all players
+			RequestHandler.broadcast("Appropriate Message");
+		}else{
+			// broadcast the position of the current_player 
+			// paddle (Player Object)
+			RequestHandler.broadcast("Appropriate Message");
+		}
+	}
+	void get_all_messages(){
+		PriorityQueue<String> messageQueue = RequestHandler.get_all_messages();
+		// receive the broadcasted message from the server 
+		//and decode them appropriately
+		// type of messages
+		// 1) position of ball and all players
+		// 2) position of paddle of a certain player
+		// 3) new player has been added - 
+		//    Get me the details of the player along with player number
+	}
+}
+\end{lstlisting}
+
+\subsection{Network Classes}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Request Handler Class}]
+public class RequestHandler implements Runnable
+{
+	private HashMap<String,ConnectionObject> peerList; 
+	//List of peers connected
+
+	private PriorityQueue<String> messageQueue; 
+	//Queue of received messages
+
+	private is_pseudo_server; 
+	//Returns if the client is a pseudo server or not
+
+	public RequestHandler()
+	{
+		this.peerList = new HashMap<String,ConnectionObject>();
+		this.messageQueue = new PriorityQueue<String>();
+		this.is_pseudo_server = false;
+	} 
+
+	/**
+	 * Method to handle connections with peers
+	 */
+	public void run()
+	{
+		/**
+		 * Function to check for connection requests from peers 
+		 * and start a new thread to handle each connection.
+		 * If the person already exists and got disconnected then
+		 * restart the thread
+		 */
+	}
+
+	public boolean is_pseudo_server()
+	{
+		return this.is_pseudo_server;
+	}
+
+	public void update_is_pseudo_server()
+	{
+		/**
+		 * Function updates the pseudo server on connection or 
+		 * disconnection of a client from the game
+		 */
+	}
+
+	public void broadcast(String message)
+	{
+		/**
+		 * Broadcast the message to all the connected clients
+		 */
+	}
+
+	public void update_player_type()
+	{
+		/**
+		 * Function to update the type (Human/AI) upon disconnection
+		 * of a client from the game
+		 */
+	}
+
+	public PriorityQueue<String> get_all_messages()
+	{
+		/**
+		 * Returns the queue of messages and reinstantiates it
+		 */
+	}
+
+	public void ping_all_clients()
+	{
+		/**
+		 * Function to ping all the clients periodically
+		 * in order to check if someone has disconnected
+		 */
+	}
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Connection Handler Class}]
+public class ConnectionHandler implements Runnable
+{
+	private String thread_name; 
+	// Name of the thread
+
+	private boolean is_sender; 
+	// Flag to identify the thread as sender or receiver
+
+	private RequestHandler parent; 
+	// Parent master Request Handler thread
+
+	private DatagramSocket socket = null; 
+	// Socket to be connected
+
+	private InetAddress ip_addr; 
+	// IP address if required
+
+	public ConnectionHandler(String name, boolean is_sender,
+	                           RequestHandler parentThread)
+	{
+		this.thread_name = name;
+		this.is_sender = is_sender;
+		this.parent = parentThread;
+		this.socket = new DatagramSocket();
+	}
+
+	public void run()
+	{
+		/**
+		 * Overloaded run method of the thread
+		 */
+	}
+
+	public void connect_as_client(String ip_address)
+	{
+		/**
+		 * Function to connect to the given ip address
+		 * over a specified port through sockets to 
+		 * interchange data
+		 */
+	}
+
+	public void handleMessages()
+	{
+		/**
+		 * Based on is_sender this function will behave
+		 * in a different manner as to send data and wait
+		 * for response or send response to incoming packet
+		 */
+	}
+
+	public void sendMessage(String message)
+	{
+		/**
+		 * Function to send message to the connected 
+		 * peer
+		 */
+	}
+
+	public void send_dummy_message()
+	{
+		/**
+		 * Function to periodically send
+		 * dummy messages to the peer to
+		 * check for connection losses
+		 */
+	}
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption={Class Parameters for Connection Object Class}]
+public class ConnectionObject
+{
+	private ConnectionHandler this_thread; 
+	// The thread object which handles this connection
+
+	private Date timestamp; 
+	// Timestamp of the last received message
+
+	private int player_index; 
+	// Index of the player in the game
+
+	public boolean is_human;
+	// Flag to check whether player is human or AI
+}
+\end{lstlisting}
+
+\section{References}
+    \begin{itemize}
+        % \item https://www.draw.io/
+        \item \textbf{Tutorial on UDP Socket Programming} 
+        \newline https://docs.oracle.com/javase/tutorial/networking/datagrams/definition.html
+        \item \textbf{Threaded UDP server} \newline http://stackoverflow.com/questions/773121/how-can-i-implement-a-threaded-udp-based-server-in-java
+         \item \textbf{Rendering a board and event listeners} \newline http://www.math.uni-hamburg.de/doc/java/tutorial/uiswing/events/example-1dot4/MouseEventDemo.java
+         \newline http://www.math.uni-hamburg.de/doc/java/tutorial/uiswing/events/example-1dot4/MouseMotionEventDemo.java
+    \end{itemize}
+\end{document}
+
+
