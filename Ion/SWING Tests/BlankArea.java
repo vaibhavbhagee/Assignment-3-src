@@ -14,11 +14,16 @@ public class BlankArea extends JLabel {
     Dimension minSize = new Dimension(100, 100);
     Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0);
     Circle c1 = new Circle(0,0,0);
+    Circle[] trail = new Circle[10];
 
     public BlankArea(Color color) {
         setBackground(color);
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.black));
+        for(int i=0;i<10;i++)
+        {
+            trail[i] = new Circle(0,0,40-4*i);
+        }
     }
 
     @Override
@@ -31,6 +36,18 @@ public class BlankArea extends JLabel {
             if(r4!=null)r4.draw(g);
             if(r5!=null)r5.draw(g);
             if(c1!=null)c1.draw(g);
+            if(trail!=null)
+            {
+                for(int i=9; i>0;i--)
+                {
+                    trail[i].setMidX(trail[i-1].getMidX());
+                    trail[i].setMidY(trail[i-1].getMidY());
+                    trail[i].draw(g);
+                }
+                trail[0].setMidX(c1.getMidX());
+                trail[0].setMidY(c1.getMidY());
+                trail[0].draw(g);
+            }
     }
 
     public void newCirc(Circle ball)

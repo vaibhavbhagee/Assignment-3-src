@@ -36,6 +36,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     Circle b1;
     Timer timer;
     int i=0;
+    Board board_b;
+    int offsetx,offsety;
     private static MouseClickOrMotion newContentPane;
 
     private static JFrame frame = new JFrame("MouseClickOrMotion");
@@ -87,21 +89,21 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
 
 
         frame.pack();
-        board_side = min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) );
+        board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
         paddle_length[0] = (int)(board_side*0.25);
         paddle_height[0] = (int)(board_side*0.05);
         //System.out.println(board_side + " " + frame.getSize());
 
-        b1 = new Circle(300,400,100);
+        board_b = new Board();
+        b1 = new Circle(300,302,40);
         
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                if(i<50*20)
-                {renderNewCoordinates(i+500,300); 
-            System.out.println(i);
-                ++i;}
+                
+                    board_b.update();
+                    renderNewCoordinates(board_b.getX(),board_b.getY());
             }
         },0,10);
 
@@ -111,38 +113,42 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     public void reInitBoard() {
         
         frame.pack();
-        board_side = min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) );
+        board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
         paddle_length[0] = (int)(board_side*0.25);
         paddle_height[0] = (int)(board_side*0.05);
-        System.out.println(board_side + " " + frame.getSize());
+        paddle_length[2] = (int)(board_side*0.25);
+        paddle_height[2] = (int)(board_side*0.05);
+System.out.println(board_side);
+        paddle_length[1] = (int)(board_side*0.05);
+        paddle_height[1] = (int)(board_side*0.25);
+        paddle_length[3] = (int)(board_side*0.05);
+        paddle_height[3] = (int)(board_side*0.25);
+        //System.out.println(board_side + " " + frame.getSize());
        //p1 = new Rectangle((int)(frame.getSize().getWidth()-board_side) + board_side/2, (int)(frame.getSize().getHeight()-board_side) + board_side-paddle_height[0]/2, paddle_length[0], paddle_height[0]);
-        p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)(frame.getSize().getHeight())-paddle_height[0]*2,paddle_length[0],paddle_height[0]);
+        p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0]);
+
+        p2 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1]);
+        p3 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()-board_side)/2)+paddle_height[2]/2,paddle_length[2],paddle_height[2]);
+        p4 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3]);
 
         board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side);
 
-        blankArea.newRect(board,p1,null,null,null);
+        offsetx = (int)(frame.getSize().getWidth()-board_side)/2;
+        offsety = (int)(frame.getSize().getHeight()-board_side)/2;
 
-                timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask(){
-            @Override
-            public void run(){
-                if(i<50*20)
-                {renderNewCoordinates(i+500,300); 
-            System.out.println(i);
-                ++i;}
-            }
-        },0,10);
+        blankArea.newRect(board,p1,p2,p3,p4);
 
     }
 
-        public void renderNewCoordinates(int x, int y)
+    public void renderNewCoordinates(int x, int y)
     {
-        b1.setMidX(x);
-        b1.setMidY(y);
+        b1.setMidX(x+offsetx);
+        b1.setMidY(y+offsety);
         //System.out.println("Atempting to set:" + x + ":" + y);
         //System.out.println("rnc_1");
         blankArea.newCirc(b1);
         //System.out.println("rnc_2");
+        blankArea.newRect(board,p1,p2,p3,p4);
     }
 
 
@@ -181,7 +187,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
             p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
         //p1.setMidY(e.getY());
         //System.out.println(e.getX()+"\n" + frame.getSize());
-        blankArea.newRect(board,p1,null,null,null);
+        blankArea.newRect(board,p1,p2,p3,p4);
     }
 
     public void mouseDragged(MouseEvent e) {
