@@ -121,7 +121,16 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).received = true;
-	            }
+
+	            	System.out.println("HashMap status");
+
+	            	for (String key: this.connect_list.keySet()) 
+			    	{
+						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
+						// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+						// 	this.connect_list.get(key).send_message(message);    		
+			    	}
+				}
 	            else if (decode[0].equals("User-Disconnected"))
 	            {
 	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
