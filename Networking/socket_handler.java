@@ -250,7 +250,7 @@ public class socket_handler implements Runnable
 
     	for (String key: this.connect_list.keySet()) 
     	{
-			to_send+=key+";"+this.connect_list.get(key).joining_order+";";
+			to_send+=";"+key+";"+this.connect_list.get(key).joining_order+"";
     	}
 
     	this.send_message_to_all(to_send);
