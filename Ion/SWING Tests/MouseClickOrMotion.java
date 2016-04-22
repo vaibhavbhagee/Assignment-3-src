@@ -39,6 +39,10 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     Board board_b;
     int offsetx,offsety;
     int prev_x;
+    int[] prev_array = new int [10];
+    int prev_array_index=0;
+    int smoothen_x=0;
+    int diff;
 
     private static MouseClickOrMotion newContentPane;
 
@@ -108,8 +112,14 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                     renderNewCoordinates(board_b.getX(),board_b.getY());
                     if(p1!=null)
                     {
-                        System.out.println(p1.getMidX()-prev_x);
+                        diff = p1.getMidX()-prev_x;
                         prev_x = p1.getMidX();
+                        
+                        smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
+                        prev_array[prev_array_index] = diff;
+                        prev_array_index = (prev_array_index + 1)%10;
+ /*For Shreyan*/        System.out.println(smoothen_x);
+                        
                     }
             }
         },0,20);
@@ -119,6 +129,10 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
 
     public void reInitBoard() {
         
+        for(int i=0;i<10;i++)
+            prev_array[i] = 0;
+        smoothen_x=0;
+
         frame.pack();
         board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
         paddle_length[0] = (int)(board_side*0.25);
