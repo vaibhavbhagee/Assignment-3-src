@@ -110,14 +110,14 @@ public class socket_handler implements Runnable
 	            }
 	            else if (decode[0].equals("Check-Connectivity"))
 	            {
-	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
+	            	// System.out.println("Message Received:" + decode[0]+" "+decode[1]);
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).send_message("Connection-verified;"+this.my_ip_address);
 	            }
 	            else if (decode[0].equals("Connection-verified"))
 	            {
-	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
+	            	// System.out.println("Message Received:" + decode[0]+" "+decode[1]);
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).received = true;
