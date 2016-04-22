@@ -286,6 +286,15 @@ class connectivity_check extends TimerTask
 	{
 		try
 		{
+			System.out.println("HashMap status inside timer");
+
+	    	for (String key: this.connect_list.keySet()) 
+	    	{
+				System.out.println(key+": is_human: "+this.sh.connect_list.get(key).is_human+": received: "+this.sh.connect_list.get(key).received);
+				// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+				// 	this.connect_list.get(key).send_message(message);    		
+	    	}
+
 			for (String key: this.sh.connect_list.keySet()) 
 	    	{
 				if (this.sh.connect_list.get(key).is_human && !this.sh.connect_list.get(key).received)
