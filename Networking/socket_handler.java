@@ -224,6 +224,7 @@ public class socket_handler implements Runnable
         }
 
         this.connect_list.get(ip_addr).joining_order = this.users_joined;
+        this.connect_list.get(ip_addr).is_human = true;
         this.users_joined++;
         this.update_pseudo_server();
 
