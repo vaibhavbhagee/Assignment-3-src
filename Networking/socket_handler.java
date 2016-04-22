@@ -67,7 +67,7 @@ public class socket_handler implements Runnable
 
 			Timer timer = new Timer();
 
-			timer.scheduleAtFixedRate(new connectivity_check(this),0,5000);
+			timer.scheduleAtFixedRate(new connectivity_check(this),0,1000);
 
 			while(true)
 			{
@@ -189,11 +189,11 @@ public class socket_handler implements Runnable
 	            		this.connect_list.get(decode[i]).joining_order = Integer.parseInt(decode[i+1]);
 	            	}
 
-	            	System.out.println("HashMap status");
+	            	System.out.println("HashMap status JO");
 
 	            	for (String key: this.connect_list.keySet()) 
 			    	{
-						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received+": is_baap:"+this.connect_list.get(key).is_pseudo_server);
+						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received+": is_baap:"+this.connect_list.get(key).is_pseudo_server+": joining_order:"+this.connect_list.get(key).joining_order);
 						// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
 						// 	this.connect_list.get(key).send_message(message);    		
 			    	}
@@ -229,6 +229,8 @@ public class socket_handler implements Runnable
     	TreeMap t_map = new TreeMap(this.connect_list);
 
     	String low_key = (String)t_map.firstKey();
+
+    	System.out.println(low_key);
 
     	this.connect_list.get(low_key).is_pseudo_server = true;
 
