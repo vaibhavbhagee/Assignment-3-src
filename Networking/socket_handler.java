@@ -221,11 +221,16 @@ public class socket_handler implements Runnable
         if (this.connect_list.get(ip_addr) == null)
         {
         	this.connect_list.put(ip_addr,new indiv_connection_handler(ip_addr));
+
+	        this.connect_list.get(ip_addr).joining_order = this.users_joined;
+	        this.connect_list.get(ip_addr).is_human = true;
+	        this.users_joined++;
+        }
+        else
+        {
+        	this.connect_list.get(ip_addr).is_human = true;
         }
 
-        this.connect_list.get(ip_addr).joining_order = this.users_joined;
-        this.connect_list.get(ip_addr).is_human = true;
-        this.users_joined++;
         this.update_pseudo_server();
 
         this.send_message_to_all("New-User-Added;"+ip_addr+"");
@@ -288,10 +293,15 @@ public class socket_handler implements Runnable
         if (this.connect_list.get(ip_addr) == null)
         {
         	this.connect_list.put(ip_addr,new indiv_connection_handler(ip_addr));
+        	this.connect_list.get(ip_addr).joining_order = this.users_joined;
+	        this.connect_list.get(ip_addr).is_human = true;
+	        this.users_joined++;
+        }
+        else
+        {
+        	this.connect_list.get(ip_addr).is_human = true;
         }
 
-        this.connect_list.get(ip_addr).joining_order = this.users_joined;
-        this.users_joined++;
         this.update_pseudo_server();
 
         // this.send_message_to_all("New-User-Added;"+ip_addr+"");
@@ -319,7 +329,12 @@ public class socket_handler implements Runnable
 	        {
 	        	this.connect_list.put(ip_addr[i],new indiv_connection_handler(ip_addr[i]));
 	        	this.connect_list.get(ip_addr[i]).joining_order = this.users_joined;
+	        	this.connect_list.get(ip_addr[i]).is_human = true;
 	        	this.users_joined++;
+	        }
+	        else
+	        {
+	        	this.connect_list.get(ip_addr[i]).is_human = true;
 	        }
 		}
 
