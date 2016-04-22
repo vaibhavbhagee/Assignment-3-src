@@ -19,7 +19,7 @@ public class Circle{
 	public void draw(Graphics g) 
 	{
      //System.out.println("drawCircle:"+midpoint_x+":"+midpoint_y);
-        g.drawOval(midpoint_x-(diameter/2), midpoint_y-(diameter/2),diameter,diameter);
+        g.fillOval(midpoint_x-(diameter/2), midpoint_y-(diameter/2),diameter,diameter);
         Toolkit.getDefaultToolkit().sync();
      //   System.out.println("drawn");
     }
