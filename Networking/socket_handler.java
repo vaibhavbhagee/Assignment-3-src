@@ -122,14 +122,14 @@ public class socket_handler implements Runnable
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).received = true;
 
-	            	System.out.println("HashMap status");
+	     //        	System.out.println("HashMap status");
 
-	            	for (String key: this.connect_list.keySet()) 
-			    	{
-						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
-						// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
-						// 	this.connect_list.get(key).send_message(message);    		
-			    	}
+	     //        	for (String key: this.connect_list.keySet()) 
+			   //  	{
+						// System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
+						// // if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+						// // 	this.connect_list.get(key).send_message(message);    		
+			   //  	}
 				}
 	            else if (decode[0].equals("User-Disconnected"))
 	            {
@@ -138,14 +138,14 @@ public class socket_handler implements Runnable
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).is_human = false;
 
-	            	System.out.println("HashMap status");
+	     //        	System.out.println("HashMap status");
 
-	            	for (String key: this.connect_list.keySet()) 
-			    	{
-						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
-						// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
-						// 	this.connect_list.get(key).send_message(message);    		
-			    	}
+	     //        	for (String key: this.connect_list.keySet()) 
+			   //  	{
+						// System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
+						// // if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+						// // 	this.connect_list.get(key).send_message(message);    		
+			   //  	}
 	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
@@ -286,14 +286,14 @@ class connectivity_check extends TimerTask
 	{
 		try
 		{
-			System.out.println("HashMap status inside timer");
+			// System.out.println("HashMap status inside timer");
 
-	    	for (String key: this.sh.connect_list.keySet()) 
-	    	{
-				System.out.println(key+": is_human: "+this.sh.connect_list.get(key).is_human+": received: "+this.sh.connect_list.get(key).received);
-				// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
-				// 	this.connect_list.get(key).send_message(message);    		
-	    	}
+	  //   	for (String key: this.sh.connect_list.keySet()) 
+	  //   	{
+			// 	System.out.println(key+": is_human: "+this.sh.connect_list.get(key).is_human+": received: "+this.sh.connect_list.get(key).received);
+			// 	// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+			// 	// 	this.connect_list.get(key).send_message(message);    		
+	  //   	}
 
 			for (String key: this.sh.connect_list.keySet()) 
 	    	{
