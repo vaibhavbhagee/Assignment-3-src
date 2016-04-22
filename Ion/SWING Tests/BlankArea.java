@@ -24,6 +24,16 @@ public class BlankArea extends JLabel {
         stringsToDisplay.add(s);
     }
 
+    public void replaceEnterIP(ShowString s)
+    {
+        for(int i=0;i<stringsToDisplay.size();i++)
+        {
+            if ( stringsToDisplay.get(i).retstr().substring(0,9) == "ENTER IP:")
+                stringsToDisplay.remove(i);
+        }
+        stringsToDisplay.add(s);
+    }
+
     public BlankArea(Color color) {
         setBackground(color);
         setOpaque(true);

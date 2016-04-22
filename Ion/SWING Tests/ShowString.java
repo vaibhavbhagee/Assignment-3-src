@@ -24,4 +24,6 @@ public class ShowString{
 		g.setFont(font);
 		g.drawString(str,x,y);
 	}
+
+	public String retstr(){return str;}
 }
