@@ -9,6 +9,8 @@ public class Rectangle{
 	private int length = 100;
 	private int thickness = 30;
 	private int fired_up = 0;
+	public int overridecolor = 0;
+	public Color overridecolorwith;
 
 	public int min(int a, int b)
 	{
@@ -36,8 +38,10 @@ public class Rectangle{
 
 	public void draw(Graphics g) 
 	{
-       // System.out.println("drawRectangle");
-		g.setColor(new Color(min(233+20,255*fired_up),max(233-50*fired_up,0),max(235-37*fired_up,0),235));
+		if(overridecolor == 0)
+			g.setColor(new Color(min(233+20,255*fired_up),max(233-50*fired_up,0),max(235-37*fired_up,0),235));
+		else
+			g.setColor(overridecolorwith);
         g.fillRect(midpoint_x-(length/2), midpoint_y-(thickness/2),length,thickness);
     }
 
