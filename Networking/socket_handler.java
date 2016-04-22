@@ -198,7 +198,7 @@ public class socket_handler implements Runnable
     {
     	for (String key: this.connect_list.keySet()) 
     	{
-			if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+			if (this.connect_list.get(key).is_human/* && !key.equals(my_ip_address*/))
 				this.connect_list.get(key).send_message(message);    		
     	}
     }
