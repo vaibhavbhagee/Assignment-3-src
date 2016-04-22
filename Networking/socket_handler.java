@@ -53,7 +53,7 @@ public class socket_handler implements Runnable
 
 			Timer timer = new Timer();
 
-			timer.scheduleAtFixedRate(new connectivity_check(this),2000,2000);
+			timer.scheduleAtFixedRate(new connectivity_check(this),0,2000);
 
 			while(true)
 			{
@@ -137,6 +137,15 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).is_human = false;
+
+	            	System.out.println("HashMap status");
+
+	            	for (String key: this.connect_list.keySet()) 
+			    	{
+						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
+						// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+						// 	this.connect_list.get(key).send_message(message);    		
+			    	}
 	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
