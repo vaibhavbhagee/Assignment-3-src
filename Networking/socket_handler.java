@@ -150,6 +150,32 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 	            }
+	            else if (decode[0].equals("Connected-List")) //periodic update of connected peers list
+	            {
+	            	System.out.println("Message Received:" + decode[0]);
+
+	            	// Probably write a send response code here
+
+	            	for (int i = 1; i< decode.length; i+=2)
+					{
+						if (this.connect_list.get(decode[i]) == null)
+				        {
+				        	this.connect_list.put(decode[i],new indiv_connection_handler(decode[i]));
+				        	this.connect_list.get(decode[i]).joining_order = this.users_joined;
+				        	this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]);
+				        	this.users_joined++;
+				        }
+				        else
+				        {
+				        	this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]); //replaced true here
+				        }
+					}
+
+			    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.send_joining_order();
+			    	}
+	            }
 	            else if (decode[0].equals("Check-Connectivity"))
 	            {
 	            	// System.out.println("Message Received:" + decode[0]+" "+decode[1]);
@@ -250,7 +276,7 @@ public class socket_handler implements Runnable
         this.update_pseudo_server();
 
         this.send_message_to_all("New-User-Added;"+ip_addr+"");
-        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+this.get_ip_list()+"");
+        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+";true"+this.get_ip_list()+"");
     }
 
     public void update_pseudo_server()
@@ -296,7 +322,7 @@ public class socket_handler implements Runnable
 
     	for (String key: this.connect_list.keySet()) 
     	{
-			ip_list = ip_list+";"+key;
+			ip_list = ip_list+";"+key+";"+this.connect_list.get(key).is_human;
     	}
 
     	return ip_list;
@@ -339,18 +365,18 @@ public class socket_handler implements Runnable
 
 		String[] ip_addr = resp.split(";");
 
-		for (int i = 1; i< ip_addr.length; i++)
+		for (int i = 1; i< ip_addr.length; i+=2)
 		{
 			if (this.connect_list.get(ip_addr[i]) == null)
 	        {
 	        	this.connect_list.put(ip_addr[i],new indiv_connection_handler(ip_addr[i]));
 	        	this.connect_list.get(ip_addr[i]).joining_order = this.users_joined;
-	        	this.connect_list.get(ip_addr[i]).is_human = true;
+	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]);
 	        	this.users_joined++;
 	        }
 	        else
 	        {
-	        	this.connect_list.get(ip_addr[i]).is_human = true;
+	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]); //replaced true here
 	        }
 		}
 
@@ -479,6 +505,7 @@ class connectivity_check extends TimerTask
 				this.sh.connect_list.get(key).received = false;
 	    	}
 
+	    	this.sh.send_message_to_all("Connected-List;"+this.sh.get_ip_list());
 	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
 	    }
 	    catch (Exception e)
