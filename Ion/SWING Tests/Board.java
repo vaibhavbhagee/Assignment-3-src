@@ -49,7 +49,7 @@ public class Board{
 			if(Math.abs(b.posY-b.radius) < epsilon)			b.velY*=-1;
 			if(Math.abs(b.posY+b.radius - height) < epsilon)b.velY*=-1;
 
-			System.out.println(b.posX+" "+b.posY);
+			//System.out.println(b.posX+" "+b.posY);
 		}
 
 		//broadcast();

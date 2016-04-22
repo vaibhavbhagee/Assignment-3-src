@@ -1,20 +1,28 @@
-/*
- * BlankArea.java is used by:
- *    MouseEventDemo.java.
- *    MouseMotionEventDemo.java
- *    MouseWheelEventDemo.java
- */
-
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
+ 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class BlankArea extends JLabel {
     Dimension minSize = new Dimension(100, 100);
     Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0);
     Circle c1 = new Circle(0,0,0);
     Circle[] trail = new Circle[10];
+    boolean trail_present = false;
+    List<ShowString> stringsToDisplay = new ArrayList<ShowString>();
+
+    public void trail_on(){trail_present=true;}
+
+    public void trail_off(){trail_present=false;}
+
+    public void addString(ShowString s)
+    {
+        stringsToDisplay.add(s);
+    }
 
     public BlankArea(Color color) {
         setBackground(color);
@@ -28,8 +36,8 @@ public class BlankArea extends JLabel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        //System.out.println("paintComponent");
         super.paintComponent(g);
+
             g.setColor(new Color(233,233,235,235));
             if(r1!=null)r1.draw(g);
             if(r2!=null)r2.draw(g);
@@ -38,7 +46,7 @@ public class BlankArea extends JLabel {
             if(r5!=null)r5.draw(g);
 
             g.setColor(new Color(124,124,124,124));
-            if(trail!=null)
+            if(trail!=null && trail_present)
             {
                 for(int i=9; i>0;i--)
                 {
@@ -52,12 +60,15 @@ public class BlankArea extends JLabel {
             }
             g.setColor(new Color(23,12,92,232));
             if(c1!=null)c1.draw(g);
+
+            for(ShowString s:stringsToDisplay){
+                s.draw(g);
+            }
     }
 
     public void newCirc(Circle ball)
     {
         c1 = ball;
-        //System.out.println("newCirc function");
         repaint(10);
     }
 
@@ -67,7 +78,6 @@ public class BlankArea extends JLabel {
         r3 = left;
         r4 = right;
         r5 = top;
-        //System.out.println("addRectangle");
         repaint(10);
     }
 

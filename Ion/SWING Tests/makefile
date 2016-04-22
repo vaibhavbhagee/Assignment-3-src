@@ -1,6 +1,6 @@
 all:
 	javac *.java
-	java MouseClickOrMotion
+	java Start
 
 clean:
 	rm -rf *.class
