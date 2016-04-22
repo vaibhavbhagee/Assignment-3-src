@@ -53,7 +53,7 @@ public class socket_handler implements Runnable
 
 			Timer timer = new Timer();
 
-			timer.scheduleAtFixedRate(new connectivity_check(this),0,2000);
+			timer.scheduleAtFixedRate(new connectivity_check(this),0,5000);
 
 			while(true)
 			{
@@ -297,7 +297,7 @@ class connectivity_check extends TimerTask
 
 			for (String key: this.sh.connect_list.keySet()) 
 	    	{
-				if (this.sh.connect_list.get(key).is_human && !this.sh.connect_list.get(key).received)
+				if (this.sh.connect_list.get(key).is_human && !this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
 				{
 					this.sh.connect_list.get(key).is_human = false;
 					this.sh.send_message_to_all("User-Disconnected;"+key);
