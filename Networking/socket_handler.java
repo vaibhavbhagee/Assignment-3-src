@@ -8,8 +8,6 @@ public class socket_handler implements Runnable
 
 	public DatagramSocket socket = null;
 
-	//Enter HashMap here
-
 	public HashMap<String,indiv_connection_handler> connect_list;
 
 	public String choice;
@@ -31,7 +29,6 @@ public class socket_handler implements Runnable
 		this.socket = new DatagramSocket(9876);
 		this.connect_list = new HashMap<String,indiv_connection_handler>();
 		this.choice = input_choice;
-		// this.my_ip_address = "10.192.45.162";
 		this.my_ip_address = this.getIp();
 	}
 
@@ -49,7 +46,12 @@ public class socket_handler implements Runnable
 
 		        	this.connect_list.get(ip_address).joining_order = this.users_joined;
 			        this.users_joined++;
+			        this.connect_list.get(ip_address).is_human = true;
 			        this.update_pseudo_server();
+		        }
+		        else
+		        {
+		        	this.connect_list.get(ip_address).is_human = true;
 		        }
 
 		        this.connect_list.get(ip_address).send_message("Connection-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+"");
@@ -60,6 +62,7 @@ public class socket_handler implements Runnable
 
 		        this.connect_list.get(this.my_ip_address).joining_order = this.users_joined;
 		        this.users_joined++;
+		        this.connect_list.get(this.my_ip_address).is_human = true;
 		        this.update_pseudo_server();
 			}
 
@@ -83,18 +86,22 @@ public class socket_handler implements Runnable
 	                // Code to handle new user
 	                this.new_user(decode[1]);
 
-	                System.out.println("HashMap entries CR");  
-	                for (String key: this.connect_list.keySet()) 
-			    	{
-						// this.connect_list.get(key).send_message(message);  
+	     //            System.out.println("HashMap entries CR");  
+	     //            for (String key: this.connect_list.keySet()) 
+			   //  	{
+						// // this.connect_list.get(key).send_message(message);  
 								
-						System.out.println(key);
-			    	}
+						// System.out.println(key);
+			   //  	}
 
 			    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.send_joining_order();
 			    	}
+
+			    	System.out.println("Inside Connection-Request");
+
+			    	this.print_hm();
 	            }
 	            else if (decode[0].equals("Message"))
 	            {
@@ -143,6 +150,32 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 	            }
+	            else if (decode[0].equals("Connected-List")) //periodic update of connected peers list
+	            {
+	            	System.out.println("Message Received:" + decode[0]);
+
+	            	// Probably write a send response code here
+
+	            	for (int i = 1; i< decode.length; i+=2)
+					{
+						if (this.connect_list.get(decode[i]) == null)
+				        {
+				        	this.connect_list.put(decode[i],new indiv_connection_handler(decode[i]));
+				        	this.connect_list.get(decode[i]).joining_order = this.users_joined;
+				        	this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]);
+				        	this.users_joined++;
+				        }
+				        else
+				        {
+				        	this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]); //replaced true here
+				        }
+					}
+
+			    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.send_joining_order();
+			    	}
+	            }
 	            else if (decode[0].equals("Check-Connectivity"))
 	            {
 	            	// System.out.println("Message Received:" + decode[0]+" "+decode[1]);
@@ -156,15 +189,6 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).received = true;
-
-	     //        	System.out.println("HashMap status");
-
-	     //        	for (String key: this.connect_list.keySet()) 
-			   //  	{
-						// System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
-						// // if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
-						// // 	this.connect_list.get(key).send_message(message);    		
-			   //  	}
 				}
 	            else if (decode[0].equals("User-Disconnected"))
 	            {
@@ -180,14 +204,27 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 
-	     //        	System.out.println("HashMap status");
+	            	System.out.println("Inside User-Disconnected:");
 
-	     //        	for (String key: this.connect_list.keySet()) 
-			   //  	{
-						// System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received);
-						// // if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
-						// // 	this.connect_list.get(key).send_message(message);    		
-			   //  	}
+	            	this.print_hm();
+	            }
+	            else if (decode[0].equals("User-Reconnected"))
+	            {
+	            	System.out.println("Message Received:" + decode[0]+" "+decode[1]);
+
+	            	// Probably write a send response code here
+	            	this.connect_list.get(decode[1]).is_human = true;
+
+	            	this.update_pseudo_server();
+
+	            	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.send_joining_order();
+			    	}
+
+	            	System.out.println("Inside User-Reconnected:");
+
+	            	this.print_hm();
 	            }
 	            else if (decode[0].equals("Joining-Order"))
 	            {
@@ -196,14 +233,9 @@ public class socket_handler implements Runnable
 	            		this.connect_list.get(decode[i]).joining_order = Integer.parseInt(decode[i+1]);
 	            	}
 
-	            	System.out.println("HashMap status JO");
+	            	System.out.println("Joining_Order:");
 
-	            	for (String key: this.connect_list.keySet()) 
-			    	{
-						System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received+": is_baap:"+this.connect_list.get(key).is_pseudo_server+": joining_order:"+this.connect_list.get(key).joining_order);
-						// if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
-						// 	this.connect_list.get(key).send_message(message);    		
-			    	}
+	            	this.print_hm();
 	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
@@ -212,6 +244,16 @@ public class socket_handler implements Runnable
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void print_hm()
+	{
+		System.out.println("HashMap status:");
+
+    	for (String key: this.connect_list.keySet()) 
+    	{
+			System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received+": is_baap:"+this.connect_list.get(key).is_pseudo_server+": joining_order:"+this.connect_list.get(key).joining_order);
+    	}
 	}
 
 	public void new_user(String ip_addr) throws Exception
@@ -234,7 +276,7 @@ public class socket_handler implements Runnable
         this.update_pseudo_server();
 
         this.send_message_to_all("New-User-Added;"+ip_addr+"");
-        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+this.get_ip_list()+"");
+        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+";true"+this.get_ip_list()+"");
     }
 
     public void update_pseudo_server()
@@ -280,7 +322,7 @@ public class socket_handler implements Runnable
 
     	for (String key: this.connect_list.keySet()) 
     	{
-			ip_list = ip_list+";"+key;
+			ip_list = ip_list+";"+key+";"+this.connect_list.get(key).is_human;
     	}
 
     	return ip_list;
@@ -323,18 +365,18 @@ public class socket_handler implements Runnable
 
 		String[] ip_addr = resp.split(";");
 
-		for (int i = 1; i< ip_addr.length; i++)
+		for (int i = 1; i< ip_addr.length; i+=2)
 		{
 			if (this.connect_list.get(ip_addr[i]) == null)
 	        {
 	        	this.connect_list.put(ip_addr[i],new indiv_connection_handler(ip_addr[i]));
 	        	this.connect_list.get(ip_addr[i]).joining_order = this.users_joined;
-	        	this.connect_list.get(ip_addr[i]).is_human = true;
+	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]);
 	        	this.users_joined++;
 	        }
 	        else
 	        {
-	        	this.connect_list.get(ip_addr[i]).is_human = true;
+	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]); //replaced true here
 	        }
 		}
 
@@ -440,9 +482,30 @@ class connectivity_check extends TimerTask
 					
 				}
 
+				// Reconnection code to be added here in future
+
+				if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
+				{
+					this.sh.connect_list.get(key).is_human = true;
+					System.out.println("within timer function: User-Reconnected;"+key);
+
+					//trial
+					this.sh.update_pseudo_server();
+
+					this.sh.send_message_to_all("User-Reconnected;"+key);
+
+	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.sh.send_joining_order();
+			    	}
+
+					
+				}
+
 				this.sh.connect_list.get(key).received = false;
 	    	}
 
+	    	this.sh.send_message_to_all("Connected-List;"+this.sh.get_ip_list());
 	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
 	    }
 	    catch (Exception e)
