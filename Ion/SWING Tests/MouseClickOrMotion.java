@@ -23,7 +23,7 @@ import java.util.TimerTask;
 
 public class MouseClickOrMotion extends JPanel implements MouseMotionListener, MouseListener{
 
-	private BlankArea blankArea = new BlankArea(new Color(0.98f, 0.97f, 0.85f));
+	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private int board_side;
     private int ball_radius;
     private int[] paddle_length = new int[4];
@@ -38,6 +38,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     int i=0;
     Board board_b;
     int offsetx,offsety;
+    int prev_x;
+
     private static MouseClickOrMotion newContentPane;
 
     private static JFrame frame = new JFrame("MouseClickOrMotion");
@@ -54,7 +56,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         super(new GridBagLayout());
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
-        this.setBackground(new Color(123,0,0,255));
+        this.setBackground(new Color(0,0,123,255));
 
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -64,7 +66,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
 
         c.insets = new Insets(1, 1, 1, 1);
         gridbag.setConstraints(blankArea, c);
-        blankArea.setBackground(new Color(0,214,0,255));
+        blankArea.setBackground(new Color(20,11,231,188));
         add(blankArea);
       
         c.insets = new Insets(0, 0, 0, 0);
@@ -104,8 +106,13 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                 
                     board_b.update();
                     renderNewCoordinates(board_b.getX(),board_b.getY());
+                    if(p1!=null)
+                    {
+                        System.out.println(p1.getMidX()-prev_x);
+                        prev_x = p1.getMidX();
+                    }
             }
-        },0,10);
+        },0,20);
 
 
     }
@@ -153,11 +160,15 @@ System.out.println(board_side);
 
 
 	public void mousePressed(MouseEvent e) {
-      // saySomething("Mouse pressed (# of clicks: "
+        for(int i=0;i<e.getClickCount();i++)
+            p1.fired_up();
+        // saySomething("Mouse pressed (# of clicks: "
         //            + e.getClickCount() + ")", e);
     }
 
     public void mouseReleased(MouseEvent e) {
+        for(int i=0;i<e.getClickCount();i++)
+            p1.fired_down();
        //saySomething("Mouse released (# of clicks: "
         //            + e.getClickCount() + ")", e);
     }
@@ -216,6 +227,12 @@ System.out.println(board_side);
 
         frame.setResizable(false);
 
+
+        //Create and set up the content pane.
+        newContentPane = new MouseClickOrMotion();
+        newContentPane.setOpaque(true); //content panes must be opaque
+
+
         //Create and set up the window.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -238,10 +255,6 @@ System.out.println(board_side);
             }
         });
 
-        //Create and set up the content pane.
-        newContentPane = new MouseClickOrMotion();
-        newContentPane.setOpaque(true); //content panes must be opaque
-
         //frame.add(rect);
         frame.add(newContentPane);
 
@@ -253,10 +266,10 @@ System.out.println(board_side);
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        //    public void run() {
                 createAndShowGUI();
-            }
-        });
+        //    }
+        //});
     }
 }
