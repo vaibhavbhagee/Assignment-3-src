@@ -173,6 +173,13 @@ public class socket_handler implements Runnable
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).is_human = false;
 
+	            	this.update_pseudo_server();
+
+	            	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.send_joining_order();
+			    	}
+
 	     //        	System.out.println("HashMap status");
 
 	     //        	for (String key: this.connect_list.keySet()) 
@@ -229,10 +236,15 @@ public class socket_handler implements Runnable
     	TreeMap t_map = new TreeMap(this.connect_list);
 
     	String low_key = (String)t_map.firstKey();
+    	while(!this.connect_list.get(low_key).is_human)
+	    {	
+	    	System.out.println(low_key);
 
-    	System.out.println(low_key);
+	    	t_map.remove(low_key);
+	    	low_key = (String)t_map.firstKey();
+	    }
 
-    	this.connect_list.get(low_key).is_pseudo_server = true;
+	    	this.connect_list.get(low_key).is_pseudo_server = true;
 
     	for (String key: this.connect_list.keySet()) 
     	{
@@ -305,10 +317,9 @@ public class socket_handler implements Runnable
 			if (this.connect_list.get(ip_addr[i]) == null)
 	        {
 	        	this.connect_list.put(ip_addr[i],new indiv_connection_handler(ip_addr[i]));
+	        	this.connect_list.get(ip_addr[i]).joining_order = this.users_joined;
+	        	this.users_joined++;
 	        }
-
-	        this.connect_list.get(ip_addr[i]).joining_order = this.users_joined;
-	        this.users_joined++;
 		}
 
 		this.update_pseudo_server();
