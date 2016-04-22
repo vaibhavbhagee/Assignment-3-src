@@ -410,7 +410,18 @@ class connectivity_check extends TimerTask
 				{
 					this.sh.connect_list.get(key).is_human = false;
 					System.out.println("within timer function: User-Disconnected;"+key);
+
+					//trial
+					this.sh.update_pseudo_server();
+
 					this.sh.send_message_to_all("User-Disconnected;"+key);
+
+	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.sh.send_joining_order();
+			    	}
+
+					
 				}
 
 				this.sh.connect_list.get(key).received = false;
