@@ -223,7 +223,7 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).is_human = true;
-	            	this.connect_list.get(decode[1]).received = true;
+	            	// this.connect_list.get(decode[1]).received = true;
 
 	            	this.update_pseudo_server();
 
@@ -522,20 +522,21 @@ class connectivity_check extends TimerTask
 					this.sh.update_pseudo_server();
 
 					this.sh.message_queue.add("User-Disconnected;"+key);
-					// this.sh.send_message_to_all("User-Disconnected;"+key);
+					this.sh.send_message_to_all("User-Disconnected;"+key);
 
 	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.sh.send_joining_order();
-						this.sh.send_message_to_all("User-Disconnected;"+key);			    		
+						// this.sh.send_message_to_all("User-Disconnected;"+key);			    		
 			    	}
 
-					
+					this.sh.connect_list.get(key).received = false;
 				}
 
+				//TODO: Check reconnection problems here
 				// Reconnection code to be added here in future
 
-				else if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
+				if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
 				{
 					this.sh.connect_list.get(key).is_human = true;
 					System.out.println("within timer function: User-Reconnected;"+key);
@@ -544,15 +545,15 @@ class connectivity_check extends TimerTask
 					this.sh.update_pseudo_server();
 
 					this.sh.message_queue.add("User-Reconnected;"+key);
-					// this.sh.send_message_to_all("User-Reconnected;"+key);
+					this.sh.send_message_to_all("User-Reconnected;"+key);
 
 	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.sh.send_joining_order();
-			    		this.sh.send_message_to_all("User-Reconnected;"+key);
+			    		// this.sh.send_message_to_all("User-Reconnected;"+key);
 			    	}
 
-					
+					this.sh.connect_list.get(key).received = false;
 				}
 
 				this.sh.connect_list.get(key).received = false;
