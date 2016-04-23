@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BlankArea extends JLabel {
     Dimension minSize = new Dimension(100, 100);
-    Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0);
+    Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0,0);
     Circle c1 = new Circle(0,0,0);
     Circle[] trail = new Circle[10];
     boolean trail_present = false;

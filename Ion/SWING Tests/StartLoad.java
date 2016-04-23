@@ -61,11 +61,11 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
         StartLoad_frame.pack();
 
-        StartLoadButton = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8) );
+        StartLoadButton = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8),0 );
         StartLoadButton.overridecolor = 1;
         StartLoadButton.overridecolorwith = new Color(33,200,200,243);
 
-		StartLoadButtonMulti = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8) );
+		StartLoadButtonMulti = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8),0 );
         StartLoadButtonMulti.overridecolor = 1;
         StartLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
@@ -122,11 +122,11 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
         StartLoad_frame.pack();
 
-        StartLoadButton = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8) );
+        StartLoadButton = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8),0 );
         StartLoadButton.overridecolor = 1;
         StartLoadButton.overridecolorwith = new Color(33,200,200,243);
 
-        StartLoadButtonMulti = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8) );
+        StartLoadButtonMulti = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8),0 );
         StartLoadButtonMulti.overridecolor = 1;
         StartLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 

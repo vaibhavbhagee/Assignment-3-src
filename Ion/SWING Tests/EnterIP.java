@@ -70,11 +70,11 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 
         EnterIP_frame.pack();
 
-        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8) );
+        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
         EnterIPButton.overridecolor = 1;
         EnterIPButton.overridecolorwith = new Color(33,200,200,243);
 
-		EnterIPButtonMulti = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(2*EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8) );
+		EnterIPButtonMulti = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(2*EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
         EnterIPButtonMulti.overridecolor = 1;
         EnterIPButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
@@ -165,11 +165,11 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         ref = (int)EnterIP_frame.getSize().getWidth();
         EnterIP_frame.pack();
 
-        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8) );
+        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
         EnterIPButton.overridecolor = 1;
         EnterIPButton.overridecolorwith = new Color(33,200,200,243);
 
-        EnterIPButtonMulti = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(2*EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8) );
+        EnterIPButtonMulti = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(2*EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
         EnterIPButtonMulti.overridecolor = 1;
         EnterIPButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
@@ -193,7 +193,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
             int right = ((i+1)*ref)/12;
             int top = EnterIPButton_y2;
             int bottom = EnterIPButton_y1m;
-            digits.add(new Rectangle((left+right)/2,(top+bottom)/2,right-left,bottom-top));
+            digits.add(new Rectangle((left+right)/2,(top+bottom)/2,right-left,bottom-top,0));
             digits.get(i).overridecolor = 1;
             digits.get(i).overridecolorwith =new Color(233,223,0,243);
         }

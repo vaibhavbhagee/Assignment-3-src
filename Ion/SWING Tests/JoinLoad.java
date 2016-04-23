@@ -61,11 +61,11 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
         JoinLoad_frame.pack();
 
-        JoinLoadButton = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8) );
+        JoinLoadButton = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8),0 );
         JoinLoadButton.overridecolor = 1;
         JoinLoadButton.overridecolorwith = new Color(33,200,200,243);
 
-		JoinLoadButtonMulti = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8) );
+		JoinLoadButtonMulti = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8),0 );
         JoinLoadButtonMulti.overridecolor = 1;
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
@@ -122,11 +122,11 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
         JoinLoad_frame.pack();
 
-        JoinLoadButton = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8) );
+        JoinLoadButton = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8),0 );
         JoinLoadButton.overridecolor = 1;
         JoinLoadButton.overridecolorwith = new Color(33,200,200,243);
 
-        JoinLoadButtonMulti = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8) );
+        JoinLoadButtonMulti = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8),0 );
         JoinLoadButtonMulti.overridecolor = 1;
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 

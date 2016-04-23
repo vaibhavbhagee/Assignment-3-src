@@ -64,11 +64,11 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
 
         MultiOpt_frame.pack();
 
-        MultiOptButton = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8) );
+        MultiOptButton = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8),0 );
         MultiOptButton.overridecolor = 1;
         MultiOptButton.overridecolorwith = new Color(33,200,200,243);
 
-		MultiOptButtonMulti = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(2*MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8) );
+		MultiOptButtonMulti = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(2*MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8),0 );
         MultiOptButtonMulti.overridecolor = 1;
         MultiOptButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
@@ -125,11 +125,11 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
 
         MultiOpt_frame.pack();
 
-        MultiOptButton = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8) );
+        MultiOptButton = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8),0 );
         MultiOptButton.overridecolor = 1;
         MultiOptButton.overridecolorwith = new Color(33,200,200,243);
 
-        MultiOptButtonMulti = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(2*MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8) );
+        MultiOptButtonMulti = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(2*MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8),0 );
         MultiOptButtonMulti.overridecolor = 1;
         MultiOptButtonMulti.overridecolorwith = new Color(33,200,200,243);
 

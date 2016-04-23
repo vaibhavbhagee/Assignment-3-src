@@ -63,11 +63,11 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
 
         start_frame.pack();
 
-        startButton = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8) );
+        startButton = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8),0 );
         startButton.overridecolor = 1;
         startButton.overridecolorwith = new Color(33,200,200,243);
 
-		startButtonMulti = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(2*start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8) );
+		startButtonMulti = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(2*start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8),0 );
         startButtonMulti.overridecolor = 1;
         startButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(startButton,startButtonMulti,null,null,null);
@@ -124,11 +124,11 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
 
         start_frame.pack();
 
-        startButton = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8) );
+        startButton = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8),0 );
         startButton.overridecolor = 1;
         startButton.overridecolorwith = new Color(33,200,200,243);
 
-        startButtonMulti = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(2*start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8) );
+        startButtonMulti = new Rectangle((int)(start_frame.getSize().getWidth()/2),(int)(2*start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8),0 );
         startButtonMulti.overridecolor = 1;
         startButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
