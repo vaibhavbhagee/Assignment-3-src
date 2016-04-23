@@ -1,3 +1,4 @@
+package Game_Engine;
 public class Ball{
 	static int ball_count = 0;
 	int ball_number;// ball number
@@ -8,23 +9,12 @@ public class Ball{
 	double theetha;	// tan_inverse
 	double diameter;	// radius of ball
 
-	double width;
-	double height;
-
-	double speed;
-	double acc;
-
-	public Ball(double posX, double posY, double velX, double velY, double diameter, double width, double height, double speed, double acc){
+	public Ball(double posX, double posY, double velX, double velY, double diameter){
 		this.ball_number = ball_count;
 		this.posX = posX;
 		this.posY = posY;
 		this.velX = velX;
 		this.velY = velY;
-
-		this.width = width;
-		this.height = height;
-		this.speed = Math.sqrt(velX*velX + velY*velY);
-		this.acc = acc;
 
 		theetha = Math.atan(velY/velX);
 		if(velX<0 && velY<0) theetha += Math.PI;
@@ -45,12 +35,11 @@ public class Ball{
 	public void update_position(){
 		posX += velX;
 		posY += velY;
-		double accX = (width/2 - posX)/width * acc;
-		double accY = (height/2 - posY)/height * acc;
-		velX += accX;
-		velY += accY;
-		speed += (velX*accX + velY*accY)/speed;
-
-		System.out.println(speed);
+		// double accX = (width/2 - posX)/width * acc;
+		// double accY = (height/2 - posY)/height * acc;
+		// velX += accX;
+		// velY += accY;
+		// speed += (velX*accX + velY*accY)/speed;
+		// System.out.println(speed);
 	}
 }
