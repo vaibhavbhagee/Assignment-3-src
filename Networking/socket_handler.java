@@ -153,6 +153,7 @@ public class socket_handler implements Runnable
 	            else if (decode[0].equals("Connected-List")) //periodic update of connected peers list
 	            {
 	            	System.out.println("Message Received:" + decode[0]);
+	            	System.out.println("Response:" + response);
 
 	            	// Probably write a send response code here
 
@@ -204,9 +205,9 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 
-	            	System.out.println("Inside User-Disconnected:");
+	            	// System.out.println("Inside User-Disconnected:");
 
-	            	this.print_hm();
+	            	// this.print_hm();
 	            }
 	            else if (decode[0].equals("User-Reconnected"))
 	            {
@@ -222,9 +223,9 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 
-	            	System.out.println("Inside User-Reconnected:");
+	            	// System.out.println("Inside User-Reconnected:");
 
-	            	this.print_hm();
+	            	// this.print_hm();
 	            }
 	            else if (decode[0].equals("Joining-Order"))
 	            {
@@ -233,9 +234,9 @@ public class socket_handler implements Runnable
 	            		this.connect_list.get(decode[i]).joining_order = Integer.parseInt(decode[i+1]);
 	            	}
 
-	            	System.out.println("Joining_Order:");
+	            	// System.out.println("Joining_Order:");
 
-	            	this.print_hm();
+	            	// this.print_hm();
 	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
@@ -354,7 +355,7 @@ public class socket_handler implements Runnable
     {
     	for (String key: this.connect_list.keySet()) 
     	{
-			if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+			if (/*this.connect_list.get(key).is_human &&*/ !key.equals(my_ip_address))
 				this.connect_list.get(key).send_message(message);    		
     	}
     }
@@ -505,7 +506,7 @@ class connectivity_check extends TimerTask
 				this.sh.connect_list.get(key).received = false;
 	    	}
 
-	    	this.sh.send_message_to_all("Connected-List;"+this.sh.get_ip_list());
+	    	this.sh.send_message_to_all("Connected-List"+this.sh.get_ip_list());
 	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
 	    }
 	    catch (Exception e)
