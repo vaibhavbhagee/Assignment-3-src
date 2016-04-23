@@ -24,7 +24,7 @@ public class Board{
 		ball_list.add(new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20));
 	}			// 460 x 460
 
-	public Object update(){
+	public Object update(Object o){
 		// called by UI
 		// update the position of the ball
 		// take care of reflections
