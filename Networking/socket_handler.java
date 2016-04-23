@@ -10,6 +10,8 @@ public class socket_handler implements Runnable
 
 	public HashMap<String,indiv_connection_handler> connect_list;
 
+	public Queue<String> message_queue;
+
 	public String choice;
 
 	public int users_joined = 0;
@@ -30,6 +32,7 @@ public class socket_handler implements Runnable
 		this.connect_list = new HashMap<String,indiv_connection_handler>();
 		this.choice = input_choice;
 		this.my_ip_address = this.getIp();
+		this.message_queue = new LinkedList<String>();
 	}
 
 	public void run()
@@ -109,6 +112,8 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	// String choice = System.console.readLine("Enter your Message: ");
+	            	this.message_queue.add(response);
+	            	this.print_q();
 	            }
 	            else if (decode[0].equals("New-User-Added"))
 	            {
@@ -152,7 +157,8 @@ public class socket_handler implements Runnable
 	            }
 	            else if (decode[0].equals("Connected-List")) //periodic update of connected peers list
 	            {
-	            	System.out.println("Message Received:" + decode[0]);
+	            	// System.out.println("Message Received:" + decode[0]);
+	            	// System.out.println("Response:" + response);
 
 	            	// Probably write a send response code here
 
@@ -233,9 +239,9 @@ public class socket_handler implements Runnable
 	            		this.connect_list.get(decode[i]).joining_order = Integer.parseInt(decode[i+1]);
 	            	}
 
-	            	System.out.println("Joining_Order:");
+	            	// System.out.println("Joining_Order:");
 
-	            	this.print_hm();
+	            	// this.print_hm();
 	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
@@ -254,6 +260,11 @@ public class socket_handler implements Runnable
     	{
 			System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received+": is_baap:"+this.connect_list.get(key).is_pseudo_server+": joining_order:"+this.connect_list.get(key).joining_order);
     	}
+	}
+
+	public void print_q()
+	{
+   		System.out.println(this.message_queue);
 	}
 
 	public void new_user(String ip_addr) throws Exception
@@ -354,7 +365,7 @@ public class socket_handler implements Runnable
     {
     	for (String key: this.connect_list.keySet()) 
     	{
-			if (this.connect_list.get(key).is_human && !key.equals(my_ip_address))
+			if (/*this.connect_list.get(key).is_human &&*/ !key.equals(my_ip_address))
 				this.connect_list.get(key).send_message(message);    		
     	}
     }
@@ -484,7 +495,7 @@ class connectivity_check extends TimerTask
 
 				// Reconnection code to be added here in future
 
-				if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
+				else if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
 				{
 					this.sh.connect_list.get(key).is_human = true;
 					System.out.println("within timer function: User-Reconnected;"+key);
@@ -505,7 +516,7 @@ class connectivity_check extends TimerTask
 				this.sh.connect_list.get(key).received = false;
 	    	}
 
-	    	this.sh.send_message_to_all("Connected-List;"+this.sh.get_ip_list());
+	    	this.sh.send_message_to_all("Connected-List"+this.sh.get_ip_list());
 	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
 	    }
 	    catch (Exception e)
