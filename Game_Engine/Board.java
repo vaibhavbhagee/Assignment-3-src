@@ -1,33 +1,27 @@
+package Game_Engine;
 import java.util.*;
 
 public class Board{
 	long counter;					// counts per update of game
 	double epsilon;
-	double width;					// width of the board
-	double height;					// height of the board
-	double length_factor;
-	int freq;
-	double speed;					// brief value of the velocity of every ball
-	double acc;
-	//double tan_omega;				// used for reflection
 	ArrayList<Ball> ball_list;
 	Player[] plr = new Player[4];	// player[0] is the current_player
 
 	public Board(int width, int height){
-		this.width = width;
-		this.height = height;
-		freq = 50;
-		length_factor = 3;
+		Var.width = width;
+		Var.height = height;
+		Var.freq = 50;
+		Var.length_factor = 3;
 		//tan_omega = 0.15;
-		speed = width/freq/1;
-		acc = speed/freq/1;
-		epsilon = speed;
+		Var.speed = Var.width/Var.freq/1;
+		Var.acc = Var.speed/Var.freq/1;
+		epsilon = Var.speed;
 		plr[0] = new Player("Shreyan", 0, width, height);
 		plr[1] = new Player("Shreyan", 1, width, height);
 		plr[2] = new Player("Shreyan", 2, width, height);
 		plr[3] = new Player("Shreyan", 3, width, height);
 		ball_list = new ArrayList<Ball>();
-		ball_list.add(new Ball(width/2+100,height/2+100,speed*0.6,speed*0.8,20, width, height, speed*0.0001, acc));
+		ball_list.add(new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20));
 	}			// 460 x 460
 
 	public Object update(){
@@ -47,9 +41,9 @@ public class Board{
 				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 			}
 
-			if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
+			if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
 				hit_paddle(3,b);
-			}else if(Math.abs(b.posX+b.diameter/2 - width) < epsilon){	//w3
+			}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
 				b.velX*=-1;
 				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 				else b.theetha = 3*Math.PI - b.theetha;
@@ -65,9 +59,9 @@ public class Board{
 				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 			}
 
-			if((Math.abs(b.posY + b.diameter/2 + plr[2].p.delta - height) < epsilon)&&(b.posX > plr[2].p.d1)&&(b.posX < plr[2].p.d2)){
+			if((Math.abs(b.posY + b.diameter/2 + plr[2].p.delta - Var.height) < epsilon)&&(b.posX > plr[2].p.d1)&&(b.posX < plr[2].p.d2)){
 				hit_paddle(2,b);
-			}else if(Math.abs(b.posY+b.diameter/2 - height) < epsilon){	//w2
+			}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
 				System.out.println("Angle: "+(b.theetha*180/Math.PI));
@@ -90,7 +84,7 @@ public class Board{
 	}
 	public int getY(){
 		for(Ball b: ball_list){
-			return (int)(height - b.posY);
+			return (int)(Var.height - b.posY);
 		}
 		return 0;
 	}
@@ -101,22 +95,22 @@ public class Board{
 		else x = b.posY - (plr[paddle_num].p.d1+plr[paddle_num].p.d2)/2;
 		l = (plr[paddle_num].p.d2-plr[paddle_num].p.d1);
 		if(paddle_num==0){
-			phi = Math.atan(l*length_factor/x);
+			phi = Math.atan(l*Var.length_factor/x);
 			b.posY += epsilon;
 		}
 		else if(paddle_num==1){
-			phi = Math.atan(x/l/length_factor);
+			phi = Math.atan(x/l/Var.length_factor);
 			b.posX += epsilon;
 		}
 		else if(paddle_num==2){
-			phi = -Math.atan(l*length_factor/x);
+			phi = -Math.atan(l*Var.length_factor/x);
 			b.posY -= epsilon;
 		}
 		else {
-			phi = -Math.atan(x/l/length_factor);
+			phi = -Math.atan(x/l/Var.length_factor);
 			b.posX -= epsilon;
 		}
-		b.set_velocity(b.speed, 2*phi - b.theetha + Math.PI);
+		b.set_velocity(Var.speed, 2*phi - b.theetha + Math.PI);
 		System.out.println(" Final angle: "+(b.theetha*180/Math.PI));
 		System.out.println("Phi: "+phi*180/Math.PI);
 	}

@@ -1,3 +1,4 @@
+package Game_Engine;
 public class Paddle{
 	int orientation;	// 1 for horizontal and 2 for vertical
 	double d1;
@@ -9,6 +10,6 @@ public class Paddle{
 		this.d1 = d1;
 		this.d2 = d2;
 		this.delta = 20;
-		System.out.println("PADDLE VALUES: "+d1+" "+d2);
+		//System.out.println("PADDLE VALUES: "+d1+" "+d2);
 	}
 }
