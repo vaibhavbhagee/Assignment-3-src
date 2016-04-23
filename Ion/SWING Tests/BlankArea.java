@@ -14,6 +14,7 @@ public class BlankArea extends JLabel {
     Circle[] trail = new Circle[10];
     boolean trail_present = false;
     List<ShowString> stringsToDisplay = new ArrayList<ShowString>();
+    List<Rectangle> digits = new ArrayList<Rectangle>();
 
     public void trail_on(){trail_present=true;}
 
@@ -28,8 +29,10 @@ public class BlankArea extends JLabel {
     {
         for(int i=0;i<stringsToDisplay.size();i++)
         {
-            if ( stringsToDisplay.get(i).retstr().substring(0,9) == "ENTER IP:")
+            if ( stringsToDisplay.get(i).retstr().substring(0,9) .equals("ENTER IP:") )
+            {
                 stringsToDisplay.remove(i);
+            }    
         }
         stringsToDisplay.add(s);
     }
@@ -74,6 +77,10 @@ public class BlankArea extends JLabel {
             for(ShowString s:stringsToDisplay){
                 s.draw(g);
             }
+
+            for(Rectangle r:digits){
+                r.draw(g);
+            }
     }
 
     public void newCirc(Circle ball)
@@ -88,6 +95,12 @@ public class BlankArea extends JLabel {
         r3 = left;
         r4 = right;
         r5 = top;
+        repaint(10);
+    }
+
+    public void manyNewRects(List<Rectangle> alr)
+    {
+        digits = alr;
         repaint(10);
     }
 
