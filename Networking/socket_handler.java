@@ -152,8 +152,8 @@ public class socket_handler implements Runnable
 	            }
 	            else if (decode[0].equals("Connected-List")) //periodic update of connected peers list
 	            {
-	            	System.out.println("Message Received:" + decode[0]);
-	            	System.out.println("Response:" + response);
+	            	// System.out.println("Message Received:" + decode[0]);
+	            	// System.out.println("Response:" + response);
 
 	            	// Probably write a send response code here
 
@@ -205,9 +205,9 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 
-	            	// System.out.println("Inside User-Disconnected:");
+	            	System.out.println("Inside User-Disconnected:");
 
-	            	// this.print_hm();
+	            	this.print_hm();
 	            }
 	            else if (decode[0].equals("User-Reconnected"))
 	            {
@@ -223,9 +223,9 @@ public class socket_handler implements Runnable
 			    		this.send_joining_order();
 			    	}
 
-	            	// System.out.println("Inside User-Reconnected:");
+	            	System.out.println("Inside User-Reconnected:");
 
-	            	// this.print_hm();
+	            	this.print_hm();
 	            }
 	            else if (decode[0].equals("Joining-Order"))
 	            {
