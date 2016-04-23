@@ -10,6 +10,8 @@ public class socket_handler implements Runnable
 
 	public HashMap<String,indiv_connection_handler> connect_list;
 
+	public Queue<String> message_queue;
+
 	public String choice;
 
 	public int users_joined = 0;
@@ -30,6 +32,7 @@ public class socket_handler implements Runnable
 		this.connect_list = new HashMap<String,indiv_connection_handler>();
 		this.choice = input_choice;
 		this.my_ip_address = this.getIp();
+		this.message_queue = new LinkedList<String>();
 	}
 
 	public void run()
@@ -109,6 +112,8 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	// String choice = System.console.readLine("Enter your Message: ");
+	            	this.message_queue.add(response);
+	            	this.print_q();
 	            }
 	            else if (decode[0].equals("New-User-Added"))
 	            {
@@ -255,6 +260,11 @@ public class socket_handler implements Runnable
     	{
 			System.out.println(key+": is_human: "+this.connect_list.get(key).is_human+": received: "+this.connect_list.get(key).received+": is_baap:"+this.connect_list.get(key).is_pseudo_server+": joining_order:"+this.connect_list.get(key).joining_order);
     	}
+	}
+
+	public void print_q()
+	{
+   		System.out.println(this.message_queue);
 	}
 
 	public void new_user(String ip_addr) throws Exception
