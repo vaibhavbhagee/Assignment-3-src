@@ -19,6 +19,10 @@ import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
 import java.awt.Font;
+ 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class EnterIP extends JPanel implements MouseMotionListener, MouseListener{
 
@@ -35,6 +39,8 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 
 	Rectangle EnterIPButtonMulti;
 	int EnterIPButton_x1m,EnterIPButton_x2m,EnterIPButton_y1m,EnterIPButton_y2m;
+
+    List<Rectangle> digits = new ArrayList<Rectangle>();
 
 	EnterIP(){
 		super(new GridBagLayout());
@@ -73,6 +79,8 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         EnterIPButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
 
+
+
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -99,10 +107,13 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
             case 7: ip_number_string = ip_number_string +"7"; break;
             case 8: ip_number_string = ip_number_string +"8"; break;
             case 9: ip_number_string = ip_number_string +"9"; break;
-            case 10: break;
-    		case 11: break;
-    		case 12: jl.launch(); EnterIP_frame.dispose(); break;
-            case 13: ip_number_string = ip_number_string.substring(0,ip_number_string.length()-1); break;
+            case 12: break;
+    		case 13: break;
+    		case 14: jl.launch(); EnterIP_frame.dispose(); break;
+            case 11: if(ip_number_string.length()>0) 
+                        ip_number_string = ip_number_string.substring(0,ip_number_string.length()-1);
+                     break;
+            case 10: ip_number_string = ip_number_string +"."; break;
 
     		default: break;
     	}
@@ -116,24 +127,34 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     	{
     		EnterIPButton.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
-    		sel = 11;
+    		sel = 13;
     	}
     	else if (e.getX()>EnterIPButton_x1m && e.getX()<EnterIPButton_x2m && e.getY()>EnterIPButton_y1m && e.getY()<EnterIPButton_y2m)
     	{
     		EnterIPButtonMulti.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
-    		sel = 12;	
+    		sel = 14;	
     	}
     	else
     	{
     		EnterIPButton.overridecolorwith = new Color(33,200,200,243);
     		EnterIPButtonMulti.overridecolorwith = new Color(33,200,200,243);
         	blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
-    		sel = 10;
+            for(int i=0;i<digits.size();i++)
+            {
+                digits.get(i).overridecolorwith =new Color(0,0,0,243);
+            }
+            blankArea.manyNewRects(digits);
+    		sel = 12;
     	}
-        for(int j=0;j<10;j++)    
-            if(e.getY()>EnterIPButton_y2 && e.getY()<EnterIPButton_y1m && e.getX()>(j*ref)/11 && e.getX()<((j+1)*ref)/11)
+        for(int j=0;j<12;j++)    
+            if(e.getY()>EnterIPButton_y2 && e.getY()<EnterIPButton_y1m && e.getX()>(j*ref)/12 && e.getX()<((j+1)*ref)/12)
+            {
                 sel=j;
+                digits.get(j).overridecolorwith =new Color(233,3,100,243);
+                blankArea.manyNewRects(digits);
+            }    
+
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -166,6 +187,17 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         EnterIPButton_y1m = (int)(2*EnterIP_frame.getSize().getHeight()/3)-(int)(EnterIP_frame.getSize().getHeight()/8)/2;
         EnterIPButton_y2m = (int)(2*EnterIP_frame.getSize().getHeight()/3)+(int)(EnterIP_frame.getSize().getHeight()/8)/2;
 
+        for(int i=0;i<12;i++ )
+        {
+            int left=(i*ref)/12;
+            int right = ((i+1)*ref)/12;
+            int top = EnterIPButton_y2;
+            int bottom = EnterIPButton_y1m;
+            digits.add(new Rectangle((left+right)/2,(top+bottom)/2,right-left,bottom-top));
+            digits.get(i).overridecolor = 1;
+            digits.get(i).overridecolorwith =new Color(233,223,0,243);
+        }
+        blankArea.manyNewRects(digits);
     }
 
     private static void createAndShowGUI() {
