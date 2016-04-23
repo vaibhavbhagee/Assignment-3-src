@@ -27,6 +27,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
     private static Start newContentPane;
     private int sel=0;
 	MouseClickOrMotion m = new MouseClickOrMotion();
+	MultiOpt mu = new MultiOpt();
 
 	Rectangle startButton;
 	int startButton_x1,startButton_x2,startButton_y1,startButton_y2;
@@ -89,7 +90,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
     	switch(sel){
     		case 0: break;
     		case 1: m.launch(); start_frame.dispose(); break;
-    		case 2: break;
+    		case 2: mu.launch(); start_frame.dispose(); break;
     		default: break;
     	}
     }
