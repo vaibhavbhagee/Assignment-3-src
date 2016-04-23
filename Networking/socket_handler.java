@@ -57,7 +57,7 @@ public class socket_handler implements Runnable
 		        	this.connect_list.get(ip_address).is_human = true;
 		        }
 
-		        this.connect_list.get(ip_address).send_message("Connection-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+"");
+		        this.connect_list.get(ip_address).send_message("Connection-Request;"+my_ip_address+"");
 			}
 			else if (choice.equals("1"))
 			{
@@ -108,7 +108,7 @@ public class socket_handler implements Runnable
 	            }
 	            else if (decode[0].equals("Message"))
 	            {
-	            	System.out.println("Message Received:" + decode[1]);
+	            	// System.out.println("Message Received:" + decode[1]);
 
 	            	// Probably write a send response code here
 	            	// String choice = System.console.readLine("Enter your Message: ");
@@ -137,7 +137,7 @@ public class socket_handler implements Runnable
 	            }
 	            else if (decode[0].equals("Handshake-Request"))
 	            {
-	            	System.out.println("Message Received:" + decode[1]);
+	            	System.out.println("Message Received:" + decode[0] + decode[1]);
 
 	            	// Probably write a send response code here
 	            	this.user_handshake(response);
@@ -223,7 +223,7 @@ public class socket_handler implements Runnable
 
 	            	// Probably write a send response code here
 	            	this.connect_list.get(decode[1]).is_human = true;
-	            	this.connect_list.get(decode[1]).received = true;
+	            	// this.connect_list.get(decode[1]).received = true;
 
 	            	this.update_pseudo_server();
 
@@ -298,16 +298,22 @@ public class socket_handler implements Runnable
 	        this.connect_list.get(ip_addr).joining_order = this.users_joined;
 	        this.connect_list.get(ip_addr).is_human = true;
 	        this.users_joined++;
+
+	        // Add to message queue
+	        this.message_queue.add("New-User-Added;"+ip_addr+"");
         }
         else
         {
         	this.connect_list.get(ip_addr).is_human = true;
+
+        	// Add to message queue
+	        this.message_queue.add("User-Reconnected;"+ip_addr+"");
         }
 
         this.update_pseudo_server();
 
         this.send_message_to_all("New-User-Added;"+ip_addr+"");
-        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*InetAddress.getLocalHost().getHostAddress()*/my_ip_address+";true"+this.get_ip_list()+"");
+        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+my_ip_address+";true"+this.get_ip_list()+"");
     }
 
     public void update_pseudo_server()
@@ -320,6 +326,7 @@ public class socket_handler implements Runnable
 	    	System.out.println(low_key);
 
 	    	t_map.remove(low_key);
+	    	//TODO:Check for empty treemap here
 	    	low_key = (String)t_map.firstKey();
 	    }
 
@@ -387,10 +394,16 @@ public class socket_handler implements Runnable
         	this.connect_list.get(ip_addr).joining_order = this.users_joined;
 	        this.connect_list.get(ip_addr).is_human = true;
 	        this.users_joined++;
+
+	        //Add to message queue
+	        this.message_queue.add("User-Joined;"+ip_addr+"");
         }
         else
         {
         	this.connect_list.get(ip_addr).is_human = true;
+
+        	//Add to message queue
+        	this.message_queue.add("User-Reconnected;"+ip_addr+"");
         }
 
         this.update_pseudo_server();
@@ -403,8 +416,15 @@ public class socket_handler implements Runnable
     {
     	for (String key: this.connect_list.keySet()) 
     	{
-			if (/*this.connect_list.get(key).is_human &&*/ !key.equals(my_ip_address))
-				this.connect_list.get(key).send_message(message);    		
+			try
+			{
+				if (/*this.connect_list.get(key).is_human &&*/ !key.equals(my_ip_address))
+					this.connect_list.get(key).send_message(message);    		
+			}
+			catch(Exception e)
+			{
+				System.out.println(key+" not connected yet");
+			}
     	}
     }
 
@@ -422,10 +442,16 @@ public class socket_handler implements Runnable
 	        	this.connect_list.get(ip_addr[i]).joining_order = this.users_joined;
 	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]);
 	        	this.users_joined++;
+
+	        	//Add to message queue
+        		this.message_queue.add("User-Added;"+ip_addr[i]+"");
 	        }
 	        else
 	        {
 	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]); //replaced true here
+
+	        	//Add to message queue
+        		this.message_queue.add("User-Reconnected;"+ip_addr[i]+"");
 	        }
 		}
 
@@ -454,11 +480,6 @@ class indiv_connection_handler
 		byte[] data = message.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(data, data.length, this.IPAddress, 9876);
         this.socket.send(sendPacket);
-        // System.out.println("Message sent from client");
-        // DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
-        // Socket.receive(incomingPacket);
-        // String response = new String(incomingPacket.getData(),incomingPacket.getOffset(),incomingPacket.getLength(),"UTF-8");
-        // System.out.println("Response from server:" + response);
 	}
 }
 
@@ -522,20 +543,26 @@ class connectivity_check extends TimerTask
 					this.sh.update_pseudo_server();
 
 					this.sh.message_queue.add("User-Disconnected;"+key);
+
+					// Print HM status inside
+					this.sh.print_hm();
+
+					// this was redundant
 					// this.sh.send_message_to_all("User-Disconnected;"+key);
 
 	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.sh.send_joining_order();
-						this.sh.send_message_to_all("User-Disconnected;"+key);			    		
+						// this.sh.send_message_to_all("User-Disconnected;"+key);			    		
 			    	}
 
-					
+					this.sh.connect_list.get(key).received = false;
 				}
 
+				//TODO: Check reconnection problems here
 				// Reconnection code to be added here in future
 
-				else if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
+				if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
 				{
 					this.sh.connect_list.get(key).is_human = true;
 					System.out.println("within timer function: User-Reconnected;"+key);
@@ -544,15 +571,20 @@ class connectivity_check extends TimerTask
 					this.sh.update_pseudo_server();
 
 					this.sh.message_queue.add("User-Reconnected;"+key);
+
+					// Print HM status inside
+					this.sh.print_hm();
+
+					//  this was redundant
 					// this.sh.send_message_to_all("User-Reconnected;"+key);
 
 	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.sh.send_joining_order();
-			    		this.sh.send_message_to_all("User-Reconnected;"+key);
+			    		// this.sh.send_message_to_all("User-Reconnected;"+key);
 			    	}
 
-					
+					this.sh.connect_list.get(key).received = false;
 				}
 
 				this.sh.connect_list.get(key).received = false;
