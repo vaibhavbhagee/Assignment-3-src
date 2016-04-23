@@ -179,7 +179,7 @@ public class socket_handler implements Runnable
 
 			    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
 			    	{
-			    		this.send_joining_order();
+			    		this.send_joining_order_ping();
 			    	}
 	            }
 	            else if (decode[0].equals("Check-Connectivity"))
@@ -205,6 +205,9 @@ public class socket_handler implements Runnable
 
 	            	this.update_pseudo_server();
 
+	            	this.message_queue.add(response);
+			    	this.print_q();
+
 	            	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.send_joining_order();
@@ -223,6 +226,9 @@ public class socket_handler implements Runnable
 
 	            	this.update_pseudo_server();
 
+			    	this.message_queue.add(response);
+			    	this.print_q();
+
 	            	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.send_joining_order();
@@ -233,6 +239,19 @@ public class socket_handler implements Runnable
 	            	this.print_hm();
 	            }
 	            else if (decode[0].equals("Joining-Order"))
+	            {
+	            	for(int i = 1; i<decode.length; i = i+2)
+	            	{
+	            		this.connect_list.get(decode[i]).joining_order = Integer.parseInt(decode[i+1]);
+	            	}
+
+	            	// System.out.println("Joining_Order:");
+
+	            	// this.print_hm();
+	            	this.message_queue.add(response);
+	            	this.print_q();
+	            }
+	            else if (decode[0].equals("Joining-Order-Ping"))
 	            {
 	            	for(int i = 1; i<decode.length; i = i+2)
 	            	{
@@ -318,6 +337,24 @@ public class socket_handler implements Runnable
     public void send_joining_order() throws Exception
     {
     	String to_send = "Joining-Order";
+
+    	for (String key: this.connect_list.keySet()) 
+    	{
+			to_send+=";"+key+";"+this.connect_list.get(key).joining_order+"";
+    	}
+
+    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+    	{
+    		this.message_queue.add(to_send);
+    		this.print_q();
+    	}    	
+
+    	this.send_message_to_all(to_send);
+    }
+
+    public void send_joining_order_ping() throws Exception
+    {
+    	String to_send = "Joining-Order-Ping";
 
     	for (String key: this.connect_list.keySet()) 
     	{
@@ -483,11 +520,13 @@ class connectivity_check extends TimerTask
 					//trial
 					this.sh.update_pseudo_server();
 
+					this.sh.message_queue.add("User-Disconnected;"+key);
 					this.sh.send_message_to_all("User-Disconnected;"+key);
 
 	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.sh.send_joining_order();
+			    		
 			    	}
 
 					
@@ -503,11 +542,13 @@ class connectivity_check extends TimerTask
 					//trial
 					this.sh.update_pseudo_server();
 
+					this.sh.message_queue.add("User-Reconnected;"+key);
 					this.sh.send_message_to_all("User-Reconnected;"+key);
 
 	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
 			    	{
 			    		this.sh.send_joining_order();
+
 			    	}
 
 					
