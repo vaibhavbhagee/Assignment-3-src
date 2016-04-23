@@ -10,6 +10,13 @@ public class DataForEngine{
 		current_position =0;
 	}
 
+	public void setAll(int pos, int pow, int vel)
+	{
+		current_position = pos;
+		current_power = pow;
+		current_velocity = vel;
+	}
+
 	public void setCurrentPosition(int p)
 	{
 		current_position = p;

@@ -2,6 +2,10 @@ import Game_Engine.*;
 
 import javax.swing.*;
 
+import java.io.*;
+import java.net.URL;
+import javax.sound.sampled.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -32,19 +36,23 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int[] paddle_height = new int[4];
     private JTextArea textArea;
     private final static String newline = "\n";
-    Rectangle p1;
-    Rectangle p2,p3,p4;
-    Rectangle board;
-    Circle b1;
-    Timer timer;
-    int i=0;
-    Board board_b;
-    int offsetx,offsety;
-    int prev_x;
-    int[] prev_array = new int [10];
-    int prev_array_index=0;
-    int smoothen_x=0;
-    int diff;
+    
+    private Rectangle p1;
+    private Rectangle p2,p3,p4;
+    private Rectangle board;
+    private Circle b1;
+    
+    private Timer timer;
+    private int i=0;
+    private Board board_b;
+    private int offsetx,offsety;
+    private int prev_x;
+    private int[] prev_array = new int [10];
+    private int prev_array_index=0;
+    private int smoothen_x=0;
+    private int diff;
+
+    private DataForEngine dfe = new DataForEngine();
 
     private static MouseClickOrMotion newContentPane;
 
@@ -56,6 +64,21 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
             return a;
         else
             return b;
+    }
+
+    public void playSound(String clipname)
+    {
+   
+                 
+                        try {
+                            Clip clip = AudioSystem.getClip();
+                            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                              MouseClickOrMotion.class.getResourceAsStream(clipname));
+                            clip.open(inputStream);
+                            clip.start(); 
+                          } catch (Exception e) {
+                            System.err.println(e.getMessage());
+                          }
     }
 
     public MouseClickOrMotion() {
@@ -102,9 +125,11 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                
-                    board_b.update();
-                    renderNewCoordinates(board_b.getX(),board_b.getY());
+                //temporary
+                i++;
+                if(i%300==0)
+                    playSound("explosion.wav");
+
                     if(p1!=null)
                     {
                         diff = p1.getMidX()-prev_x;
@@ -113,9 +138,10 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
- /*For Shreyan*/        System.out.println(smoothen_x); //To be passed into update
-                        
+                        dfe.setAll(p1.getMidX(),p1.getFired(),smoothen_x);
                     }
+                    board_b.update(dfe);
+                    renderNewCoordinates(board_b.getX(),board_b.getY());
             }
         },0,20);
 

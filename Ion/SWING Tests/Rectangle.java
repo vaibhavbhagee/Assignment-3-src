@@ -65,7 +65,6 @@ public class Rectangle{
             Graphics2D g2 = (Graphics2D)g;
         	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 		    arc1.setFrame(midpoint_x-rf,midpoint_y-(thickness/2), 2*rf,2*rf );  
-		    //System.out.println("theta:" + (90-(thetaf*180)/3.14159)+","+thetaf );
 		    arc1.setAngleStart(90-thetaf*2.3); 
 		    arc1.setAngleExtent( thetaf*4.6 ); 
 
@@ -76,7 +75,6 @@ public class Rectangle{
             Graphics2D g2 = (Graphics2D)g;
         	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 		    arc1.setFrame(midpoint_x-rf,midpoint_y-(2*rf)+(thickness/2), 2*rf,2*rf );  
-		    //System.out.println("theta:" + (90-(thetaf*180)/3.14159)+","+thetaf );
 		    arc1.setAngleStart(270-thetaf*2.3); 
 		    arc1.setAngleExtent( thetaf*4.6 ); 
 	
@@ -87,7 +85,6 @@ public class Rectangle{
             Graphics2D g2 = (Graphics2D)g;
         	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 		    arc1.setFrame(midpoint_x-(length/2),midpoint_y-rs, 2*rs,2*rs );  
-		    //System.out.println("theta:" + (90-(thetaf*180)/3.14159)+","+thetaf );
 		    arc1.setAngleStart(180-thetas*2.3); 
 		    arc1.setAngleExtent( thetas*4.6 ); 
 	
@@ -98,18 +95,18 @@ public class Rectangle{
             Graphics2D g2 = (Graphics2D)g;
         	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 		    arc1.setFrame(midpoint_x-(2*rs)+(length/2),midpoint_y-rs, 2*rs,2*rs );  
-		    //System.out.println("theta:" + (90-(thetaf*180)/3.14159)+","+thetaf );
 		    arc1.setAngleStart(360-thetas*2.3); 
 		    arc1.setAngleExtent( thetas*4.6 ); 
 	
 		    g2.fill(arc1);  
         }
-            //g.fillArc (midpoint_x,  midpoint_y, 1000, 1000, 80, 20); 
     }
 
     public void fired_up(){fired_up++;}
 
     public void fired_down(){fired_up--;}
+
+    public int getFired(){return min(fired_up,5);}
 
 	public int getMidX(){return midpoint_x;}
 
