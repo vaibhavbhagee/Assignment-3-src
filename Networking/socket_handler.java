@@ -484,7 +484,7 @@ class connectivity_check extends TimerTask
 
 				// Reconnection code to be added here in future
 
-				if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
+				else if (!this.sh.connect_list.get(key).is_human && this.sh.connect_list.get(key).received && !key.equals(this.sh.my_ip_address))
 				{
 					this.sh.connect_list.get(key).is_human = true;
 					System.out.println("within timer function: User-Reconnected;"+key);
