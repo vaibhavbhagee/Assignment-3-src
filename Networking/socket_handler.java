@@ -108,7 +108,7 @@ public class socket_handler implements Runnable
 	            }
 	            else if (decode[0].equals("Message"))
 	            {
-	            	System.out.println("Message Received:" + decode[1]);
+	            	// System.out.println("Message Received:" + decode[1]);
 
 	            	// Probably write a send response code here
 	            	// String choice = System.console.readLine("Enter your Message: ");
