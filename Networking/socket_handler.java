@@ -73,7 +73,7 @@ public class socket_handler implements Runnable
 
 			Timer timer = new Timer();
 
-			timer.scheduleAtFixedRate(new connectivity_check(this),0,1000);
+			timer.scheduleAtFixedRate(new connectivity_check(this),0,2000);
 
 			while(true)
 			{
@@ -550,11 +550,11 @@ class connectivity_check extends TimerTask
 					// this was redundant
 					// this.sh.send_message_to_all("User-Disconnected;"+key);
 
-	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
-			    	{
-			    		this.sh.send_joining_order();
-						// this.sh.send_message_to_all("User-Disconnected;"+key);			    		
-			    	}
+	     //        	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
+			   //  	{
+			   //  		this.sh.send_joining_order();
+						// // this.sh.send_message_to_all("User-Disconnected;"+key);			    		
+			   //  	}
 
 					this.sh.connect_list.get(key).received = false;
 				}
@@ -578,17 +578,19 @@ class connectivity_check extends TimerTask
 					//  this was redundant
 					// this.sh.send_message_to_all("User-Reconnected;"+key);
 
-	            	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
-			    	{
-			    		this.sh.send_joining_order();
-			    		// this.sh.send_message_to_all("User-Reconnected;"+key);
-			    	}
+	       //      	if (this.sh.connect_list.get(this.sh.my_ip_address).is_pseudo_server)
+			    	// {
+			    	// 	this.sh.send_joining_order();
+			    	// 	// this.sh.send_message_to_all("User-Reconnected;"+key);
+			    	// }
 
 					this.sh.connect_list.get(key).received = false;
 				}
 
 				this.sh.connect_list.get(key).received = false;
 	    	}
+
+	    	System.out.println("Inside at this point in timer: :P");
 
 	    	this.sh.send_message_to_all("Connected-List"+this.sh.get_ip_list());
 	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
