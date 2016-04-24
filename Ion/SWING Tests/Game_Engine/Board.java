@@ -28,7 +28,7 @@ public class Board{
 		data_out = new DataForUI();
 	}			// 460 x 460
 
-	public Object update(DataForEngine o){
+	public DataForUI update(DataForEngine o){
 		// called by UI
 		// update the position of the ball
 		// take care of reflections
