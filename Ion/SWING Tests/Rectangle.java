@@ -106,6 +106,8 @@ public class Rectangle{
 
     public void fired_down(){fired_up--;}
 
+    public void setFired(int f){fired_up=f;}
+
     public int getFired(){return min(fired_up,5);}
 
 	public int getMidX(){return midpoint_x;}

@@ -139,16 +139,19 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
-                        dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
-                        dfe.setAll(p1.getMidX()-paddle_length[1]/2,p1.getMidX()+paddle_length[1]/2,p1.getFired(),smoothen_x);
+                        //dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
+                        dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     dfui = board_b.update(dfe);
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
-                        System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
+                        //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
                         p2.setMidY(dfui.paddle_pos[1]+offsety);
                         p3.setMidX(board_side-dfui.paddle_pos[2]+offsetx);
                         p4.setMidY(board_side-dfui.paddle_pos[3]+offsety);
+                        p2.setFired(dfui.getPowers()[1]);
+                        p3.setFired(dfui.getPowers()[2]);
+                        p4.setFired(dfui.getPowers()[3]);
                     }catch(NullPointerException e){}
             }
         },0,20);
@@ -253,14 +256,15 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = new MouseClickOrMotion();
+        //newContentPane = new MouseClickOrMotion();
+        newContentPane = this;
         newContentPane.setOpaque(true); //content panes must be opaque
 
 
@@ -289,7 +293,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     }
 
 
-    public static void launch(){
+    public void launch(){
         createAndShowGUI();
     }
 }

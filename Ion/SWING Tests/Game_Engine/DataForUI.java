@@ -5,6 +5,7 @@ public class DataForUI{
 	private boolean[] ball_wall_collision = new boolean[4];
 	private int[] lives = new int[4];
 	public int paddle_pos[] = new int[4];
+	public int powered_up[] = new int[4];
 	private int ballX;
 	private int ballY;
 	//private boolean[] paddle_paddle_collision
@@ -20,6 +21,22 @@ public class DataForUI{
 			lives[i]=maxLives;
 			paddle_pos[i] = 0;
 		}
+	}
+
+	public void setPower(int player, int pow)
+	{
+		powered_up[player]=pow;
+	}
+
+	public void resetPower()
+	{
+		for(int i=0;i<4;i++)
+			powered_up[i]=0;
+	}
+
+	public int[] getPowers()
+	{
+		return powered_up;
 	}
 
 	public void resetLives()
