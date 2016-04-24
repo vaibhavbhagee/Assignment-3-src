@@ -4,7 +4,8 @@ import java.util.*;
 public class Board{
 	long counter;					// counts per update of game
 	double epsilon;
-	ArrayList<Ball> ball_list;
+	//ArrayList<Ball> ball_list;
+	Ball b;
 	Player[] plr = new Player[4];	// player[0] is the current_player
 	DataForUI data_out;
 
@@ -21,9 +22,9 @@ public class Board{
 		plr[1] = new Player("Shreyan", 1);
 		plr[2] = new Player("Shreyan", 2);
 		plr[3] = new Player("Shreyan", 3);
-		ball_list = new ArrayList<Ball>();
-		ball_list.add(new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20));
-		
+		//ball_list = new ArrayList<Ball>();
+		//ball_list.add(new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20));
+		b = new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20);
 		data_out = new DataForUI();
 	}			// 460 x 460
 
@@ -41,30 +42,24 @@ public class Board{
 			data_out.noCollision();
 		}
 
-		for(Ball b: ball_list){
+		//for(Ball b: ball_list)
+		{
 			b.update_position();
 			
+			// w0
 			if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
 				hit_paddle(0,b);
 				data_out.collisionPaddle(0);
+				//System.out.println("wall");
 			}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
 				data_out.collisionWall(0);
+				System.out.println("wall 0");
 				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 			}
 
-			if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
-				hit_paddle(3,b);
-				data_out.collisionPaddle(3);
-			}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
-				b.velX*=-1;
-				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
-				else b.theetha = 3*Math.PI - b.theetha;
-				data_out.collisionWall(3);
-				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
-			}
-
+			// w1
 			if((Math.abs(b.posX - b.diameter/2 - plr[1].p.delta) < epsilon)&&(b.posY > plr[1].p.d1)&&(b.posY < plr[1].p.d2)){
 				hit_paddle(1,b);
 				data_out.collisionPaddle(1);
@@ -73,9 +68,11 @@ public class Board{
 				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 				else b.theetha = 3*Math.PI - b.theetha;
 				data_out.collisionWall(1);
+				System.out.println("wall 1");
 				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 			}
 
+			// w2
 			if((Math.abs(b.posY + b.diameter/2 + plr[2].p.delta - Var.height) < epsilon)&&(b.posX > plr[2].p.d1)&&(b.posX < plr[2].p.d2)){
 				hit_paddle(2,b);
 				data_out.collisionPaddle(2);
@@ -83,29 +80,47 @@ public class Board{
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
 				data_out.collisionWall(2);
+				System.out.println("wall 2");
 				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 			}
 
-			//System.out.println(b.velX+" "+b.velY);
-			//System.out.println(epsilon+" "+speed);
+			// w3
+			if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
+				hit_paddle(3,b);
+				data_out.collisionPaddle(3);
+			}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
+				b.velX*=-1;
+				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
+				else b.theetha = 3*Math.PI - b.theetha;
+				data_out.collisionWall(3);
+				System.out.println("wall 3");
+			}
+		}
+		{
+			int a = (int)(plr[0].p.d2+plr[0].p.d1)/2;
+			int b = (int)(plr[1].p.d2+plr[1].p.d1)/2;
+			int c = (int)(plr[2].p.d2+plr[2].p.d1)/2;
+			int d = (int)(plr[3].p.d2+plr[3].p.d1)/2;
+			data_out.setPaddlePositions(a,b,c,d);
+			data_out.setBallPos((int)b.posX, (int)(Var.height - b.posY));
 		}
 
 		//broadcast();
 		//get_all_messages();
-		return null;
+		return data_out;
 	}
 
 	public int getX(){
-		for(Ball b: ball_list){
-			return (int)b.posX;
-		}
-		return 0;
+		// for(Ball b: ball_list){
+		// 	return (int)b.posX;
+		// }
+		return (int)b.posX;
 	}
 	public int getY(){
-		for(Ball b: ball_list){
-			return (int)(Var.height - b.posY);
-		}
-		return 0;
+		// for(Ball b: ball_list){
+		// 	return (int)(Var.height - b.posY);
+		// }
+		return (int)(Var.height - b.posY);
 	}
 	void hit_paddle(int paddle_num, Ball b){
 		double x,l,phi;
@@ -133,19 +148,16 @@ public class Board{
 		//System.out.println(" Final angle: "+(b.theetha*180/Math.PI));
 		//System.out.println("Phi: "+phi*180/Math.PI);
 	}
-/*
 
-	void move_paddle(){
-		// called by UI to update the position of the paddle
-	}
 
 	void artificial_intelligence(int i){
 		if(plr[i].is_AI){
 			// i is the player who's paddle has to be updated
+
 			;
 		}
 	}
-
+/*
 	boolean is_pseudo_server(){
 		// returns true depending on whether the current player is the pseudo server
 		return RequestHandler.is_pseudo_server();
