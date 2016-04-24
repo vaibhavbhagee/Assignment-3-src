@@ -50,7 +50,21 @@ public class BlankArea extends JLabel {
     {
         for(int i=0;i<stringsToDisplay.size();i++)
         {
+            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>9)
             if ( stringsToDisplay.get(i).retstr().substring(0,9) .equals("ENTER IP:") )
+            {
+                stringsToDisplay.remove(i);
+            }    
+        }
+        stringsToDisplay.add(s);
+    }
+
+    public void replaceName(ShowString s)
+    {
+        for(int i=0;i<stringsToDisplay.size();i++)
+        {   
+            if(stringsToDisplay.get(i) != null)
+            if ( stringsToDisplay.get(i).retstr().substring(0,5) .equals("NAME:") )
             {
                 stringsToDisplay.remove(i);
             }    

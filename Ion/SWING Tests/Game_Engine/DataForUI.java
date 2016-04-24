@@ -10,7 +10,7 @@ public class DataForUI{
 	private boolean spin_ball_paddle_collide;//Like first, but spin imparted
 	private boolean power_ball_paddle_collide;//Like first, but power up hit
 
-	public boolean resetAllFlags()
+	public void resetAllFlags()
 	{
 		ball_paddle_collide = false;
 		ball_wall_collide = false;
