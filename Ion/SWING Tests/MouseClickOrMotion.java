@@ -53,6 +53,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int diff;
 
     private Game_Engine.DataForEngine dfe = new Game_Engine.DataForEngine();
+    private Game_Engine.DataForUI dfui = new Game_Engine.DataForUI();
 
     private static MouseClickOrMotion newContentPane;
 
@@ -139,9 +140,16 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
                         dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
+                        dfe.setAll(p1.getMidX()-paddle_length[1]/2,p1.getMidX()+paddle_length[1]/2,p1.getFired(),smoothen_x);
                     }
-                    board_b.update(dfe);
-                    renderNewCoordinates(board_b.getX(),board_b.getY());
+                    dfui = board_b.update(dfe);
+                    renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
+                    try{
+                        System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
+                        p2.setMidY(dfui.paddle_pos[1]+offsety);
+                        p3.setMidX(board_side-dfui.paddle_pos[2]+offsetx);
+                        p4.setMidY(board_side-dfui.paddle_pos[3]+offsety);
+                    }catch(NullPointerException e){}
             }
         },0,20);
 
@@ -173,9 +181,9 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         paddle_height[3] = (int)(board_side*0.25);
 
         p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0],1);
-        p2 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
+        p4 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
         p3 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()-board_side)/2)+paddle_height[2]/2,paddle_length[2],paddle_height[2],3);
-        p4 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
+        p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
 
         board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
 
