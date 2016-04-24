@@ -1,3 +1,4 @@
+package Game_Engine;
 public class DataForUI{
 
 	private boolean[] ball_paddle_collision = new boolean[4];

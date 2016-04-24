@@ -8,7 +8,7 @@ public class Player{
 	int lives; 			// number of lives left
 	Paddle p;
 
-	public Player(String name, int player_number, double width, double height){
+	public Player(String name, int player_number){
 		this.name = name;
 		this.player_number = player_number;
 		is_AI = true;
@@ -16,10 +16,10 @@ public class Player{
 		score = 0;
 		lives = 3;
 		//if(player_number == 0) p = new Paddle(1,2*width/5, 3*width/5, height/25);
-		if(player_number == 0) p = new Paddle(1,width*0.25, width*0.75, height/25);
-		if(player_number == 1) p = new Paddle(2,0, height, width/25);
-		if(player_number == 2) p = new Paddle(1,0, width, 24*height/25);
-		if(player_number == 3) p = new Paddle(2,0, height, 24*width/25);
+		if(player_number == 0) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05);
+		if(player_number == 1) p = new Paddle(2,0, Var.height*0.25, Var.width*0.05);
+		if(player_number == 2) p = new Paddle(1,0, Var.width*0.25, Var.height*0.95);
+		if(player_number == 3) p = new Paddle(2,0, Var.height*0.25, Var.width*0.95);
 
 	}
 }
