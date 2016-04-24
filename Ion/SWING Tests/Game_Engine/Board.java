@@ -14,7 +14,7 @@ public class Board{
 		Var.height = height;
 		Var.freq = 50;
 		//tan_omega = 0.15;
-		Var.speed = Var.width/Var.freq/1;
+		Var.speed = Var.width/Var.freq/5;
 		Var.acc = Var.speed/Var.freq/1;
 		epsilon = Var.speed;
 		plr[0] = new Player("Shreyan", 0);
@@ -50,13 +50,13 @@ public class Board{
 			if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
 				hit_paddle(0,b);
 				data_out.collisionPaddle(0);
-				//System.out.println("wall");
+				System.out.println("wall");
 			}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
 				data_out.collisionWall(0);
 				System.out.println("wall 0");
-				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
+				System.out.println("Angle: "+(b.theetha*180/Math.PI));
 			}
 
 			// w1

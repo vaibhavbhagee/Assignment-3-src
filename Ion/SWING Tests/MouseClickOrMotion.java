@@ -139,7 +139,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
-                        dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
+                        //dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
                         dfe.setAll(p1.getMidX()-paddle_length[1]/2,p1.getMidX()+paddle_length[1]/2,p1.getFired(),smoothen_x);
                     }
                     dfui = board_b.update(dfe);
