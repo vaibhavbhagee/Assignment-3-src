@@ -28,7 +28,7 @@ public class Board{
 		data_out = new DataForUI();
 	}			// 460 x 460
 
-	public Object update(DataForEngine o){
+	public DataForUI update(DataForEngine o){
 		// called by UI
 		// update the position of the ball
 		// take care of reflections
@@ -98,10 +98,10 @@ public class Board{
 		}
 		{
 			int a = (int)(plr[0].p.d2+plr[0].p.d1)/2;
-			int b = (int)(plr[1].p.d2+plr[1].p.d1)/2;
+			int b_kya_g_shreyan = (int)(plr[1].p.d2+plr[1].p.d1)/2;
 			int c = (int)(plr[2].p.d2+plr[2].p.d1)/2;
 			int d = (int)(plr[3].p.d2+plr[3].p.d1)/2;
-			data_out.setPaddlePositions(a,b,c,d);
+			data_out.setPaddlePositions(a,b_kya_g_shreyan,c,d);
 			data_out.setBallPos((int)b.posX, (int)(Var.height - b.posY));
 		}
 
