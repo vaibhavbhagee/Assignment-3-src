@@ -1,6 +1,38 @@
 package Game_Engine;
 public class DataForUI{
 
+//TODO: SHREYAN SET THESE FOR NOW:
+//THESE ARE NEEDED FOR PLAYING SOUNDS
+	private boolean ball_paddle_collide;	//Any ball paddle collision takes place
+	private boolean ball_wall_collide;		//Any ball wall collision takes place
+	private boolean lifeLostByPlayer;		//A player just lost a life because above
+	private int playerDead;				//This player died
+	private boolean spin_ball_paddle_collide;//Like first, but spin imparted
+	private boolean power_ball_paddle_collide;//Like first, but power up hit
+
+	public boolean resetAllFlags()
+	{
+		ball_paddle_collide = false;
+		ball_wall_collide = false;
+		lifeLostByPlayer = false;
+		playerDead = -1;
+		spin_ball_paddle_collide = false;
+		power_ball_paddle_collide = false;
+		//TBC
+	}
+
+	public boolean getBallPaddleCollide(){return ball_paddle_collide;}
+
+	public boolean getBallWallCollide(){return ball_wall_collide;}
+
+	public boolean getLifeLostByPlayer(){return lifeLostByPlayer;}
+
+	public int getPlayerDied(){return playerDead;}
+
+	public boolean getSpinBallPaddleCollide(){return spin_ball_paddle_collide;}
+
+	public boolean getPowerBallPaddleCollide(){return power_ball_paddle_collide;}
+
 	private boolean[] ball_paddle_collision = new boolean[4];
 	private boolean[] ball_wall_collision = new boolean[4];
 	private int[] lives = new int[4];

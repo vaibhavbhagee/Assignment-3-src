@@ -129,9 +129,9 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
             @Override
             public void run(){
                 //temporary
-                i++;
-                if(i%300==0)
-                    playSound("explosion.wav");
+                //i++;
+                //if(i%300==0)
+                    //playSound("explosion.wav");
 
                     if(p1!=null)
                     {
@@ -145,6 +145,10 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     dfui = board_b.update(dfe);
+                    //if(dfui.getFlag() == true)
+                    //  playSound("something.wav");
+                    // if player dead
+                    // disintegrate player
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
                         //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
