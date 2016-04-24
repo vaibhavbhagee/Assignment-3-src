@@ -73,7 +73,7 @@ public class socket_handler implements Runnable
 
 			Timer timer = new Timer();
 
-			timer.scheduleAtFixedRate(new connectivity_check(this),0,1000);
+			timer.scheduleAtFixedRate(new connectivity_check(this),0,2000);
 
 			while(true)
 			{
