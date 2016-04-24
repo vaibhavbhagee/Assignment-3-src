@@ -173,7 +173,7 @@ public class socket_handler implements Runnable
 				        }
 				        else
 				        {
-				        	this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]); //replaced true here
+				        	// this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]); //replaced true here
 				        }
 					}
 
@@ -543,6 +543,7 @@ class connectivity_check extends TimerTask
 					this.sh.update_pseudo_server();
 
 					this.sh.message_queue.add("User-Disconnected;"+key);
+					this.sh.print_q();
 
 					// Print HM status inside
 					this.sh.print_hm();
@@ -571,6 +572,7 @@ class connectivity_check extends TimerTask
 					this.sh.update_pseudo_server();
 
 					this.sh.message_queue.add("User-Reconnected;"+key);
+					this.sh.print_q();
 
 					// Print HM status inside
 					this.sh.print_hm();
@@ -590,7 +592,7 @@ class connectivity_check extends TimerTask
 				this.sh.connect_list.get(key).received = false;
 	    	}
 
-	    	System.out.println("Inside at this point in timer: :P");
+	    	// System.out.println("Inside at this point in timer: :P");
 
 	    	this.sh.send_message_to_all("Connected-List"+this.sh.get_ip_list());
 	    	this.sh.send_message_to_all("Check-Connectivity;"+this.sh.my_ip_address);
