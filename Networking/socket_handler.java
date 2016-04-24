@@ -325,7 +325,7 @@ public class socket_handler implements Runnable
 				System.out.println(key+" not connected yet");
 			}
     	}
-        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*my_ip_address+";true"+*/this.get_ip_list()+"");
+        this.connect_list.get(ip_addr).send_message("Handshake-Request"+/*my_ip_address+";true"+*/this.get_ip_list()+"");
     }
 
     public void update_pseudo_server()
@@ -460,10 +460,24 @@ public class socket_handler implements Runnable
 	        }
 	        else
 	        {
-	        	this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]); //replaced true here
-
-	        	//Add to message queue
-        		this.message_queue.add("User-Reconnected;"+ip_addr[i]+"");
+	        	if (this.connect_list.get(ip_addr[i]).is_human)
+	        	{
+	        		this.message_queue.add("User-Added;"+ip_addr[i]+"");	
+	        	}
+	        	else
+	        	{
+		        	if (Boolean.parseBoolean(ip_addr[i+1]))
+		        	{
+		        		this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]); //replaced true here
+		        		
+		        		//Add to message queue
+	        			this.message_queue.add("User-Reconnected;"+ip_addr[i]+"");
+		        	}
+		        	else
+		        	{
+		        		this.connect_list.get(ip_addr[i]).is_human = Boolean.parseBoolean(ip_addr[i+1]); //replaced true here
+		        	}
+	        	}
 	        }
 		}
 
