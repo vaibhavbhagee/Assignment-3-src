@@ -52,7 +52,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int smoothen_x=0;
     private int diff;
 
-    private DataForEngine dfe = new DataForEngine();
+    private Game_Engine.DataForEngine dfe = new Game_Engine.DataForEngine();
 
     private static MouseClickOrMotion newContentPane;
 
@@ -138,7 +138,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
-                        dfe.setAll(p1.getMidX(),p1.getFired(),smoothen_x);
+                        dfe.setAll(p1.getMidX()-50, p1.getMidX()+50, p1.getFired(),smoothen_x);
                     }
                     board_b.update(dfe);
                     renderNewCoordinates(board_b.getX(),board_b.getY());
