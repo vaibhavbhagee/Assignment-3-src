@@ -10,7 +10,7 @@ public class DataForUI{
 	private boolean spin_ball_paddle_collide;//Like first, but spin imparted
 	private boolean power_ball_paddle_collide;//Like first, but power up hit
 
-	public boolean resetAllFlags()
+	public void resetAllFlags()
 	{
 		ball_paddle_collide = false;
 		ball_wall_collide = false;
@@ -21,16 +21,17 @@ public class DataForUI{
 		//TBC
 	}
 
+	public void setBallPaddleCollide(boolean b){ball_paddle_collide=b;}
+	public void setBallWallCollide(boolean b){ball_wall_collide=b;}
+	public void setLifeLostByPlater(boolean b){lifeLostByPlayer=b;}
+	public void setPlayerDead(int p){playerDead = p;}
+	public void setPowerBallPaddleCollide(boolean b){power_ball_paddle_collide=b;}
+
 	public boolean getBallPaddleCollide(){return ball_paddle_collide;}
-
 	public boolean getBallWallCollide(){return ball_wall_collide;}
-
 	public boolean getLifeLostByPlayer(){return lifeLostByPlayer;}
-
 	public int getPlayerDied(){return playerDead;}
-
 	public boolean getSpinBallPaddleCollide(){return spin_ball_paddle_collide;}
-
 	public boolean getPowerBallPaddleCollide(){return power_ball_paddle_collide;}
 
 	private boolean[] ball_paddle_collision = new boolean[4];
@@ -40,7 +41,6 @@ public class DataForUI{
 	public int powered_up[] = new int[4];
 	private int ballX;
 	private int ballY;
-	//private boolean[] paddle_paddle_collision
 
 	private int maxLives = 5;
 
