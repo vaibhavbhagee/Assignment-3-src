@@ -16,24 +16,24 @@ public class Paddle{
 		paddle_speed = 0;
 		//System.out.println("PADDLE VALUES: "+d1+" "+d2);
 	}
-	public void movePaddle(double x, double y){
+	public void movePaddle(double x, double y, int level_AI){
 		double factor = 1;
 		double center = (d1+d2)/2;
 		if(orientation==1){
 			if(center>x){
-				d1 -= Var.speed * factor;
-				d2 -= Var.speed * factor;
+				d1 -= Var.speed * Var.level_AI[level_AI];
+				d2 -= Var.speed * Var.level_AI[level_AI];
 			}else{
-				d1 += Var.speed * factor;
-				d2 += Var.speed * factor;
+				d1 += Var.speed * Var.level_AI[level_AI];
+				d2 += Var.speed * Var.level_AI[level_AI];
 			}
 		}else{
 			if(center>y){
-				d1 -= Var.speed * factor;
-				d2 -= Var.speed * factor;
+				d1 -= Var.speed * Var.level_AI[level_AI];
+				d2 -= Var.speed * Var.level_AI[level_AI];
 			}else{
-				d1 += Var.speed * factor;
-				d2 += Var.speed * factor;
+				d1 += Var.speed * Var.level_AI[level_AI];
+				d2 += Var.speed * Var.level_AI[level_AI];
 			}
 		}
 		//System.out.println(center + " ajkshdkj " + y);
