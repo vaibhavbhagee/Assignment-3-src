@@ -54,7 +54,10 @@ public class Ball{
 		// speed += (velX*accX + velY*accY)/speed;
 		// System.out.println(speed);
 	}
-	public void addSpin(int x){
+	public void addSpin(double x){
 		spin += Var.speed*x*Math.PI/Var.freq/Var.spin_factor/100;
+		if(spin>0.045) spin=0.045;
+		if(spin<-0.045) spin=-0.045;
+		//System.out.println(spin*100);
 	}
 }

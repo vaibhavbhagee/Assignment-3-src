@@ -37,6 +37,7 @@ public class Board{
 			plr[0].p.current_power = o.getCurrentPower();
 			plr[0].p.paddle_speed = o.getCurrentVelocity();
 			data_out.noCollision();
+			data_out.resetAllFlags();
 		}
 
 		artificial_intelligence(1);
@@ -49,10 +50,10 @@ public class Board{
 			// w0
 			if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
 				hit_paddle(0,b);
-				data_out.collisionPaddle(0);
 				b.addSpin(plr[0].p.paddle_speed);
+				data_out.collisionPaddle(0);
 				//System.out.println("Paddle 0");
-				System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
+				//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
 			}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
