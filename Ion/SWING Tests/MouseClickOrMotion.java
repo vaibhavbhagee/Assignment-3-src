@@ -140,7 +140,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
                         //dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
-                        dfe.setAll(p1.getMidX()-paddle_length[1]/2,p1.getMidX()+paddle_length[1]/2,p1.getFired(),smoothen_x);
+                        dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     dfui = board_b.update(dfe);
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
@@ -256,14 +256,15 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = new MouseClickOrMotion();
+        //newContentPane = new MouseClickOrMotion();
+        newContentPane = this;
         newContentPane.setOpaque(true); //content panes must be opaque
 
 
@@ -292,7 +293,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     }
 
 
-    public static void launch(){
+    public void launch(){
         createAndShowGUI();
     }
 }
