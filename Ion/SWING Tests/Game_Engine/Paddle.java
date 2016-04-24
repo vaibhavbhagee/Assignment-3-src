@@ -36,6 +36,6 @@ public class Paddle{
 				d2 += Var.speed * factor;
 			}
 		}
-		System.out.println(center + " ajkshdkj " + y);
+		//System.out.println(center + " ajkshdkj " + y);
 	}
 }

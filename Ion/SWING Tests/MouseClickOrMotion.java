@@ -145,7 +145,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                     dfui = board_b.update(dfe);
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
-                        System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
+                        //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
                         p2.setMidY(dfui.paddle_pos[1]+offsety);
                         p3.setMidX(board_side-dfui.paddle_pos[2]+offsetx);
                         p4.setMidY(board_side-dfui.paddle_pos[3]+offsety);

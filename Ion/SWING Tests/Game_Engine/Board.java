@@ -13,7 +13,6 @@ public class Board{
 		Var.width = width;
 		Var.height = height;
 		Var.freq = 50;
-		Var.length_factor = 3;
 		//tan_omega = 0.15;
 		Var.speed = Var.width/Var.freq/1;
 		Var.acc = Var.speed/Var.freq/1;
@@ -99,9 +98,9 @@ public class Board{
 		}
 		{
 			int a = (int)(plr[0].p.d2+plr[0].p.d1)/2;
-			int bb = (int)(plr[1].p.d2+plr[1].p.d1)/2;
+			int bb = (int)(Var.height-(plr[1].p.d2+plr[1].p.d1)/2);
 			int c = (int)(plr[2].p.d2+plr[2].p.d1)/2;
-			int d = (int)(plr[3].p.d2+plr[3].p.d1)/2;
+			int d = (int)(Var.height-(plr[3].p.d2+plr[3].p.d1)/2);
 			data_out.setPaddlePositions(a,bb,c,d);
 			int x = (int)b.posX;
 			int y = (int)(Var.height - b.posY);
@@ -110,6 +109,8 @@ public class Board{
 
 		//broadcast();
 		//get_all_messages();
+		System.out.println("Paddle 0: "+plr[0].p.d1 + " "+ plr[0].p.d2);
+
 		return data_out;
 	}
 
