@@ -39,6 +39,11 @@ public class DataForUI{
 		return powered_up;
 	}
 
+	public int getLife(int player)
+	{
+		return lives[player];
+	}
+
 	public void resetLives()
 	{
 		for(int i=0;i<4;i++)

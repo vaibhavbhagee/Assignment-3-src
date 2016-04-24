@@ -15,6 +15,27 @@ public class BlankArea extends JLabel {
     boolean trail_present = false;
     List<ShowString> stringsToDisplay = new ArrayList<ShowString>();
     List<Rectangle> digits = new ArrayList<Rectangle>();
+    List<Rectangle> lives = new ArrayList<Rectangle>();
+    Rectangle redZone1;
+    Rectangle redZone2;
+    Rectangle redZone3;
+    Rectangle redZone4;
+
+    public int gWidth=0;
+    public int gHeight=0;
+    public int bSize=0;
+
+    public void setRed()
+    {
+        redZone1 = new Rectangle(gWidth/2,gHeight/2,bSize,bSize,0);
+        redZone1.setLifeRect(1);
+        redZone3 = new Rectangle(gWidth/2,gHeight/2,bSize,bSize,0);
+        redZone3.setLifeRect(3);
+        redZone2 = new Rectangle(gWidth/2,gHeight/2,bSize,bSize,0);
+        redZone2.setLifeRect(2);
+        redZone4 = new Rectangle(gWidth/2,gHeight/2,bSize,bSize,0);
+        redZone4.setLifeRect(4);
+    }
 
     public void trail_on(){trail_present=true;}
 
@@ -53,6 +74,13 @@ public class BlankArea extends JLabel {
 
             g.setColor(new Color(233,233,235,235));
             if(r1!=null)r1.draw(g);
+ 
+            if(redZone1!=null)redZone1.draw(g);
+            if(redZone2!=null)redZone2.draw(g);
+            if(redZone3!=null)redZone3.draw(g);
+            if(redZone4!=null)redZone4.draw(g);
+
+            g.setColor(new Color(233,233,235,235));
             if(r2!=null)r2.draw(g);
             if(r3!=null)r3.draw(g);
             if(r4!=null)r4.draw(g);
