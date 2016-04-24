@@ -312,8 +312,20 @@ public class socket_handler implements Runnable
 
         this.update_pseudo_server();
 
-        this.send_message_to_all("New-User-Added;"+ip_addr+"");
-        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+my_ip_address+";true"+this.get_ip_list()+"");
+        // this.send_message_to_all("New-User-Added;"+ip_addr+"");
+        for (String key: this.connect_list.keySet()) 
+    	{
+			try
+			{
+				if (!key.equals(my_ip_address) && !key.equals(ip_addr))
+					this.connect_list.get(key).send_message("New-User-Added;"+ip_addr+"");    		
+			}
+			catch(Exception e)
+			{
+				System.out.println(key+" not connected yet");
+			}
+    	}
+        this.connect_list.get(ip_addr).send_message("Handshake-Request;"+/*my_ip_address+";true"+*/this.get_ip_list()+"");
     }
 
     public void update_pseudo_server()
