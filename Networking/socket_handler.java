@@ -170,6 +170,9 @@ public class socket_handler implements Runnable
 				        	this.connect_list.get(decode[i]).joining_order = this.users_joined;
 				        	this.connect_list.get(decode[i]).is_human = Boolean.parseBoolean(decode[i+1]);
 				        	this.users_joined++;
+
+				        	// Add to message queue
+	        				this.message_queue.add("New-User-Added;"+decode[i]+"");
 				        }
 				        else
 				        {
