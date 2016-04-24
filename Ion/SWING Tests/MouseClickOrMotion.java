@@ -42,6 +42,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private Rectangle board;
     private Circle b1;
     
+    private Rectangle l1,l2,l3,l4;
+
     private Timer timer;
     private int i=0;
     private Board board_b;
@@ -127,9 +129,9 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
             @Override
             public void run(){
                 //temporary
-                i++;
-                if(i%300==0)
-                    playSound("explosion.wav");
+                //i++;
+                //if(i%300==0)
+                    //playSound("explosion.wav");
 
                     if(p1!=null)
                     {
@@ -143,6 +145,10 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     dfui = board_b.update(dfe);
+                    //if(dfui.getFlag() == true)
+                    //  playSound("something.wav");
+                    // if player dead
+                    // disintegrate player
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
                         //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
@@ -152,6 +158,12 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         p2.setFired(dfui.getPowers()[1]);
                         p3.setFired(dfui.getPowers()[2]);
                         p4.setFired(dfui.getPowers()[3]);
+                        
+                        l1.lostLifeSet(dfui.getLife(0));
+                        l2.lostLifeSet(dfui.getLife(1));
+                        l3.lostLifeSet(dfui.getLife(2));
+                        l4.lostLifeSet(dfui.getLife(3));
+
                     }catch(NullPointerException e){}
             }
         },0,20);
@@ -189,6 +201,11 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
 
         board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
+
+        blankArea.gWidth = (int)(frame.getSize().getWidth());
+        blankArea.gHeight = (int)(frame.getSize().getHeight());
+        blankArea.bSize = board_side;
+        blankArea.setRed();
 
         offsetx = (int)(frame.getSize().getWidth()-board_side)/2;
         offsety = (int)(frame.getSize().getHeight()-board_side)/2;
