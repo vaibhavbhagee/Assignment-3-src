@@ -2,7 +2,7 @@ package Game_Engine;
 import java.util.*;
 
 public class Board{
-	long counter;					// counts per update of game
+	long counter = 0;					// counts per update of game
 	double epsilon;
 	//ArrayList<Ball> ball_list;
 	Ball b;
@@ -12,7 +12,7 @@ public class Board{
 	public Board(int width, int height){
 		Var.width = width;
 		Var.height = height;
-		Var.speed = Var.width/Var.freq/1;
+		Var.speed = Var.width/Var.freq/Var.speed_factor;
 		Var.acc = Var.speed/Var.freq/1;
 		epsilon = Var.speed;
 		plr[0] = new Player("Shreyan", 0);
@@ -30,7 +30,7 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-
+		++counter;
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
@@ -50,7 +50,9 @@ public class Board{
 			if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
 				hit_paddle(0,b);
 				data_out.collisionPaddle(0);
-				System.out.println("Paddle 0");
+				b.addSpin(plr[0].p.paddle_speed);
+				//System.out.println("Paddle 0");
+				System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
 			}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
@@ -62,7 +64,7 @@ public class Board{
 			if((Math.abs(b.posX - b.diameter/2 - plr[1].p.delta) < epsilon)&&(b.posY > plr[1].p.d1)&&(b.posY < plr[1].p.d2)){
 				hit_paddle(1,b);
 				data_out.collisionPaddle(1);
-				System.out.println("Paddle 1");
+				//System.out.println("Paddle 1");
 			}else if(Math.abs(b.posX-b.diameter/2) < epsilon){		//w1
 				b.velX*=-1;
 				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
@@ -77,7 +79,7 @@ public class Board{
 			{
 				hit_paddle(2,b);
 				data_out.collisionPaddle(2);
-				System.out.println("Paddle 2");
+				//System.out.println("Paddle 2");
 			}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
 				b.velY*=-1;
 				b.theetha = 2*Math.PI - b.theetha;
@@ -90,7 +92,7 @@ public class Board{
 			if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
 				hit_paddle(3,b);
 				data_out.collisionPaddle(3);
-				System.out.println("Paddle 3");
+				//System.out.println("Paddle 3");
 			}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
 				b.velX*=-1;
 				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
@@ -112,7 +114,6 @@ public class Board{
 
 		//broadcast();
 		//get_all_messages();
-		System.out.println("Paddle 2: "+plr[3].p.d1 + " "+ plr[3].p.d2 + " Ball "+b.posY);
 
 		return data_out;
 	}
@@ -151,7 +152,7 @@ public class Board{
 			phi = -Math.atan(x/l/Var.length_factor);
 			b.posX -= epsilon;
 		}
-		b.set_velocity(Var.speed, 2*phi - b.theetha + Math.PI);
+		b.set_velocity(2*phi - b.theetha + Math.PI);
 		//System.out.println(" Final angle: "+(b.theetha*180/Math.PI));
 		//System.out.println("Phi: "+phi*180/Math.PI);
 	}
