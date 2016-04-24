@@ -20,6 +20,5 @@ public class Player{
 		if(player_number == 1) p = new Paddle(2,0, Var.height*0.25, Var.width*0.05);
 		if(player_number == 2) p = new Paddle(1,0, Var.width*0.25, Var.height*0.95);
 		if(player_number == 3) p = new Paddle(2,0, Var.height*0.25, Var.width*0.95);
-
 	}
 }

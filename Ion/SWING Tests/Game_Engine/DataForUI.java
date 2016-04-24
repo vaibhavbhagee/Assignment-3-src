@@ -66,6 +66,6 @@ public class DataForUI{
 		return ballX;
 	}
 	public int getBallY(){
-		return ballY
+		return ballY;
 	}
 }

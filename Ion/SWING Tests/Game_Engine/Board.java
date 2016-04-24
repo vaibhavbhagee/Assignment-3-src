@@ -24,7 +24,7 @@ public class Board{
 		plr[3] = new Player("Shreyan", 3);
 		//ball_list = new ArrayList<Ball>();
 		//ball_list.add(new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20));
-		b = new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20);
+		b = new Ball(width/2,height/2,Var.speed*0.6,Var.speed*0.8,20);
 		data_out = new DataForUI();
 	}			// 460 x 460
 
@@ -38,14 +38,15 @@ public class Board{
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
 			plr[0].p.current_power = o.getCurrentPower();
-			plr[0].p.speed = o.getCurrentVelocity();
+			plr[0].p.paddle_speed = o.getCurrentVelocity();
 			data_out.noCollision();
 		}
 
+		artificial_intelligence(1);
 		//for(Ball b: ball_list)
 		{
 			b.update_position();
-			
+
 			// w0
 			if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
 				hit_paddle(0,b);
@@ -98,11 +99,13 @@ public class Board{
 		}
 		{
 			int a = (int)(plr[0].p.d2+plr[0].p.d1)/2;
-			int b = (int)(plr[1].p.d2+plr[1].p.d1)/2;
+			int bb = (int)(plr[1].p.d2+plr[1].p.d1)/2;
 			int c = (int)(plr[2].p.d2+plr[2].p.d1)/2;
 			int d = (int)(plr[3].p.d2+plr[3].p.d1)/2;
-			data_out.setPaddlePositions(a,b,c,d);
-			data_out.setBallPos((int)b.posX, (int)(Var.height - b.posY));
+			data_out.setPaddlePositions(a,bb,c,d);
+			int x = (int)b.posX;
+			int y = (int)(Var.height - b.posY);
+			data_out.setBallPos(x,y);
 		}
 
 		//broadcast();
@@ -149,12 +152,10 @@ public class Board{
 		//System.out.println("Phi: "+phi*180/Math.PI);
 	}
 
-
 	void artificial_intelligence(int i){
 		if(plr[i].is_AI){
 			// i is the player who's paddle has to be updated
-
-			;
+			plr[i].p.movePaddle(b.posX, b.posY);
 		}
 	}
 /*
