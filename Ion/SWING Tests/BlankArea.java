@@ -7,13 +7,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import java.util.*;
+
 public class BlankArea extends JLabel {
     Dimension minSize = new Dimension(100, 100);
     Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0,0);
     Circle c1 = new Circle(0,0,0);
     Circle[] trail = new Circle[10];
     boolean trail_present = false;
-    List<ShowString> stringsToDisplay = new ArrayList<ShowString>();
+    List<ShowString> stringsToDisplay = new CopyOnWriteArrayList<ShowString>();
     List<Rectangle> digits = new ArrayList<Rectangle>();
     List<Rectangle> lives = new ArrayList<Rectangle>();
     Rectangle redZone1;
@@ -63,12 +67,93 @@ public class BlankArea extends JLabel {
     {
         for(int i=0;i<stringsToDisplay.size();i++)
         {   
-            if(stringsToDisplay.get(i) != null)
+            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>5)
             if ( stringsToDisplay.get(i).retstr().substring(0,5) .equals("NAME:") )
             {
                 stringsToDisplay.remove(i);
             }    
         }
+        stringsToDisplay.add(s);
+    }
+
+    public void replaceLives1(ShowString s)
+    {
+        
+        for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>15)
+                if(sz.retstr().substring(0,15).equals("PLAYER1:: lives="))
+                    iter.remove();
+        }
+        /*for(int i=0;i<stringsToDisplay.size();i++)
+        {   
+            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
+            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER1:: lives=") )
+            {
+                stringsToDisplay.remove(i);
+            }    
+        }*/
+        stringsToDisplay.add(s);
+    }
+
+    public void replaceLives2(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>15)
+                if(sz.retstr().substring(0,15).equals("PLAYER2:: lives="))
+                    iter.remove();
+        }
+       /* for(int i=0;i<stringsToDisplay.size();i++)
+        {   
+            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
+            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER2:: lives=") )
+            {
+                stringsToDisplay.remove(i);
+            }    
+        }*/
+        stringsToDisplay.add(s);
+    }
+
+    public void replaceLives3(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>15)
+                if(sz.retstr().substring(0,15).equals("PLAYER3:: lives="))
+                    iter.remove();
+        }
+        /*for(int i=0;i<stringsToDisplay.size();i++)
+        {   
+            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
+            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER3:: lives=") )
+            {
+                stringsToDisplay.remove(i);
+            }    
+        }*/
+        stringsToDisplay.add(s);
+    }
+
+    public void replaceLives4(ShowString s)
+    {
+        for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>15)
+                if(sz.retstr().substring(0,15).equals("PLAYER4:: lives="))
+                    iter.remove();
+        }
+       /* for(int i=0;i<stringsToDisplay.size();i++)
+        {   
+            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
+            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER4:: lives=") )
+            {
+                stringsToDisplay.remove(i);
+            }    
+        }*/
         stringsToDisplay.add(s);
     }
 

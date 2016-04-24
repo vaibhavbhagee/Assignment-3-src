@@ -24,6 +24,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
+import java.awt.Font;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -149,6 +151,14 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                     //  playSound("something.wav");
                     // if player dead
                     // disintegrate player
+
+
+        blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+
+
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
                         //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
@@ -218,6 +228,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     {
         b1.setMidX(x+offsetx);
         b1.setMidY(y+offsety);
+
         blankArea.newCirc(b1);
         blankArea.newRect(board,p1,p2,p3,p4);
     }
@@ -251,6 +262,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         else
             p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
                blankArea.newRect(board,p1,p2,p3,p4);
+
+
     }
 
     public void mouseDragged(MouseEvent e) {
