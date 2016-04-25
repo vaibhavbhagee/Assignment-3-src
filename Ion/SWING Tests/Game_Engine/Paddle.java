@@ -16,6 +16,7 @@ public class Paddle{
 		paddle_speed = 0;
 		//System.out.println("PADDLE VALUES: "+d1+" "+d2);
 	}
+	
 	public void movePaddle(double x, double y, int level_AI){
 		double factor = 1;
 		double center = (d1+d2)/2;
@@ -36,6 +37,5 @@ public class Paddle{
 				d2 += Var.speed * Var.level_AI[level_AI];
 			}
 		}
-		//System.out.println(center + " ajkshdkj " + y);
 	}
 }
