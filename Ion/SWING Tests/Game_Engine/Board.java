@@ -166,12 +166,19 @@ public class Board{
 	void periodic_network(){
 		get_all_messages();
 		broadcast();
+		System.out.println(is_pseudo_server());
 	}
 
-	// boolean is_pseudo_server(){
-	// 	// returns true depending on whether the current player is the pseudo server
-	// 	return RequestHandler.is_pseudo_server();
-	// }
+	boolean is_pseudo_server(){
+		// returns true depending on whether the current player is the pseudo server
+		try{
+			return socket.is_pseudo_server();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 
 	void broadcast(){
 		try{
