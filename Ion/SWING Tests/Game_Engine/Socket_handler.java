@@ -318,12 +318,12 @@ public class Socket_handler implements Runnable
 
 	public Queue<String> ret_q()
 	{
-		System.out.println(this.message_queue);
-		return this.message_queue;
+		// System.out.println(this.message_queue);
+		// return this.message_queue;
 
-		//Queue<String> retq = this.message_queue;
-		//this.message_queue = new LinkedList<String>();
-		//return retq;
+		Queue<String> retq = this.message_queue;
+		this.message_queue = new LinkedList<String>();
+		return retq;
 	}
 
 	public void new_user(String ip_addr) throws Exception

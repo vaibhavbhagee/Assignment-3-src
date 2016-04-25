@@ -159,11 +159,13 @@ public class Board{
 	void init_network(){
 		try{
 			socket = new Socket_handler("2");
+			new Thread(socket).start();
 			socket.connect_to_user("10.208.20.161");
 		}catch(Exception e){e.printStackTrace();}
 	}
 	void periodic_network(){
 		get_all_messages();
+		broadcast();
 	}
 
 	// boolean is_pseudo_server(){
@@ -171,19 +173,24 @@ public class Board{
 	// 	return RequestHandler.is_pseudo_server();
 	// }
 
-	// void broadcast(){
-	// 	if(is_pseudo_server()){
-	// 		// broadcast the position of the ball and all players
-	// 		RequestHandler.broadcast("Appropriate Message");
-	// 	}else{
-	// 		// broadcast the position of the current_player paddle (Player Object)
-	// 		RequestHandler.broadcast("Appropriate Message");
-	// 	}
-	// }
+	void broadcast(){
+		try{
+			socket.send_message_to_all("Message;"+counter);
+		}catch(Exception e){e.printStackTrace();}
+		
+
+		// if(is_pseudo_server()){
+		// 	// broadcast the position of the ball and all players
+		// 	RequestHandler.broadcast("Appropriate Message");
+		// }else{
+		// 	// broadcast the position of the current_player paddle (Player Object)
+		// 	RequestHandler.broadcast("Appropriate Message");
+		// }
+	}
 	void get_all_messages(){
 		Queue<String> messageQueue = socket.ret_q();
-		System.out.println(messageQueue);
-		// System.out.println(socket.message_queue);
+		// System.out.println(messageQueue);
+		System.out.println(socket.message_queue);
 		
 
 		// receive the broadcasted message from the server and decode them appropriately

@@ -14,7 +14,7 @@ class Test{
 			public void run(){
 				b.update(d);
 			}
-		},0,100);
+		},0,500);
 	}
 	public static void main(String[] args) {
 		new Test();
