@@ -99,12 +99,14 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     		JoinLoadButton.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 1;
+            blankArea.reDraw();
     	}
     	else if (e.getX()>JoinLoadButton_x1m && e.getX()<JoinLoadButton_x2m && e.getY()>JoinLoadButton_y1m && e.getY()<JoinLoadButton_y2m)
     	{
     		JoinLoadButtonMulti.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 2;	
+            blankArea.reDraw();
     	}
     	else
     	{
@@ -112,6 +114,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     		JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 0;
+            blankArea.reDraw();
     	}
     }
 

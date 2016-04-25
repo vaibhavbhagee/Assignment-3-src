@@ -22,8 +22,11 @@ public class ShowString{
 	{
 		g.setColor(textcolor);
 		g.setFont(font);
-		g.drawString(str,x,y);
+        int width = g.getFontMetrics(font).stringWidth(str);
+		g.drawString(str,x-width/2,y);
 	}
+
+	public void setstr(String s){str = s;}
 
 	public String retstr(){return str;}
 }

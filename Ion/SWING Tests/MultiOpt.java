@@ -102,12 +102,14 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
     		MultiOptButton.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
     		sel = 1;
+            blankArea.reDraw();
     	}
     	else if (e.getX()>MultiOptButton_x1m && e.getX()<MultiOptButton_x2m && e.getY()>MultiOptButton_y1m && e.getY()<MultiOptButton_y2m)
     	{
     		MultiOptButtonMulti.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
     		sel = 2;	
+            blankArea.reDraw();
     	}
     	else
     	{
@@ -115,6 +117,7 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
     		MultiOptButtonMulti.overridecolorwith = new Color(33,200,200,243);
         	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
     		sel = 0;
+            blankArea.reDraw();
     	}
     }
 

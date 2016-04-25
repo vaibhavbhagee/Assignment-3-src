@@ -91,6 +91,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     		case 2: break;
     		default: break;
     	}
+        blankArea.reDraw();
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -113,6 +114,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         	blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
     		sel = 0;
     	}
+        blankArea.reDraw();
     }
 
     public void mouseDragged(MouseEvent e) {

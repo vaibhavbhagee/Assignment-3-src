@@ -43,6 +43,8 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 	Rectangle EnterIPButtonMulti;
 	int EnterIPButton_x1m,EnterIPButton_x2m,EnterIPButton_y1m,EnterIPButton_y2m;
 
+    List<ShowString> bhagee = new ArrayList<ShowString>(); 
+
     List<Rectangle> digits = new ArrayList<Rectangle>();
 
 	EnterIP(){
@@ -121,6 +123,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     	}
         blankArea.replaceEnterIP(new ShowString("ENTER IP:"+ip_number_string,(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
         blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
+        blankArea.reDraw();
         blankArea.requestFocus();
     }
 
@@ -145,7 +148,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         	blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
             for(int i=0;i<digits.size();i++)
             {
-                digits.get(i).overridecolorwith =new Color(0,0,0,243);
+                digits.get(i).overridecolorwith =new Color(20,11,231,243);
             }
             blankArea.manyNewRects(digits);
     		sel = 12;
@@ -157,6 +160,8 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
                 digits.get(j).overridecolorwith =new Color(233,3,100,243);
                 blankArea.manyNewRects(digits);
             }    
+
+            blankArea.reDraw();
             blankArea.requestFocus();
 
 
@@ -171,7 +176,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 
     /** Handle the key-pressed event from the text field. */
     public void keyPressed(KeyEvent e) {
-        //System.out.println(e);
+        System.out.println(e);
         if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
         {
             if(nameEntered.length()>0)
@@ -181,6 +186,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
             nameEntered = nameEntered + e.getKeyChar();
         blankArea.replaceName(new ShowString("NAME:"+nameEntered,(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
         blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
+        blankArea.reDraw();
     }
 
     /** Handle the key-released event from the text field. */
@@ -193,7 +199,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         ref = (int)EnterIP_frame.getSize().getWidth();
         EnterIP_frame.pack();
 
-        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
+        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/5),0 );
         EnterIPButton.overridecolor = 1;
         EnterIPButton.overridecolorwith = new Color(33,200,200,243);
 
@@ -202,9 +208,9 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         EnterIPButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
         blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
-   		blankArea.addString(new ShowString("ENTER IP:"+ip_number_string,(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+   		blankArea.addString(new ShowString("ENTER IP:"+ip_number_string,(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.BOLD, 30)));
    		blankArea.addString(new ShowString("JOIN GAME",(int)(EnterIP_frame.getSize().getWidth()/2),(int)(2*EnterIP_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.addString(new ShowString("NAME:",(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.addString(new ShowString("NAME:",(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.BOLD, 30)));
 
         EnterIPButton_x1 = (int)(EnterIP_frame.getSize().getWidth()/2) - (int)(EnterIP_frame.getSize().getWidth()/5)/2;
         EnterIPButton_x2 = (int)(EnterIP_frame.getSize().getWidth()/2) + (int)(EnterIP_frame.getSize().getWidth()/5)/2; 
@@ -223,10 +229,18 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
             int top = EnterIPButton_y2;
             int bottom = EnterIPButton_y1m;
             digits.add(new Rectangle((left+right)/2,(top+bottom)/2,right-left,bottom-top,0));
+            if(i<10)    
+                bhagee.add(new ShowString(Integer.toString(i),(left+right)/2,(top+bottom)/2,new Color(255,255,0,200),new Font("Serif", Font.PLAIN, 50) ));
+            else if(i==11)
+                bhagee.add(new ShowString("<-",(left+right)/2,(top+bottom)/2,new Color(255,255,0,200),new Font("Serif", Font.PLAIN, 50) ));
+            else if(i==10)
+                bhagee.add(new ShowString(".",(left+right)/2,(top+bottom)/2,new Color(255,255,0,200),new Font("Serif", Font.PLAIN, 50) ));
+
             digits.get(i).overridecolor = 1;
-            digits.get(i).overridecolorwith =new Color(233,223,0,243);
+            digits.get(i).overridecolorwith =new Color(20,11,231,243);
         }
         blankArea.manyNewRects(digits);
+        blankArea.manyNewerRects(bhagee);
     }
 
     private static void createAndShowGUI() {

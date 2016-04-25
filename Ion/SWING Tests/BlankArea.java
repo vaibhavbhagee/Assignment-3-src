@@ -19,11 +19,13 @@ public class BlankArea extends JLabel {
     boolean trail_present = false;
     List<ShowString> stringsToDisplay = new CopyOnWriteArrayList<ShowString>();
     List<Rectangle> digits = new ArrayList<Rectangle>();
+    List<ShowString> numerals = new ArrayList<ShowString>();
     List<Rectangle> lives = new ArrayList<Rectangle>();
     Rectangle redZone1;
     Rectangle redZone2;
     Rectangle redZone3;
     Rectangle redZone4;
+    int i=0;
 
     public int gWidth=0;
     public int gHeight=0;
@@ -52,28 +54,28 @@ public class BlankArea extends JLabel {
 
     public void replaceEnterIP(ShowString s)
     {
-        for(int i=0;i<stringsToDisplay.size();i++)
-        {
-            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>9)
-            if ( stringsToDisplay.get(i).retstr().substring(0,9) .equals("ENTER IP:") )
-            {
-                stringsToDisplay.remove(i);
-            }    
+        for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {   
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>=9)
+                {System.out.println(sz.retstr().substring(0,9));
+                    if(sz.retstr().substring(0,9).equals("ENTER IP:"))
+                    sz.setstr(s.retstr());
+            }
         }
-        stringsToDisplay.add(s);
     }
 
     public void replaceName(ShowString s)
     {
-        for(int i=0;i<stringsToDisplay.size();i++)
+        for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {   
-            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>5)
-            if ( stringsToDisplay.get(i).retstr().substring(0,5) .equals("NAME:") )
-            {
-                stringsToDisplay.remove(i);
-            }    
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>=5)
+                {System.out.println(sz.retstr().substring(0,5));
+                    if(sz.retstr().substring(0,5).equals("NAME:"))
+                    sz.setstr(s.retstr());
+            }
         }
-        stringsToDisplay.add(s);
     }
 
     public void replaceLives1(ShowString s)
@@ -86,14 +88,7 @@ public class BlankArea extends JLabel {
                 if(sz.retstr().substring(0,15).equals("PLAYER1:: lives="))
                     iter.remove();
         }
-        /*for(int i=0;i<stringsToDisplay.size();i++)
-        {   
-            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
-            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER1:: lives=") )
-            {
-                stringsToDisplay.remove(i);
-            }    
-        }*/
+       
         stringsToDisplay.add(s);
     }
 
@@ -106,14 +101,7 @@ public class BlankArea extends JLabel {
                 if(sz.retstr().substring(0,15).equals("PLAYER2:: lives="))
                     iter.remove();
         }
-       /* for(int i=0;i<stringsToDisplay.size();i++)
-        {   
-            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
-            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER2:: lives=") )
-            {
-                stringsToDisplay.remove(i);
-            }    
-        }*/
+       
         stringsToDisplay.add(s);
     }
 
@@ -126,14 +114,7 @@ public class BlankArea extends JLabel {
                 if(sz.retstr().substring(0,15).equals("PLAYER3:: lives="))
                     iter.remove();
         }
-        /*for(int i=0;i<stringsToDisplay.size();i++)
-        {   
-            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
-            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER3:: lives=") )
-            {
-                stringsToDisplay.remove(i);
-            }    
-        }*/
+       
         stringsToDisplay.add(s);
     }
 
@@ -146,14 +127,7 @@ public class BlankArea extends JLabel {
                 if(sz.retstr().substring(0,15).equals("PLAYER4:: lives="))
                     iter.remove();
         }
-       /* for(int i=0;i<stringsToDisplay.size();i++)
-        {   
-            if(stringsToDisplay.get(i) != null && stringsToDisplay.get(i).retstr().length()>15)
-            if ( stringsToDisplay.get(i).retstr().substring(0,15) .equals("PLAYER4:: lives=") )
-            {
-                stringsToDisplay.remove(i);
-            }    
-        }*/
+       
         stringsToDisplay.add(s);
     }
 
@@ -165,6 +139,17 @@ public class BlankArea extends JLabel {
         {
             trail[i] = new Circle(0,0,40-4*i);
         }
+    }
+
+    public void setTrails()
+    {
+        for(int i=9; i>0;i--)
+                {
+                    trail[i].setMidX(trail[i-1].getMidX());
+                    trail[i].setMidY(trail[i-1].getMidY());
+                }
+                trail[0].setMidX(c1.getMidX());
+                trail[0].setMidY(c1.getMidY());
     }
 
     @Override
@@ -188,15 +173,8 @@ public class BlankArea extends JLabel {
             g.setColor(new Color(124,124,124,124));
             if(trail!=null && trail_present)
             {
-                for(int i=9; i>0;i--)
-                {
-                    trail[i].setMidX(trail[i-1].getMidX());
-                    trail[i].setMidY(trail[i-1].getMidY());
+                for(int i=9; i>=0;i--)
                     trail[i].draw(g);
-                }
-                trail[0].setMidX(c1.getMidX());
-                trail[0].setMidY(c1.getMidY());
-                trail[0].draw(g);
             }
             g.setColor(new Color(23,12,92,232));
             if(c1!=null)c1.draw(g);
@@ -208,12 +186,18 @@ public class BlankArea extends JLabel {
             for(Rectangle r:digits){
                 r.draw(g);
             }
+            for(ShowString n:numerals){
+                n.draw(g);
+                System.out.println(n.retstr());
+            }
+            i++;
+            System.out.println("drawn:"+i);
     }
 
     public void newCirc(Circle ball)
     {
         c1 = ball;
-        repaint(10);
+        //repaint(10);
     }
 
     public void newRect(Rectangle board,Rectangle bottom, Rectangle left, Rectangle right, Rectangle top) {
@@ -222,13 +206,18 @@ public class BlankArea extends JLabel {
         r3 = left;
         r4 = right;
         r5 = top;
-        repaint(10);
+        //repaint(10);
     }
 
     public void manyNewRects(List<Rectangle> alr)
     {
         digits = alr;
-        repaint(10);
+        //repaint(10);
+    }
+
+    public void manyNewerRects(List<ShowString> num)
+    {
+        numerals = num;
     }
 
     public Dimension getMinimumSize() {
@@ -238,5 +227,16 @@ public class BlankArea extends JLabel {
     @Override
     public Dimension getPreferredSize() {
         return minSize;
+    }
+
+    public void reDraw()
+    {
+        //repaint(1,180,0,832,832);
+        repaint(1);
+    }
+
+    public void reDraw2()
+    {
+        repaint(1,0,50,180,300);
     }
 }

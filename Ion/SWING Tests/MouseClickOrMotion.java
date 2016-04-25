@@ -47,6 +47,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private Rectangle l1,l2,l3,l4;
 
     private Timer timer;
+    private Timer timer2;
     private int i=0;
     private Board board_b;
     private int offsetx,offsety;
@@ -55,6 +56,9 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int prev_array_index=0;
     private int smoothen_x=0;
     private int diff;
+    long cur=0;
+long curp=0;
+long c1=0,c2=0;
 
     private Game_Engine.DataForEngine dfe = new Game_Engine.DataForEngine();
     private Game_Engine.DataForUI dfui = new Game_Engine.DataForUI();
@@ -92,6 +96,11 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
 
+        l1 = new Rectangle(0,0,0,0,0);
+        l2 = new Rectangle(0,0,0,0,0);
+        l3= new Rectangle(0,0,0,0,0);
+        l4 = new Rectangle(0,0,0,0,0);
+
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.weightx = 1.0;
@@ -127,6 +136,19 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         b1 = new Circle(300,302,40);
         
         timer = new Timer();
+        timer2 = new Timer();
+
+        timer2.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                blankArea.reDraw();
+                c1++;
+                System.out.println("c1:"+c1);
+            }
+        },0,20);
+
+        blankArea.trail_on();
+
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
@@ -134,7 +156,10 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                 //i++;
                 //if(i%300==0)
                     //playSound("explosion.wav");
-
+                i++;
+                cur=System.currentTimeMillis();
+                /*System.out.println("vmm:"+(System.currentTimeMillis()-curp) );*/
+                blankArea.setTrails();
                     if(p1!=null)
                     {
                         diff = p1.getMidX()-prev_x;
@@ -152,12 +177,15 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                     // if player dead
                     // disintegrate player
 
-
-        blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-
+                    if(i>3)
+                    {
+                        blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+                        blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+                        blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+                        blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+                        //blankArea.reDraw2();
+                    }
+                    
 
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
@@ -165,16 +193,22 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         p2.setMidY(dfui.paddle_pos[1]+offsety);
                         p3.setMidX(dfui.paddle_pos[2]+offsetx);
                         p4.setMidY(dfui.paddle_pos[3]+offsety);
-                        p2.setFired(dfui.getPowers()[1]);
+                        /*p2.setFired(dfui.getPowers()[1]);
                         p3.setFired(dfui.getPowers()[2]);
                         p4.setFired(dfui.getPowers()[3]);
                         
                         l1.lostLifeSet(dfui.getLife(0));
                         l2.lostLifeSet(dfui.getLife(1));
                         l3.lostLifeSet(dfui.getLife(2));
-                        l4.lostLifeSet(dfui.getLife(3));
+                        l4.lostLifeSet(dfui.getLife(3));*/
 
-                    }catch(NullPointerException e){}
+                    }catch(NullPointerException e){e.printStackTrace();System.out.println("maakichy");}
+                    // System.out.println("beforeredraw"+(System.currentTimeMillis()-cur));
+                    System.out.println(System.currentTimeMillis()-cur);
+                    //c2++;
+                    //System.out.println("c2:"+c2);
+                        // curp = System.currentTimeMillis();
+
             }
         },0,20);
 
