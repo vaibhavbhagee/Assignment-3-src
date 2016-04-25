@@ -1,10 +1,10 @@
 all: Start
 	# javac *.java
-	java Test
+	java Start
 
 Start: *.java Game_Engine/*.java
 	make clean
-	javac Test.java
+	javac Start.java
 
 clean:
 	rm -rf *.class Game_Engine/*.class

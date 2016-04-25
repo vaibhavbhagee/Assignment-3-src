@@ -297,6 +297,11 @@ public class Socket_handler implements Runnable
    		System.out.println(this.message_queue);
 	}
 
+	public void is_pseudo_server()
+	{
+		return this.connect_list.get(this.my_ip_address).is_pseudo_server;
+	}
+
 	public void connect_to_user(String ip_address) throws Exception
 	{
 		if (this.connect_list.get(ip_address) == null)
@@ -318,6 +323,9 @@ public class Socket_handler implements Runnable
 
 	public Queue<String> ret_q()
 	{
+		// System.out.println(this.message_queue);
+		// return this.message_queue;
+
 		Queue<String> retq = this.message_queue;
 		this.message_queue = new LinkedList<String>();
 		return retq;
