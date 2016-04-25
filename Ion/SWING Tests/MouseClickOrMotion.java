@@ -141,9 +141,13 @@ long c1=0,c2=0;
         timer2.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                blankArea.reDraw();
+                if(blankArea.renderDone == true)
+                {
+                    blankArea.renderDone = false;
+                    blankArea.reDraw();
+                }    
                 c1++;
-                System.out.println("c1:"+c1);
+                //System.out.println("c1:"+c1);
             }
         },0,20);
 
@@ -204,9 +208,9 @@ long c1=0,c2=0;
                         l3.lostLifeSet(dfui.getLife(2));
                         l4.lostLifeSet(dfui.getLife(3));*/
 
-                    }catch(NullPointerException e){e.printStackTrace();System.out.println("maakichy");}
+                    }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
                     // System.out.println("beforeredraw"+(System.currentTimeMillis()-cur));
-                    System.out.println(System.currentTimeMillis()-cur);
+                   //System.out.println(System.currentTimeMillis()-cur);
                     //c2++;
                     //System.out.println("c2:"+c2);
                         // curp = System.currentTimeMillis();
@@ -229,7 +233,7 @@ long c1=0,c2=0;
         board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
         
         board_b = new Board(board_side,board_side);
-        System.out.println("banka"+board_side);
+        //System.out.println("banka"+board_side);
         
         paddle_length[0] = (int)(board_side*0.25);
         paddle_height[0] = (int)(board_side*0.05);
@@ -240,6 +244,12 @@ long c1=0,c2=0;
         paddle_height[1] = (int)(board_side*0.25);
         paddle_length[3] = (int)(board_side*0.05);
         paddle_height[3] = (int)(board_side*0.25);
+
+        blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+        blankArea.addString(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+                       
 
         p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0],1);
         p4 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
