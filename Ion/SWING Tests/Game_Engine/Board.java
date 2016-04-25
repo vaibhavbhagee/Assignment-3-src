@@ -21,9 +21,7 @@ public class Board{
 		plr[3] = new Player("Shreyan", 3);
 		b = new Ball(width/2,height/2,Var.speed*0.6,Var.speed*0.8,20);
 		data_out = new DataForUI();
-		try{
-			socket = new Socket_handler("1");
-		}catch(Exception e){e.printStackTrace();}
+		init_network();
 	}			// 460 x 460
 
 	public DataForUI update(DataForEngine o){
@@ -32,6 +30,7 @@ public class Board{
 		// take care of reflections
 		// return an Object to render the board
 		++counter;
+		periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
@@ -112,7 +111,7 @@ public class Board{
 			b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
 			data_out.collisionWall(0);
-			System.out.println("wall 0");
+			//System.out.println("wall 0");
 		}
 
 		// w1
@@ -156,28 +155,42 @@ public class Board{
 			System.out.println("wall 3");
 		}
 	}
-/*
-	boolean is_pseudo_server(){
-		// returns true depending on whether the current player is the pseudo server
-		return RequestHandler.is_pseudo_server();
+
+	void init_network(){
+		try{
+			socket = new Socket_handler("2");
+			socket.connect_to_user("10.208.20.161");
+		}catch(Exception e){e.printStackTrace();}
+	}
+	void periodic_network(){
+		get_all_messages();
 	}
 
-	void broadcast(){
-		if(is_pseudo_server()){
-			// broadcast the position of the ball and all players
-			RequestHandler.broadcast("Appropriate Message");
-		}else{
-			// broadcast the position of the current_player paddle (Player Object)
-			RequestHandler.broadcast("Appropriate Message");
-		}
-	}
+	// boolean is_pseudo_server(){
+	// 	// returns true depending on whether the current player is the pseudo server
+	// 	return RequestHandler.is_pseudo_server();
+	// }
+
+	// void broadcast(){
+	// 	if(is_pseudo_server()){
+	// 		// broadcast the position of the ball and all players
+	// 		RequestHandler.broadcast("Appropriate Message");
+	// 	}else{
+	// 		// broadcast the position of the current_player paddle (Player Object)
+	// 		RequestHandler.broadcast("Appropriate Message");
+	// 	}
+	// }
 	void get_all_messages(){
-		PriorityQueue<String> messageQueue = RequestHandler.get_all_messages();
+		Queue<String> messageQueue = socket.ret_q();
+		System.out.println(messageQueue);
+		// System.out.println(socket.message_queue);
+		
+
 		// receive the broadcasted message from the server and decode them appropriately
 		// type of messages
 		// 1) position of ball and all players
 		// 2) position of paddle of a certain player
 		// 3) new player has been added - Get me the details of the player along with player number
 	}
-*/
+
 }
