@@ -1,4 +1,4 @@
-package Networking;
+// package Networking;
 
 import java.io.*;
 import java.lang.*;
@@ -24,12 +24,12 @@ public class network_main
 		{
 			if(choice.equals("1"))
 			{
-				new Thread(new socket_handler(choice)).start();
+				new Thread(new Socket_handler(choice)).start();
 			}
 			else
 			{
 				String ip_addr = System.console().readLine("Enter IP Address: ");
-				socket_handler a = new socket_handler(choice);
+				Socket_handler a = new Socket_handler(choice);
 				new Thread(a).start();
 				a.connect_to_user(ip_addr);	
 			}
