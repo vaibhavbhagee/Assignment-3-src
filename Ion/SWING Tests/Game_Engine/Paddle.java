@@ -16,7 +16,20 @@ public class Paddle{
 		paddle_speed = 0;
 		//System.out.println("PADDLE VALUES: "+d1+" "+d2);
 	}
-	
+
+	public String to_String(){
+		return (d1+"#"+d2+"#"+current_power+"#"+paddle_speed+";");
+	}
+
+	public void from_String(String val){
+		String[] s = val.split("#");
+		//orientation = Integer.parseInt(s[0]);
+		d1 = Double.parseDouble(s[0]);
+		d2 = Double.parseDouble(s[1]);
+		current_power = Integer.parseInt(s[2]);
+		paddle_speed = Integer.parseInt(s[3]);
+	}
+
 	public void movePaddle(double x, double y, int level_AI){
 		double factor = 1;
 		double center = (d1+d2)/2;
