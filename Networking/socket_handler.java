@@ -39,7 +39,7 @@ public class socket_handler implements Runnable
 	{
 		try
 		{
-			if (choice.equals("2"))
+			/*if (choice.equals("2"))
 			{
 				String ip_address = System.console().readLine("Enter the IP Address: ");
 
@@ -59,7 +59,7 @@ public class socket_handler implements Runnable
 
 		        this.connect_list.get(ip_address).send_message("Connection-Request;"+my_ip_address+"");
 			}
-			else if (choice.equals("1"))
+			else */if (choice.equals("1"))
 			{
 		        this.connect_list.put(this.my_ip_address,new indiv_connection_handler(this.my_ip_address));
 
@@ -266,6 +266,11 @@ public class socket_handler implements Runnable
 
 	            	// this.print_hm();
 	            }
+	            else
+	            {
+	            	this.message_queue.add(response);
+	            	this.print_q();
+	            }
 	            // new Thread(new Responder(this.socket, packet)).start();
 			}
 		}
@@ -288,6 +293,32 @@ public class socket_handler implements Runnable
 	public void print_q()
 	{
    		System.out.println(this.message_queue);
+	}
+
+	public void connect_to_user(String ip_address) throws Exception
+	{
+		if (this.connect_list.get(ip_address) == null)
+        {
+        	this.connect_list.put(ip_address,new indiv_connection_handler(ip_address));
+
+        	this.connect_list.get(ip_address).joining_order = this.users_joined;
+	        this.users_joined++;
+	        this.connect_list.get(ip_address).is_human = true;
+	        this.update_pseudo_server();
+        }
+        else
+        {
+        	this.connect_list.get(ip_address).is_human = true;
+        }
+
+        this.connect_list.get(ip_address).send_message("Connection-Request;"+my_ip_address+"");
+	}
+
+	public Queue<String> ret_q()
+	{
+		Queue<String> retq = this.message_queue;
+		this.message_queue = new LinkedList<String>();
+		return retq;
 	}
 
 	public void new_user(String ip_addr) throws Exception
