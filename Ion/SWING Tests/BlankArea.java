@@ -25,6 +25,7 @@ public class BlankArea extends JLabel {
     Rectangle redZone2;
     Rectangle redZone3;
     Rectangle redZone4;
+    public boolean renderDone=true;
     int i=0;
 
     public int gWidth=0;
@@ -84,12 +85,11 @@ public class BlankArea extends JLabel {
         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
-            if(sz.retstr().length()>15)
-                if(sz.retstr().substring(0,15).equals("PLAYER1:: lives="))
-                    iter.remove();
+            if(sz.retstr().length()>=16)
+                if(sz.retstr().substring(0,16).equals("PLAYER1:: lives="))
+                    sz.setstr(s.retstr());
         }
        
-        stringsToDisplay.add(s);
     }
 
     public void replaceLives2(ShowString s)
@@ -97,12 +97,11 @@ public class BlankArea extends JLabel {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
-            if(sz.retstr().length()>15)
-                if(sz.retstr().substring(0,15).equals("PLAYER2:: lives="))
-                    iter.remove();
+            if(sz.retstr().length()>=16)
+                if(sz.retstr().substring(0,16).equals("PLAYER2:: lives="))
+                    sz.setstr(s.retstr());
         }
        
-        stringsToDisplay.add(s);
     }
 
     public void replaceLives3(ShowString s)
@@ -110,12 +109,11 @@ public class BlankArea extends JLabel {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
-            if(sz.retstr().length()>15)
-                if(sz.retstr().substring(0,15).equals("PLAYER3:: lives="))
-                    iter.remove();
+            if(sz.retstr().length()>=16)
+                if(sz.retstr().substring(0,16).equals("PLAYER3:: lives="))
+                    sz.setstr(s.retstr());
         }
        
-        stringsToDisplay.add(s);
     }
 
     public void replaceLives4(ShowString s)
@@ -123,12 +121,11 @@ public class BlankArea extends JLabel {
         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
-            if(sz.retstr().length()>15)
-                if(sz.retstr().substring(0,15).equals("PLAYER4:: lives="))
-                    iter.remove();
+            if(sz.retstr().length()>=16)
+                if(sz.retstr().substring(0,16).equals("PLAYER4:: lives="))
+                    sz.setstr(s.retstr());
         }
        
-        stringsToDisplay.add(s);
     }
 
     public BlankArea(Color color) {
@@ -155,6 +152,8 @@ public class BlankArea extends JLabel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+            long l = System.nanoTime();
+            //System.out.println("Step1:"+l);
 
             g.setColor(new Color(233,233,235,235));
             if(r1!=null)r1.draw(g);
@@ -191,7 +190,8 @@ public class BlankArea extends JLabel {
                 System.out.println(n.retstr());
             }
             i++;
-            System.out.println("drawn:"+i);
+            renderDone = true;
+            
     }
 
     public void newCirc(Circle ball)
