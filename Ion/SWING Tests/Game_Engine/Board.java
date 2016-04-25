@@ -1,28 +1,29 @@
 package Game_Engine;
+
 import java.util.*;
 
 public class Board{
 	long counter = 0;					// counts per update of game
 	double epsilon;
-	//ArrayList<Ball> ball_list;
 	Ball b;
 	Player[] plr = new Player[4];	// player[0] is the current_player
 	DataForUI data_out;
+	Socket_handler socket;
 
 	public Board(int width, int height){
 		Var.width = width;
 		Var.height = height;
-		Var.speed = Var.width/Var.freq/Var.speed_factor;
-		Var.acc = Var.speed/Var.freq/1;
+		Var.speed = Var.width/Var.freq*Var.speed_factor;
 		epsilon = Var.speed;
 		plr[0] = new Player("Shreyan", 0);
 		plr[1] = new Player("Shreyan", 1);
 		plr[2] = new Player("Shreyan", 2);
 		plr[3] = new Player("Shreyan", 3);
-		//ball_list = new ArrayList<Ball>();
-		//ball_list.add(new Ball(width/2+100,height/2+100,Var.speed*0.6,Var.speed*0.8,20));
 		b = new Ball(width/2,height/2,Var.speed*0.6,Var.speed*0.8,20);
 		data_out = new DataForUI();
+		try{
+			socket = new Socket_handler("1");
+		}catch(Exception e){e.printStackTrace();}
 	}			// 460 x 460
 
 	public DataForUI update(DataForEngine o){
@@ -39,69 +40,11 @@ public class Board{
 			data_out.noCollision();
 			data_out.resetAllFlags();
 		}
-
-		artificial_intelligence(1);
-		artificial_intelligence(2);
-		artificial_intelligence(3);
-		//for(Ball b: ball_list)
-		{
-			b.update_position();
-
-			// w0
-			if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
-				hit_paddle(0,b);
-				b.addSpin(plr[0].p.paddle_speed);
-				data_out.collisionPaddle(0);
-				//System.out.println("Paddle 0");
-				//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
-			}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
-				b.velY*=-1;
-				b.theetha = 2*Math.PI - b.theetha;
-				data_out.collisionWall(0);
-				System.out.println("wall 0");
-			}
-
-			// w1
-			if((Math.abs(b.posX - b.diameter/2 - plr[1].p.delta) < epsilon)&&(b.posY > plr[1].p.d1)&&(b.posY < plr[1].p.d2)){
-				hit_paddle(1,b);
-				data_out.collisionPaddle(1);
-				//System.out.println("Paddle 1");
-			}else if(Math.abs(b.posX-b.diameter/2) < epsilon){		//w1
-				b.velX*=-1;
-				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
-				else b.theetha = 3*Math.PI - b.theetha;
-				data_out.collisionWall(1);
-				System.out.println("wall 1");
-				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
-			}
-
-			// w2
-			if((Math.abs(b.posY + b.diameter/2 + plr[2].p.delta - Var.height) < epsilon)&&(b.posX > plr[2].p.d1)&&(b.posX < plr[2].p.d2))
-			{
-				hit_paddle(2,b);
-				data_out.collisionPaddle(2);
-				//System.out.println("Paddle 2");
-			}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
-				b.velY*=-1;
-				b.theetha = 2*Math.PI - b.theetha;
-				data_out.collisionWall(2);
-				System.out.println("wall 2");
-				//System.out.println("Angle: "+(b.theetha*180/Math.PI));
-			}
-
-			// w3
-			if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
-				hit_paddle(3,b);
-				data_out.collisionPaddle(3);
-				//System.out.println("Paddle 3");
-			}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
-				b.velX*=-1;
-				if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
-				else b.theetha = 3*Math.PI - b.theetha;
-				data_out.collisionWall(3);
-				System.out.println("wall 3");
-			}
-		}
+		
+		artificial_intelligence();
+		collision();
+		b.update_position();
+		
 		{
 			int a = (int)(plr[0].p.d2+plr[0].p.d1)/2;
 			int bb = (int)(Var.height-(plr[1].p.d2+plr[1].p.d1)/2);
@@ -113,24 +56,16 @@ public class Board{
 			data_out.setBallPos(x,y);
 		}
 
-		//broadcast();
-		//get_all_messages();
-
 		return data_out;
 	}
 
-	public int getX(){
-		// for(Ball b: ball_list){
-		// 	return (int)b.posX;
-		// }
-		return (int)b.posX;
-	}
-	public int getY(){
-		// for(Ball b: ball_list){
-		// 	return (int)(Var.height - b.posY);
-		// }
-		return (int)(Var.height - b.posY);
-	}
+	// public int getX(){
+	// 	return (int)b.posX;
+	// }
+	// public int getY(){
+	// 	return (int)(Var.height - b.posY);
+	// }
+
 	void hit_paddle(int paddle_num, Ball b){
 		double x,l,phi;
 		//System.out.print("Previous angle: "+(b.theetha*180/Math.PI));
@@ -158,10 +93,67 @@ public class Board{
 		//System.out.println("Phi: "+phi*180/Math.PI);
 	}
 
-	void artificial_intelligence(int i){
+	void artificial_intelligence(){
+		// i is the player who's paddle has to be updated
+		for(int i=1;i<4;++i)
 		if(plr[i].is_AI){
-			// i is the player who's paddle has to be updated
 			plr[i].movePaddle(b.posX, b.posY);
+		}
+	}
+	void collision(){
+		// w0
+		if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
+			hit_paddle(0,b);
+			b.addSpin(plr[0].p.paddle_speed);
+			data_out.collisionPaddle(0);
+			//System.out.println("Paddle 0");
+			//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
+		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
+			b.velY*=-1;
+			b.theetha = 2*Math.PI - b.theetha;
+			data_out.collisionWall(0);
+			System.out.println("wall 0");
+		}
+
+		// w1
+		if((Math.abs(b.posX - b.diameter/2 - plr[1].p.delta) < epsilon)&&(b.posY > plr[1].p.d1)&&(b.posY < plr[1].p.d2)){
+			hit_paddle(1,b);
+			data_out.collisionPaddle(1);
+			//System.out.println("Paddle 1");
+		}else if(Math.abs(b.posX-b.diameter/2) < epsilon){		//w1
+			b.velX*=-1;
+			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
+			else b.theetha = 3*Math.PI - b.theetha;
+			data_out.collisionWall(1);
+			System.out.println("wall 1");
+			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
+		}
+
+		// w2
+		if((Math.abs(b.posY + b.diameter/2 + plr[2].p.delta - Var.height) < epsilon)&&(b.posX > plr[2].p.d1)&&(b.posX < plr[2].p.d2))
+		{
+			hit_paddle(2,b);
+			data_out.collisionPaddle(2);
+			//System.out.println("Paddle 2");
+		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
+			b.velY*=-1;
+			b.theetha = 2*Math.PI - b.theetha;
+			data_out.collisionWall(2);
+			System.out.println("wall 2");
+			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
+		}
+
+		// w3
+		if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
+			hit_paddle(3,b);
+			data_out.collisionPaddle(3);
+			//System.out.println("Paddle 3");
+		}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
+			b.velX*=-1;
+			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
+			else b.theetha = 3*Math.PI - b.theetha;
+			data_out.collisionWall(3);
+			System.out.println("wall 3");
 		}
 	}
 /*

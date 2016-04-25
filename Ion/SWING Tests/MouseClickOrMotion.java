@@ -123,7 +123,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
         paddle_length[0] = (int)(board_side*0.25);
         paddle_height[0] = (int)(board_side*0.05);
 
-        board_b = new Board(board_side,board_side);
+        // board_b = new Board(board_side,board_side);
         b1 = new Circle(300,302,40);
         
         timer = new Timer();
@@ -146,7 +146,9 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
                         //dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
                         dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
-                    dfui = board_b.update(dfe);
+                    try{
+                        dfui = board_b.update(dfe);
+                    }catch(Exception e){e.printStackTrace();}
                     //if(dfui.getFlag() == true)
                     //  playSound("something.wav");
                     // if player dead
