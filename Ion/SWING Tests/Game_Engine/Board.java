@@ -10,6 +10,11 @@ public class Board{
 	DataForUI data_out;
 	Socket_handler socket;
 
+	public int getSpeed()
+	{
+		return (int)(Var.speed);
+	}
+
 	public Board(int width, int height){
 		Var.width = width;
 		Var.height = height;
@@ -21,7 +26,7 @@ public class Board{
 		plr[3] = new Player("Shreyan", 3);
 		b = new Ball(width/2,height/2,Var.speed*0.6,Var.speed*0.8,20);
 		data_out = new DataForUI();
-		init_network();
+		/////////////////////////////////////////////////////////////////////init_network();
 	}			// 460 x 460
 
 	public DataForUI update(DataForEngine o){
@@ -30,7 +35,7 @@ public class Board{
 		// take care of reflections
 		// return an Object to render the board
 		++counter;
-		periodic_network();
+		//////////////////////////////////////////////////////////////////////periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();

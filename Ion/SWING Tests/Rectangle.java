@@ -32,9 +32,25 @@ public class Rectangle{
 	private Color Color_4 = new Color(255,0,0,80);
 	private Color Color_f = new Color(255,0,0,100);
 
+	private int maxDabbaWidth = 40;
+	private int playerDeadOpenDabba = 0;
+	private double playerDeadFallThePaddleInTheHole = 1.00000000000;
+	private int waitTillPaddleFallInTheHole = 0;
+	private int deadFlag = 0;
+
+	public void killPaddle()
+	{
+		playerDeadFallThePaddleInTheHole = 0.98;
+	}
+
 	public void setLifeRect(int a)
 	{
 		lives = a;
+	}
+
+	public boolean marJaApproval()
+	{
+		return (deadFlag == 1);
 	}
 
 	public int isLife()
@@ -51,6 +67,11 @@ public class Rectangle{
 	public void lostLifeSet(int lls)
 	{
 		lostlives = lls;
+	}
+
+	public int getLostLives()
+	{
+		return lostlives;
 	}
 
 	public int min(int a, int b)
@@ -84,6 +105,8 @@ public class Rectangle{
 
 	public void draw(Graphics g) 
 	{
+		rf = playerDeadFallThePaddleInTheHole*rf;
+		rs = playerDeadFallThePaddleInTheHole*rs;
 		if(overridecolor == 0)
 			g.setColor(new Color(min(233+20,255*fired_up),max(233-50*fired_up,0),max(235-37*fired_up,0),235));
 		else
@@ -95,6 +118,7 @@ public class Rectangle{
 	        else if(paddleorientation == 1)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	        	g2.setColor(new Color(0,255,0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-rf,midpoint_y-(thickness/2), 2*rf,2*rf );  
 			    arc1.setAngleStart(90-thetaf*2.3); 
@@ -105,6 +129,7 @@ public class Rectangle{
 	        else if(paddleorientation == 3)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	            g2.setColor(new Color(0,255,0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-rf,midpoint_y-(2*rf)+(thickness/2), 2*rf,2*rf );  
 			    arc1.setAngleStart(270-thetaf*2.3); 
@@ -115,6 +140,7 @@ public class Rectangle{
 	        else if(paddleorientation == 2)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	            g2.setColor(new Color(0,255,0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-(length/2),midpoint_y-rs, 2*rs,2*rs );  
 			    arc1.setAngleStart(180-thetas*2.3); 
@@ -125,6 +151,7 @@ public class Rectangle{
 	        else if(paddleorientation == 4)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	            g2.setColor(new Color(0,255,0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-(2*rs)+(length/2),midpoint_y-rs, 2*rs,2*rs );  
 			    arc1.setAngleStart(360-thetas*2.3); 
@@ -161,24 +188,63 @@ public class Rectangle{
 	    		default: c1 = Color_0;
 	    	}
 
+	    	if(lostlives == 5)
+	    	{
+	    		if(deadFlag == 0)
+		    		if (playerDeadOpenDabba < maxDabbaWidth)
+		    		{
+		    			g2d.setColor(new Color(0,0,0,255));
+		    			playerDeadOpenDabba++;
+		    			switch(lives){
+		    				case 1:
+		    				g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+		    			}
+		    		}
+		    		else
+		    			deadFlag ++;
+	    		else if(deadFlag == 1)
+	    		{
+	    			if(waitTillPaddleFallInTheHole < 5*maxDabbaWidth)
+	    				waitTillPaddleFallInTheHole ++;
+	    			else
+	    				deadFlag++;
+		    		g2d.setColor(new Color(0,0,0,255));
+	    			g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+	    		}
+	    		else if(deadFlag == 2)
+		    		if (playerDeadOpenDabba > 0)
+		    		{
+		    			g2d.setColor(new Color(0,0,0,255));
+		    			playerDeadOpenDabba--;
+		    			switch(lives){
+		    				case 1:
+		    				g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+		    			}
+		    		}
+		    		else
+		    			deadFlag ++;
+	    	}
+
 	    	switch(lives){
 	    		case 1:
-		    	gp1 = new GradientPaint(0,midpoint_y, Color_0, 0, midpoint_y+(thickness/2), c1, false);
+		    	gp1 = new GradientPaint(0,midpoint_y, Color_0, 0, midpoint_y+(thickness/3), c1, false);
 		    	break;
 		    	case 2:
-		    	gp1 = new GradientPaint(midpoint_x,0, Color_0, midpoint_x-(length/2),0, c1, false);
+		    	gp1 = new GradientPaint(midpoint_x,0, Color_0, midpoint_x-(length/3),0, c1, false);
 		    	break;
 		    	case 3:
-		    	gp1 = new GradientPaint(0,midpoint_y, Color_0, 0, midpoint_y-(thickness/2), c1, false);
+		    	gp1 = new GradientPaint(0,midpoint_y, Color_0, 0, midpoint_y-(thickness/3), c1, false);
 		    	break;
 		    	case 4:
-		    	gp1 = new GradientPaint(midpoint_x,0, Color_0, midpoint_x+(length/2),0, c1, false);
+		    	gp1 = new GradientPaint(midpoint_x,0, Color_0, midpoint_x+(length/3),0, c1, false);
 		    	break;
 		    	default: gp1 = null;
 	    	}
-
-        	g2d.setPaint(gp1);
-			g2d.fillRect(midpoint_x-(length/2), midpoint_y-(thickness/2),length,thickness);
+	    	if(deadFlag <3)
+	    	{
+	        	g2d.setPaint(gp1);
+				g2d.fillRect(midpoint_x-(length/2), midpoint_y-(thickness/2),length,thickness);
+			}
 
 	    }
     }

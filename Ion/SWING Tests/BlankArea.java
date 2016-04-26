@@ -21,10 +21,10 @@ public class BlankArea extends JLabel {
     List<Rectangle> digits = new ArrayList<Rectangle>();
     List<ShowString> numerals = new ArrayList<ShowString>();
     List<Rectangle> lives = new ArrayList<Rectangle>();
-    Rectangle redZone1;
-    Rectangle redZone2;
-    Rectangle redZone3;
-    Rectangle redZone4;
+    public Rectangle redZone1;
+    public Rectangle redZone2;
+    public Rectangle redZone3;
+    public Rectangle redZone4;
     public boolean renderDone=true;
     int i=0;
 
@@ -51,6 +51,14 @@ public class BlankArea extends JLabel {
     public void addString(ShowString s)
     {
         stringsToDisplay.add(s);
+    }
+
+    public void addRedRectangles(int a, int b, int c, int d)
+    {
+        redZone4.lostLifeSet(d);
+        redZone2.lostLifeSet(b);
+        redZone3.lostLifeSet(c);
+        redZone1.lostLifeSet(a);
     }
 
     public void replaceEnterIP(ShowString s)

@@ -44,6 +44,15 @@ public class DataForUI{
 
 	private int maxLives = 5;
 
+
+	//test for ion only shreyan ignore
+	public void redLife(int player)
+	{
+		if(lives[player]>0)
+			lives[player]--;
+		System.out.println("asd" + lives[player]);
+	}
+
 	public DataForUI()
 	{
 		for(int i=0; i<4; i++)

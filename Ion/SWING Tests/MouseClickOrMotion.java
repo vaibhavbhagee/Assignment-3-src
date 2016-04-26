@@ -138,11 +138,27 @@ long c1=0,c2=0;
         timer = new Timer();
         timer2 = new Timer();
 
+        Timer timer3 = new Timer();
+        timer3.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run()
+            {
+                if(dfui!=null)dfui.redLife(0);
+                //if(dfui!=null)dfui.redLife(1);
+                //if(dfui!=null)dfui.redLife(2);
+                //if(dfui!=null)dfui.redLife(3);
+            }
+        },0,1000);
+
         timer2.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
                 if(blankArea.renderDone == true)
                 {
+                    if(board_b!=null && board_b.getSpeed()>10)
+                        blankArea.trail_on();
+                    else
+                        blankArea.trail_off();
                     blankArea.renderDone = false;
                     blankArea.reDraw();
                 }    
@@ -199,15 +215,16 @@ long c1=0,c2=0;
                         p2.setMidY(dfui.paddle_pos[1]+offsety);
                         p3.setMidX(dfui.paddle_pos[2]+offsetx);
                         p4.setMidY(dfui.paddle_pos[3]+offsety);
-                        /*p2.setFired(dfui.getPowers()[1]);
+                        p2.setFired(dfui.getPowers()[1]);
                         p3.setFired(dfui.getPowers()[2]);
                         p4.setFired(dfui.getPowers()[3]);
                         
-                        l1.lostLifeSet(dfui.getLife(0));
-                        l2.lostLifeSet(dfui.getLife(1));
-                        l3.lostLifeSet(dfui.getLife(2));
-                        l4.lostLifeSet(dfui.getLife(3));*/
+           
+                        blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
 
+                        if(blankArea.redZone1.marJaApproval())
+                            p1.killPaddle();
+                        
                     }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
                     // System.out.println("beforeredraw"+(System.currentTimeMillis()-cur));
                    //System.out.println(System.currentTimeMillis()-cur);
