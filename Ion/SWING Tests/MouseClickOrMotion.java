@@ -143,10 +143,10 @@ long c1=0,c2=0;
             @Override
             public void run()
             {
-                if(dfui!=null)dfui.redLife(0);
+                //if(dfui!=null)dfui.redLife(0);
                 //if(dfui!=null)dfui.redLife(1);
                 //if(dfui!=null)dfui.redLife(2);
-                //if(dfui!=null)dfui.redLife(3);
+                if(dfui!=null)dfui.redLife(3);
             }
         },0,1000);
 
@@ -224,7 +224,13 @@ long c1=0,c2=0;
 
                         if(blankArea.redZone1.marJaApproval())
                             p1.killPaddle();
-                        
+                        if(blankArea.redZone2.marJaApproval())
+                            p2.killPaddle();
+                        if(blankArea.redZone3.marJaApproval())
+                            p3.killPaddle();
+                        if(blankArea.redZone4.marJaApproval())
+                            p4.killPaddle();
+
                     }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
                     // System.out.println("beforeredraw"+(System.currentTimeMillis()-cur));
                    //System.out.println(System.currentTimeMillis()-cur);

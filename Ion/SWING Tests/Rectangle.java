@@ -198,6 +198,13 @@ public class Rectangle{
 		    			switch(lives){
 		    				case 1:
 		    				g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+		    				case 3:
+		    				g2d.fillRect(midpoint_x-length/2,midpoint_y-thickness/2,length,playerDeadOpenDabba);
+		    				case 2:
+		    				g2d.fillRect(midpoint_x-length/2,midpoint_y-thickness/2,playerDeadOpenDabba,thickness);
+		    				case 4:
+		    				g2d.fillRect(midpoint_x+length/2-playerDeadOpenDabba,midpoint_y-thickness/2,playerDeadOpenDabba,thickness);
+
 		    			}
 		    		}
 		    		else
@@ -209,7 +216,17 @@ public class Rectangle{
 	    			else
 	    				deadFlag++;
 		    		g2d.setColor(new Color(0,0,0,255));
-	    			g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+		    		switch(lives){
+		    			case 1:
+		    			g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+		    			case 3:
+		    			g2d.fillRect(midpoint_x-length/2,midpoint_y-thickness/2,length,playerDeadOpenDabba);
+		    			case 2:
+		    			g2d.fillRect(midpoint_x-length/2,midpoint_y-thickness/2,playerDeadOpenDabba,thickness);
+		    			case 4:
+		    			g2d.fillRect(midpoint_x+length/2-playerDeadOpenDabba,midpoint_y-thickness/2,playerDeadOpenDabba,thickness);
+
+		    		}
 	    		}
 	    		else if(deadFlag == 2)
 		    		if (playerDeadOpenDabba > 0)
@@ -219,6 +236,13 @@ public class Rectangle{
 		    			switch(lives){
 		    				case 1:
 		    				g2d.fillRect(midpoint_x-length/2,-playerDeadOpenDabba+midpoint_y+thickness/2,length,playerDeadOpenDabba);
+		    				case 3:
+		    				g2d.fillRect(midpoint_x-length/2,midpoint_y-thickness/2,length,playerDeadOpenDabba);
+		    				case 2:
+		    				g2d.fillRect(midpoint_x-length/2,midpoint_y-thickness/2,playerDeadOpenDabba,thickness);
+		    				case 4:
+		    				g2d.fillRect(midpoint_x+length/2-playerDeadOpenDabba,midpoint_y-thickness/2,playerDeadOpenDabba,thickness);
+
 		    			}
 		    		}
 		    		else
