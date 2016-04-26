@@ -20,11 +20,11 @@ public class Board{
 		Var.height = height;
 		Var.speed = Var.width/Var.freq*Var.speed_factor;
 		epsilon = Var.speed;
-		plr[0] = new Player("Shreyan", 0);
-		plr[1] = new Player("Shreyan", 1);
-		plr[2] = new Player("Shreyan", 2);
-		plr[3] = new Player("Shreyan", 3);
-		b = new Ball(width/2,height/2,Var.speed*0.6,Var.speed*0.8,20);
+		plr[0] = new Player("Shreyan", "a", 0);
+		plr[1] = new Player("Shreyan", "b", 1);
+		plr[2] = new Player("Shreyan", "c", 2);
+		plr[3] = new Player("Shreyan", "d", 3);
+		b = new Ball(width/2,height/2,Math.PI/5,20);
 		data_out = new DataForUI();
 		/////////////////////////////////////////////////////////////////////init_network();
 	}			// 460 x 460
@@ -113,7 +113,7 @@ public class Board{
 			//System.out.println("Paddle 0");
 			//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
 		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
-			b.velY*=-1;
+			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
 			data_out.collisionWall(0);
 			//System.out.println("wall 0");
@@ -125,7 +125,7 @@ public class Board{
 			data_out.collisionPaddle(1);
 			//System.out.println("Paddle 1");
 		}else if(Math.abs(b.posX-b.diameter/2) < epsilon){		//w1
-			b.velX*=-1;
+			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			data_out.collisionWall(1);
@@ -140,7 +140,7 @@ public class Board{
 			data_out.collisionPaddle(2);
 			//System.out.println("Paddle 2");
 		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
-			b.velY*=-1;
+			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
 			data_out.collisionWall(2);
 			System.out.println("wall 2");
@@ -153,7 +153,7 @@ public class Board{
 			data_out.collisionPaddle(3);
 			//System.out.println("Paddle 3");
 		}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
-			b.velX*=-1;
+			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			data_out.collisionWall(3);
@@ -171,12 +171,19 @@ public class Board{
 	void periodic_network(){
 		get_all_messages();
 		broadcast();
+		System.out.println(plr[1].to_String());
 	}
 
-	// boolean is_pseudo_server(){
-	// 	// returns true depending on whether the current player is the pseudo server
-	// 	return RequestHandler.is_pseudo_server();
-	// }
+	boolean is_pseudo_server(){
+		// returns true depending on whether the current player is the pseudo server
+		try{
+			return socket.is_pseudo_server();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 
 	void broadcast(){
 		try{

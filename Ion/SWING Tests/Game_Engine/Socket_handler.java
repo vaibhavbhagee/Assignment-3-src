@@ -297,9 +297,12 @@ public class Socket_handler implements Runnable
    		System.out.println(this.message_queue);
 	}
 
-	/*public void is_pseudo_server()
+/*	public boolean is_pseudo_server()
 	{
-		return this.connect_list.get(this.my_ip_address).is_pseudo_server;
+		return this.
+		connect_list.
+		get(this.my_ip_address).
+		is_pseudo_server;
 	}*/
 
 	public void connect_to_user(String ip_address) throws Exception
