@@ -3,7 +3,7 @@ package Game_Engine;
 import java.util.*;
 
 public class Board{
-	long counter = 0;					// counts per update of game
+	long counter = 0;				// counts per update of game
 	double epsilon;
 	Ball b;
 	Player[] plr = new Player[4];	// player[0] is the current_player
@@ -13,13 +13,13 @@ public class Board{
 	Queue<Player_Info> plr_q;
 	int game_mode = 0;
 
-	public Board(int width, int height, String name, int singleOrMultiPlayer, int isHost){
-		Var.width = width;
-		Var.height = height;
-		Var.speed = Var.width/Var.freq*Var.speed_factor;
-		Var.speed_increase = 0;
-		epsilon = Var.speed;
+	int singleOrMultiPlayer, isHost;
+
+	public Board(int a, int b, String name, int singleOrMultiPlayer, int isHost){
 		this.name = name;
+
+		this.singleOrMultiPlayer = singleOrMultiPlayer;
+		this.isHost = isHost;
 
 		plr[0] = new Player(name, null, 0);
 		plr[1] = new Player("AI_1", "", 1);
@@ -36,6 +36,9 @@ public class Board{
 	{
 		Var.width = w;
 		Var.height = h;
+		Var.speed = Var.width/Var.freq*Var.speed_factor;
+		Var.speed_increase = 0;
+		epsilon = Var.speed;
 	}
 	public void setGameMode(int i){
 		game_mode = i; //TODO: yeh yaad rakhiyo and shreyan ki gpl
@@ -200,11 +203,11 @@ public class Board{
 		//game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
 		if(game_mode!=0)
 		try{
-			String s1 = System.console().readLine("Enter Choice: ");
-			socket = new Socket_handler(s1);
+			//String s1 = System.console().readLine("Enter Choice: ");
+			socket = new Socket_handler(isHost+"");
 			new Thread(socket).start();
-			if(s1.equals("2"))
-			socket.connect_to_user(System.console().readLine("Enter IP: "));
+			if(isHost==2)
+			socket.connect_to_user();
 			plr[0].ip = socket.my_ip_address();
 		}catch(Exception e){e.printStackTrace();}
 	}
@@ -231,7 +234,6 @@ public class Board{
 				return socket.is_pseudo_server();
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println("KYA HAE???????"+counter);
 				return false;
 			}
 		}
@@ -239,21 +241,11 @@ public class Board{
 	}
 
 	void broadcast(String str){
-		//String msg1 = b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String();
-		//String msg2 = plr[0].to_String();
 		try{
 			socket.send_message_to_all(str);
 		}catch(Exception e){e.printStackTrace();}
-		
-
-		// if(is_pseudo_server()){
-		// 	// broadcast the position of the ball and all players
-		// 	RequestHandler.broadcast("Appropriate Message");
-		// }else{
-		// 	// broadcast the position of the current_player paddle (Player Object)
-		// 	RequestHandler.broadcast("Appropriate Message");
-		// }
 	}
+
 	void decode(String str){
 		String ip_temp;
 		String s[] = str.split(";");
@@ -279,13 +271,7 @@ public class Board{
 				System.out.println("Message2");
 				ip_temp = s[1].substring(0, s[1].indexOf("#"));
 				for(int i=1; i<4; ++i)
-					if(plr[i].
-						ip.
-						equals(
-							ip_temp)) 
-						plr[i].
-					from_String(
-						s[1]);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1]);
 				break;
 			}
 			case "User-Added" : 
@@ -316,10 +302,7 @@ public class Board{
 			case "User-Disconnected" : {
 				System.out.println("User-Disconnected");
 				for(int i=0; i<4; ++i){
-					if(plr[i].
-						ip.
-						equals(
-							s[1])){
+					if(plr[i].ip.equals(s[1])){
 						plr[i].is_AI = true;
 						break;
 					}
@@ -367,7 +350,7 @@ public class Board{
 	void get_all_messages(){
 		Queue<String> messageQueue = socket.ret_q();
 		// System.out.println(messageQueue);
-		System.out.println(socket.message_queue);
+		//System.out.println(socket.message_queue);
 		for(String s : messageQueue){
 			decode(s);
 			System.out.println(s);
