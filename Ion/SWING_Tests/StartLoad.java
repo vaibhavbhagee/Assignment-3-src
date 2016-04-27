@@ -107,7 +107,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: t1.cancel(); t1.purge(); (new MouseClickOrMotion("Host",1,1,board_b)).launch(); StartLoad_frame.dispose();  break;
+    		case 2: board_b.hostApproval(true); t1.cancel(); t1.purge(); (new MouseClickOrMotion("Host",1,1,board_b)).launch(); StartLoad_frame.dispose();  break;
     		default: break;
     	}
         blankArea.reDraw();
@@ -202,7 +202,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoad_frame.setVisible(true);
     }
 
-    public static void launch(){
+    public static  void launch(){
         createAndShowGUI();
     }
 }
