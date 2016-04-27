@@ -30,13 +30,19 @@ public class Board{
 
 		b = new Ball(width/2,height/2,Math.PI/5,20);
 		data_out = new DataForUI();
-		init_network();
 	}			// 460 x 460
 
 	public void setParams(int w, int h)
 	{
 		Var.width = w;
 		Var.height = h;
+	}
+	public void setGameMode(int i){
+		game_mode = i;
+		init_network();
+		// 0 - single player
+		// 1 - Hosting
+		// 2 - connecting
 	}
 
 	public DataForUI update(DataForEngine o){
@@ -191,7 +197,7 @@ public class Board{
 	}
 
 	void init_network(){
-		game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
+		//game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
 		if(game_mode!=0)
 		try{
 			String s1 = System.console().readLine("Enter Choice: ");
@@ -203,7 +209,7 @@ public class Board{
 		}catch(Exception e){e.printStackTrace();}
 	}
 	public void periodic_network(){
-/*ion*/	System.out.println("PeriodicNetwork");
+		//System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase;

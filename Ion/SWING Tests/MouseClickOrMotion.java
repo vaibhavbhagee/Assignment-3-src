@@ -60,6 +60,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int smoothen_x=0;
     private int diff;
     private String playerName;
+
+    private int gameMode=0;
     long cur=0;
 long curp=0;
 long c1=0,c2=0;
@@ -97,7 +99,7 @@ long c1=0,c2=0;
     public MouseClickOrMotion(String name, int mode, int isHost, Board b_old) {
         super(new GridBagLayout());
         boardFromPrevPage = b_old;
-
+        mode = gameMode;
         playerName = name;
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -284,6 +286,7 @@ long c1=0,c2=0;
              board_b = boardFromPrevPage;
              board_b.setParams(board_side,board_side);
         }   
+        board_b.setGameMode(gameMode);
 
         //System.out.println("banka"+board_side);
         
