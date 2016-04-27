@@ -36,9 +36,10 @@ public class Board{
 		// take care of reflections
 		// return an Object to render the board
 		++counter;
+
 		Var.speed_increase *= Var.speed_decay_factor;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		periodic_network();
+		/////////////////////////////////////////////////////////////////periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
@@ -112,6 +113,7 @@ public class Board{
 		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
+			data_out.oneLifeLostBy(0);
 			data_out.collisionWall(0);
 			//System.out.println("wall 0");
 		}
@@ -127,6 +129,7 @@ public class Board{
 			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
+			data_out.oneLifeLostBy(1);
 			data_out.collisionWall(1);
 			System.out.println("wall 1");
 			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
@@ -143,6 +146,7 @@ public class Board{
 		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
+			data_out.oneLifeLostBy(2);
 			data_out.collisionWall(2);
 			System.out.println("wall 2");
 			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
@@ -159,6 +163,7 @@ public class Board{
 			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI -b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
+			data_out.oneLifeLostBy(3);
 			data_out.collisionWall(3);
 			System.out.println("wall 3");
 		}

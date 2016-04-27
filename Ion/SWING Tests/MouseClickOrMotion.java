@@ -146,7 +146,7 @@ long c1=0,c2=0;
                 //if(dfui!=null)dfui.redLife(0);
                 //if(dfui!=null)dfui.redLife(1);
                 //if(dfui!=null)dfui.redLife(2);
-                if(dfui!=null)dfui.redLife(3);
+                //if(dfui!=null)dfui.redLife(3);
             }
         },0,1000);
 
@@ -223,7 +223,10 @@ long c1=0,c2=0;
                         blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
 
                         if(blankArea.redZone1.marJaApproval())
+                        {
                             p1.killPaddle();
+                            blankArea.showGameOverLol();
+                        }
                         if(blankArea.redZone2.marJaApproval())
                             p2.killPaddle();
                         if(blankArea.redZone3.marJaApproval())
@@ -272,7 +275,6 @@ long c1=0,c2=0;
         blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
         blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
         blankArea.addString(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-                       
 
         p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0],1);
         p4 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
@@ -280,6 +282,8 @@ long c1=0,c2=0;
         p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
 
         board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
+
+        blankArea.setGameOverDim(frame.getSize(),board_side);
 
         blankArea.gWidth = (int)(frame.getSize().getWidth());
         blankArea.gHeight = (int)(frame.getSize().getHeight());
@@ -336,7 +340,15 @@ long c1=0,c2=0;
     }
 
     public void mouseDragged(MouseEvent e) {
-       saySomething1("Mouse dragged", e);
+        if (e.getX() <= (int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2)
+            if(e.getX() >= (int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 )
+                p1.setMidX(e.getX());
+            else
+                p1.setMidX((int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 );
+        else
+            p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
+               blankArea.newRect(board,p1,p2,p3,p4);
+
     }
 
     void saySomething(String eventDescription, MouseEvent e) {
