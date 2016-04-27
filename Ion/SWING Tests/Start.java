@@ -186,6 +186,11 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
         start_frame.setVisible(true);
     }
 
+    public void launch()
+    {
+        createAndShowGUI();
+    }
+
 	public static void main(String args[])
 	{
 		createAndShowGUI();

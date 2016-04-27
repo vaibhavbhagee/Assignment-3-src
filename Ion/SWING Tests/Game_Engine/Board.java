@@ -27,7 +27,7 @@ public class Board{
 		plr[3] = new Player("Shreyan", "d", 3);
 		b = new Ball(width/2,height/2,Math.PI/5,20);
 		data_out = new DataForUI();
-		init_network();
+		////////////////////////////////////////////////init_network();
 	}			// 460 x 460
 
 	public DataForUI update(DataForEngine o){
@@ -76,19 +76,24 @@ public class Board{
 		if(paddle_num==0){
 			phi = Math.atan(l*Var.length_factor/x);
 			b.posY += epsilon;
+			data_out.collisionPaddle(0);
 		}
 		else if(paddle_num==1){
 			phi = Math.atan(x/l/Var.length_factor);
 			b.posX += epsilon;
+			data_out.collisionPaddle(1);
 		}
 		else if(paddle_num==2){
 			phi = -Math.atan(l*Var.length_factor/x);
 			b.posY -= epsilon;
+			data_out.collisionPaddle(2);
 		}
 		else {
 			phi = -Math.atan(x/l/Var.length_factor);
 			b.posX -= epsilon;
+			data_out.collisionPaddle(3);
 		}
+		data_out.setBallPaddleCollide(true);
 		b.set_velocity(2*phi - b.theetha + Math.PI);
 		//System.out.println(" Final angle: "+(b.theetha*180/Math.PI));
 		//System.out.println("Phi: "+phi*180/Math.PI);
@@ -114,6 +119,7 @@ public class Board{
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
 			data_out.oneLifeLostBy(0);
+			data_out.setBallWallCollide(true);
 			data_out.collisionWall(0);
 			//System.out.println("wall 0");
 		}
@@ -130,6 +136,7 @@ public class Board{
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			data_out.oneLifeLostBy(1);
+			data_out.setBallWallCollide(true);
 			data_out.collisionWall(1);
 			System.out.println("wall 1");
 			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
@@ -147,6 +154,7 @@ public class Board{
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
 			data_out.oneLifeLostBy(2);
+			data_out.setBallWallCollide(true);
 			data_out.collisionWall(2);
 			System.out.println("wall 2");
 			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
@@ -164,6 +172,7 @@ public class Board{
 			if(b.theetha < Math.PI) b.theetha = Math.PI -b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			data_out.oneLifeLostBy(3);
+			data_out.setBallWallCollide(true);
 			data_out.collisionWall(3);
 			System.out.println("wall 3");
 		}
