@@ -39,7 +39,7 @@ public class Board{
 
 		Var.speed_increase *= Var.speed_decay_factor;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		/////////////////////////////////////////////////////////////////periodic_network();
+		periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
