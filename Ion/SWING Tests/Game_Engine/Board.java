@@ -258,8 +258,8 @@ public class Board{
 		String ip_temp;
 		String s[] = str.split(";");
 		switch(s[0]){
-			System.out.println("Message1");
 			case "Message1" : if(!is_pseudo_server()) {
+				System.out.println("Message1");
 				b.from_String(s[1]);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
