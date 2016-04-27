@@ -21,19 +21,11 @@ public class Board{
 
 		this.singleOrMultiPlayer = singleOrMultiPlayer;
 		this.isHost = isHost;
-
-		plr[0] = new Player(name, null, 0);
-		plr[1] = new Player("AI_1", "", 1);
-		plr[2] = new Player("AI_2", "", 2);
-		plr[3] = new Player("AI_3", "", 3);
-		plr[0].is_AI = false;
 		plr_q = new LinkedList<Player_Info>();
-
-		b = new Ball(width/2,height/2,Math.PI/5,20);
 		data_out = new DataForUI();
 	}			// 460 x 460
 
-	public void acceptIP(String ip1);
+	public void acceptIP(String ip1)
 	{	
 		current_ip = ip1;
 	}
@@ -44,6 +36,12 @@ public class Board{
 		Var.speed = Var.width/Var.freq*Var.speed_factor;
 		Var.speed_increase = 0;
 		epsilon = Var.speed;
+		b = new Ball(Var.width/2,Var.height/2,Math.PI/5,20);
+		plr[0] = new Player(name, null, 0);
+		plr[1] = new Player("AI_1", "", 1);
+		plr[2] = new Player("AI_2", "", 2);
+		plr[3] = new Player("AI_3", "", 3);
+		plr[0].is_AI = false;
 	}
 	public void setGameMode(int i){
 		game_mode = i;
@@ -230,7 +228,7 @@ public class Board{
 			socket = new Socket_handler(isHost+"");
 			new Thread(socket).start();
 			if(isHost==2)
-			socket.connect_to_user();
+			socket.connect_to_user(current_ip);
 			plr[0].ip = socket.my_ip_address();
 		}catch(Exception e){e.printStackTrace();}
 	}

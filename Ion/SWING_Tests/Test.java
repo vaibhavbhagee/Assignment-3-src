@@ -8,7 +8,9 @@ class Test{
 	public Test(){
 		d = new DataForEngine();
 		b = new Board(0,0,"bancho",1,2);
-		b.setGameMode(500,500);
+		b.setParams(500,500);
+		b.acceptIP(System.console().readLine("Enter IP: "));
+		b.setGameMode(2);
 		t = new Timer();
 		t.schedule(new TimerTask(){
 			@Override
