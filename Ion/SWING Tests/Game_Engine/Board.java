@@ -27,7 +27,7 @@ public class Board{
 		plr[3] = new Player("Shreyan", "d", 3);
 		b = new Ball(width/2,height/2,Math.PI/5,20);
 		data_out = new DataForUI();
-		/////////////////////////////////////////////////////////////////////init_network();
+		init_network();
 	}			// 460 x 460
 
 	public DataForUI update(DataForEngine o){
@@ -38,7 +38,7 @@ public class Board{
 		++counter;
 		Var.speed_increase *= Var.speed_decay_factor;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		//////////////////////////////////////////////////////////////////////periodic_network();
+		periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
@@ -166,17 +166,15 @@ public class Board{
 
 	void init_network(){
 		try{
-			System.out.print("Enter Choice: ");
-			socket = new Socket_handler("2");
+			socket = new Socket_handler(System.console().readLine("Enter Choice: "));
 			new Thread(socket).start();
-			System.out.print("Enter IP: ");
-			socket.connect_to_user("10.208.20.161");
+			socket.connect_to_user(System.console().readLine("Enter IP: "));
 		}catch(Exception e){e.printStackTrace();}
 	}
 	void periodic_network(){
 		get_all_messages();
 		broadcast();
-		System.out.println(plr[1].to_String());
+		System.out.println(is_pseudo_server());
 	}
 
 	boolean is_pseudo_server(){
@@ -194,7 +192,7 @@ public class Board{
 		String msg1 = b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String();
 		String msg2 = plr[0].to_String();
 		try{
-			socket.send_message_to_all("Message;"+counter);
+			socket.send_message_to_all("Message;"+msg2);
 		}catch(Exception e){e.printStackTrace();}
 		
 
