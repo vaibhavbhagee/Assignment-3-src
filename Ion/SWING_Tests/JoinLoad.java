@@ -184,14 +184,14 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
     }
 
-    private static void createAndShowGUI() {
+    private /*static*/ void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         JoinLoad_frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = new JoinLoad(ipAddress,playerName);
+        newContentPane = this;//new JoinLoad(ipAddress,playerName);
         newContentPane.setOpaque(true); //content panes must be opaque
 
 
@@ -219,7 +219,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoad_frame.setVisible(true);
     }
 
-    public static  void launch(){
+    public /*static*/  void launch(){
         createAndShowGUI();
     }
 }

@@ -266,6 +266,7 @@ long c1=0,c2=0;
     }
 
     public void reInitBoard() {
+        System.out.println("reInitBoard");
         if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
         {
             for(int i=0;i<10;i++)

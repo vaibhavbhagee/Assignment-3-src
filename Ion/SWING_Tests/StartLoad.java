@@ -32,7 +32,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     private static StartLoad newContentPane;
     private int sel=0;
 
-    private Board board_b;
+    private Board board_b=null;
     Timer t1;
 
 	Rectangle StartLoadButton;
@@ -43,6 +43,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
 	StartLoad(){
 		super(new GridBagLayout());
+        System.out.println("StartLoadConstructor");
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
@@ -78,8 +79,9 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
 
+        System.out.println("wtf");
         board_b = new Board(20,20,"Host",1,1);
-
+        System.out.println("seriously");
         t1 = new Timer();
         t1.scheduleAtFixedRate(new TimerTask(){
             @Override
@@ -107,7 +109,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: board_b.hostApproval(true); t1.cancel(); t1.purge(); (new MouseClickOrMotion("Host",1,1,board_b)).launch(); StartLoad_frame.dispose();  break;
+    		case 2: board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
     		default: break;
     	}
         blankArea.reDraw();
@@ -167,14 +169,14 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
     }
 
-    private static void createAndShowGUI() {
+    private /*static*/ void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         StartLoad_frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = new StartLoad();
+        newContentPane = this;//new StartLoad();
         newContentPane.setOpaque(true); //content panes must be opaque
 
 
@@ -202,7 +204,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoad_frame.setVisible(true);
     }
 
-    public static  void launch(){
+    public /*static*/  void launch(){
         createAndShowGUI();
     }
 }
