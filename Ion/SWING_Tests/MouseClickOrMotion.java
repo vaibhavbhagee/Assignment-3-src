@@ -47,6 +47,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private Rectangle board;
     private Circle b1;
     
+    private boolean onlyGodKnowsWhyThisFunctionIsBeingCalledTwice = false;
+
     private Rectangle l1,l2,l3,l4;
 
     private Timer timer;
@@ -101,6 +103,7 @@ long c1=0,c2=0;
 
     public MouseClickOrMotion(String name, int mode, int isHost, Board b_old) {
         super(new GridBagLayout());
+        System.out.println("MCOM");
         boardFromPrevPage = b_old;
         mode = gameMode;
         playerName = name;
@@ -155,6 +158,7 @@ long c1=0,c2=0;
             @Override
             public void run()
             {
+
                 //if(dfui!=null)dfui.redLife(0);
                 //if(dfui!=null)dfui.redLife(1);
                 //if(dfui!=null)dfui.redLife(2);
@@ -184,13 +188,9 @@ long c1=0,c2=0;
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                //temporary
-                //i++;
-                //if(i%300==0)
-                    //playSound("explosion.wav");
+
                 i++;
                 cur=System.currentTimeMillis();
-                /*System.out.println("vmm:"+(System.currentTimeMillis()-curp) );*/
                 blankArea.setTrails();
                     if(p1!=null)
                     {
@@ -200,18 +200,13 @@ long c1=0,c2=0;
                         smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
                         prev_array[prev_array_index] = diff;
                         prev_array_index = (prev_array_index + 1)%10;
-                        //dfe.setAll(p1.getMidX()-200, p1.getMidX()+200, p1.getFired(),smoothen_x);
                         dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     try{
                         dfui = 
                         board_b.update(
                             dfe);
-                    }catch(Exception e){e.printStackTrace();}
-                    //if(dfui.getFlag() == true)
-                    //  playSound("something.wav");
-                    // if player dead
-                    // disintegrate player
+                    }catch(Exception e){e.printStackTrace();System.out.println("bancho");}
 
                     if(i>3)
                     {
@@ -271,64 +266,69 @@ long c1=0,c2=0;
     }
 
     public void reInitBoard() {
-        
-        for(int i=0;i<10;i++)
-            prev_array[i] = 0;
-        smoothen_x=0;
-
-        frame.pack();
-
-
-        board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
-        
-
-        if(boardFromPrevPage == null)
+        if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
         {
-            board_b = new Board(board_side,board_side,playerName,0,0);
-            board_b.setParams(board_side,board_side);
-        }    
-        else
-        {
-             board_b = boardFromPrevPage;
-             board_b.setParams(board_side,board_side);
-        }   
-        board_b.setGameMode(gameMode);
+            for(int i=0;i<10;i++)
+                prev_array[i] = 0;
+            smoothen_x=0;
 
-        //System.out.println("banka"+board_side);
-        
-        paddle_length[0] = (int)(board_side*0.25);
-        paddle_height[0] = (int)(board_side*0.05);
-        paddle_length[2] = (int)(board_side*0.25);
-        paddle_height[2] = (int)(board_side*0.05);
+            frame.pack();
 
-        paddle_length[1] = (int)(board_side*0.05);
-        paddle_height[1] = (int)(board_side*0.25);
-        paddle_length[3] = (int)(board_side*0.05);
-        paddle_height[3] = (int)(board_side*0.25);
 
-        blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-        blankArea.addString(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+            board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
+            
 
-        p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0],1);
-        p4 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
-        p3 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()-board_side)/2)+paddle_height[2]/2,paddle_length[2],paddle_height[2],3);
-        p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
+            if(boardFromPrevPage == null)
+            {
+                System.out.println("wtf");
+                board_b = new Board(board_side,board_side,playerName,0,0);
+                System.out.println("ftw");
+                board_b.setParams(board_side,board_side);
+            }    
+            else
+            {
+                 board_b = boardFromPrevPage;
+                 board_b.setParams(board_side,board_side);
+            }   
+            board_b.setGameMode(gameMode);
 
-        board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
+            //System.out.println("banka"+board_side);
+            
+            paddle_length[0] = (int)(board_side*0.25);
+            paddle_height[0] = (int)(board_side*0.05);
+            paddle_length[2] = (int)(board_side*0.25);
+            paddle_height[2] = (int)(board_side*0.05);
 
-        blankArea.setGameOverDim(frame.getSize(),board_side);
+            paddle_length[1] = (int)(board_side*0.05);
+            paddle_height[1] = (int)(board_side*0.25);
+            paddle_length[3] = (int)(board_side*0.05);
+            paddle_height[3] = (int)(board_side*0.25);
 
-        blankArea.gWidth = (int)(frame.getSize().getWidth());
-        blankArea.gHeight = (int)(frame.getSize().getHeight());
-        blankArea.bSize = board_side;
-        blankArea.setRed();
+            blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+            blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+            blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+            blankArea.addString(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
 
-        offsetx = (int)(frame.getSize().getWidth()-board_side)/2;
-        offsety = (int)(frame.getSize().getHeight()-board_side)/2;
+            p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0],1);
+            p4 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
+            p3 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()-board_side)/2)+paddle_height[2]/2,paddle_length[2],paddle_height[2],3);
+            p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
 
-        blankArea.newRect(board,p1,p2,p3,p4);
+            board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
+
+            blankArea.setGameOverDim(frame.getSize(),board_side);
+
+            blankArea.gWidth = (int)(frame.getSize().getWidth());
+            blankArea.gHeight = (int)(frame.getSize().getHeight());
+            blankArea.bSize = board_side;
+            blankArea.setRed();
+
+            offsetx = (int)(frame.getSize().getWidth()-board_side)/2;
+            offsety = (int)(frame.getSize().getHeight()-board_side)/2;
+
+            blankArea.newRect(board,p1,p2,p3,p4);
+            onlyGodKnowsWhyThisFunctionIsBeingCalledTwice = true;
+        }
 
     }
 
