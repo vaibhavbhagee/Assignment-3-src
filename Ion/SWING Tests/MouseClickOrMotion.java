@@ -60,6 +60,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
 long curp=0;
 long c1=0,c2=0;
 
+    private boolean soundplayed = false;
+
     private Game_Engine.DataForEngine dfe = new Game_Engine.DataForEngine();
     private Game_Engine.DataForUI dfui = new Game_Engine.DataForUI();
 
@@ -219,13 +221,22 @@ long c1=0,c2=0;
                         p3.setFired(dfui.getPowers()[2]);
                         p4.setFired(dfui.getPowers()[3]);
                         
-           
+                        if(dfui.getBallPaddleCollide())
+                            playSound("ballpaddlecollision.wav");
+                        if(dfui.getBallWallCollide())
+                            playSound("ballwallcollision.wav");
+
                         blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
 
                         if(blankArea.redZone1.marJaApproval())
                         {
                             p1.killPaddle();
                             blankArea.showGameOverLol();
+                            if(soundplayed == false)
+                            {
+                                playSound("gameover.wav");
+                                soundplayed = true;
+                            }
                         }
                         if(blankArea.redZone2.marJaApproval())
                             p2.killPaddle();
@@ -308,8 +319,18 @@ long c1=0,c2=0;
 
 
 	public void mousePressed(MouseEvent e) {
-        for(int i=0;i<e.getClickCount();i++)
-            p1.fired_up();
+        if(soundplayed == false)
+        {
+            for(int i=0;i<e.getClickCount();i++)
+                p1.fired_up();
+        }
+        else
+        {
+            frame.dispose();
+            timer.cancel();
+            timer.purge();
+            (new Start()).launch(); frame.dispose();
+        }
     }
 
     public void mouseReleased(MouseEvent e) {
