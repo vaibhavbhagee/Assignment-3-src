@@ -33,7 +33,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     private static EnterIP newContentPane;
     private int sel=0;
     private String ip_number_string="";
-    private JoinLoad jl = new JoinLoad();
+    //private JoinLoad jl = new JoinLoad();
     private String nameEntered ="";
     int ref;
 
@@ -113,7 +113,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
             case 9: ip_number_string = ip_number_string +"9"; break;
             case 12: break;
     		case 13: break;
-    		case 14: jl.launch(); EnterIP_frame.dispose(); break;
+    		case 14: (new JoinLoad(ip_number_string, nameEntered)).launch(); EnterIP_frame.dispose(); break;
             case 11: if(ip_number_string.length()>0) 
                         ip_number_string = ip_number_string.substring(0,ip_number_string.length()-1);
                      break;

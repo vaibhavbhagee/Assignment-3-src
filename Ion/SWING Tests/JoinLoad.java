@@ -1,5 +1,7 @@
 import javax.swing.*;
 
+import Game_Engine.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -20,6 +22,9 @@ import java.awt.geom.Ellipse2D;
 
 import java.awt.Font;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class JoinLoad extends JPanel implements MouseMotionListener, MouseListener{
 
 	private static JFrame JoinLoad_frame = new JFrame("JoinLoad");
@@ -27,14 +32,22 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     private static JoinLoad newContentPane;
     private int sel=0;
 
+    private String ipAddress = "";
+    private String playerName = "";
+
+    private Board board_b;
+    Timer t1;
+
 	Rectangle JoinLoadButton;
 	int JoinLoadButton_x1,JoinLoadButton_x2,JoinLoadButton_y1,JoinLoadButton_y2;
 
 	Rectangle JoinLoadButtonMulti;
 	int JoinLoadButton_x1m,JoinLoadButton_x2m,JoinLoadButton_y1m,JoinLoadButton_y2m;
 
-	JoinLoad(){
+	JoinLoad(String ip, String name){
 		super(new GridBagLayout());
+        ipAddress = ip;
+        playerName = name;
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
@@ -70,6 +83,17 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
 
+        board_b = new Board(20,20,"Host",1,1);
+
+        t1 = new Timer();
+        t1.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run()
+            {
+                board_b.periodic_network();
+            }
+        },0,20);
+
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -88,7 +112,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: break;
+    		case 2: t1.cancel(); t1.purge(); (new MouseClickOrMotion("Host",1,0,board_b)).launch(); JoinLoad_frame.dispose(); break;
     		default: break;
     	}
     }
@@ -149,14 +173,14 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
     }
 
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         JoinLoad_frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = new JoinLoad();
+        newContentPane = new JoinLoad(ipAddress,playerName);
         newContentPane.setOpaque(true); //content panes must be opaque
 
 
@@ -184,7 +208,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoad_frame.setVisible(true);
     }
 
-    public static void launch(){
+    public void launch(){
         createAndShowGUI();
     }
 }
