@@ -50,12 +50,16 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private Timer timer2;
     private int i=0;
     private Board board_b;
+
+    private Board boardFromPrevPage;
+
     private int offsetx,offsety;
     private int prev_x;
     private int[] prev_array = new int [10];
     private int prev_array_index=0;
     private int smoothen_x=0;
     private int diff;
+    private String playerName;
     long cur=0;
 long curp=0;
 long c1=0,c2=0;
@@ -79,21 +83,22 @@ long c1=0,c2=0;
 
     public void playSound(String clipname)
     {
-   
-                 
-                        try {
-                            Clip clip = AudioSystem.getClip();
-                            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                              MouseClickOrMotion.class.getResourceAsStream(clipname));
-                            clip.open(inputStream);
-                            clip.start(); 
-                          } catch (Exception e) {
-                            System.err.println(e.getMessage());
-                          }
+        try {
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+              MouseClickOrMotion.class.getResourceAsStream(clipname));
+            clip.open(inputStream);
+            clip.start(); 
+          } catch (Exception e) {
+            System.err.println(e.getMessage());
+          }
     }
 
-    public MouseClickOrMotion() {
+    public MouseClickOrMotion(String name, int mode, int isHost, Board b_old) {
         super(new GridBagLayout());
+        boardFromPrevPage = b_old;
+
+        playerName = name;
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
@@ -271,7 +276,15 @@ long c1=0,c2=0;
 
         board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
         
-        board_b = new Board(board_side,board_side, "bancho");
+
+        if(boardFromPrevPage == null)
+            board_b = new Board(board_side,board_side,playerName,0,0);
+        else
+        {
+             board_b = boardFromPrevPage;
+             board_b.setParams(board_side,board_side);
+        }   
+
         //System.out.println("banka"+board_side);
         
         paddle_length[0] = (int)(board_side*0.25);

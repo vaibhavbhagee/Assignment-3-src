@@ -1,5 +1,7 @@
 import javax.swing.*;
 
+import Game_Engine.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -20,12 +22,18 @@ import java.awt.geom.Ellipse2D;
 
 import java.awt.Font;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class StartLoad extends JPanel implements MouseMotionListener, MouseListener{
 
 	private static JFrame StartLoad_frame = new JFrame("StartLoad");
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private static StartLoad newContentPane;
     private int sel=0;
+
+    private Board board_b;
+    Timer t1;
 
 	Rectangle StartLoadButton;
 	int StartLoadButton_x1,StartLoadButton_x2,StartLoadButton_y1,StartLoadButton_y2;
@@ -70,7 +78,18 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
 
-	}
+        board_b = new Board(20,20,"Host",1,1);
+
+        t1 = new Timer();
+        t1.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run()
+            {
+                board_b.periodic_network();
+            }
+        },0,20);
+
+    }
 
 	public void mousePressed(MouseEvent e) {
     }
@@ -88,7 +107,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: break;
+    		case 2: t1.cancel(); t1.purge(); (new MouseClickOrMotion("Host",1,1,board_b)).launch(); StartLoad_frame.dispose();  break;
     		default: break;
     	}
         blankArea.reDraw();

@@ -26,8 +26,8 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private static MultiOpt newContentPane;
     private int sel=0;
-	private StartLoad sl = new StartLoad();
-    private EnterIP ei = new EnterIP();
+	//private StartLoad sl = new StartLoad();
+    //private EnterIP ei = new EnterIP();
     //MouseClickOrMotion m = new MouseClickOrMotion();
 
 	Rectangle MultiOptButton;
@@ -90,8 +90,8 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
     public void mouseClicked(MouseEvent e) {
     	switch(sel){
     		case 0: break;
-    		case 1: sl.launch(); MultiOpt_frame.dispose(); break;
-    		case 2: ei.launch(); MultiOpt_frame.dispose(); break;
+    		case 1: (new StartLoad()).launch(); MultiOpt_frame.dispose(); break;
+    		case 2: (new EnterIP()).launch(); MultiOpt_frame.dispose(); break;
     		default: break;
     	}
     }
