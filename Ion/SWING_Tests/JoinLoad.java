@@ -83,7 +83,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
 
-        board_b = new Board(20,20,playerName,1,1);
+        board_b = new Board(20,20,playerName,1,2);
 
         board_b.acceptIP(ipAddress);
 

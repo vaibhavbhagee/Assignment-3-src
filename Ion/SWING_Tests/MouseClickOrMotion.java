@@ -283,7 +283,10 @@ long c1=0,c2=0;
         
 
         if(boardFromPrevPage == null)
+        {
             board_b = new Board(board_side,board_side,playerName,0,0);
+            board_b.setParams(board_side,board_side);
+        }    
         else
         {
              board_b = boardFromPrevPage;

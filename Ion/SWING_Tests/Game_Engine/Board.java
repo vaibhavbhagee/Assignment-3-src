@@ -18,7 +18,7 @@ public class Board{
 
 	public Board(int a, int b, String name, int singleOrMultiPlayer, int isHost){
 		this.name = name;
-
+		System.out.println("Constructor");
 		this.singleOrMultiPlayer = singleOrMultiPlayer;
 		this.isHost = isHost;
 		plr_q = new LinkedList<Player_Info>();
@@ -27,10 +27,12 @@ public class Board{
 
 	public void acceptIP(String ip1)
 	{	
+		System.out.println("IP");
 		current_ip = ip1;
 	}
 	public void setParams(int w, int h)
 	{
+		System.out.println("setParams");
 		Var.width = w;
 		Var.height = h;
 		Var.speed = Var.width/Var.freq*Var.speed_factor;
@@ -45,7 +47,7 @@ public class Board{
 	}
 	public void setGameMode(int i){
 		game_mode = i;
-
+		System.out.println("Set gam mode");
 		init_network();
 		// 0 - single player
 		// 1 - Hosting
@@ -74,9 +76,10 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
+		System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		////////////////////////////////////////////////////periodic_network();
+		if(game_mode!=0) periodic_network();
 
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
@@ -233,7 +236,7 @@ public class Board{
 		}catch(Exception e){e.printStackTrace();}
 	}
 	public void periodic_network(){
-		//System.out.println("PeriodicNetwork");
+		System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase;
