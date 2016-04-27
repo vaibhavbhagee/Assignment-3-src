@@ -299,10 +299,21 @@ public class Socket_handler implements Runnable
 
 	public boolean is_pseudo_server()
 	{
-		return this.
-		connect_list.
-		get(this.my_ip_address).
-		is_pseudo_server;
+		try
+		{
+			if (this.connect_list.get(this.my_ip_address) != null)
+				return this.connect_list.get(this.my_ip_address).is_pseudo_server;
+			else
+			{
+				System.out.println("Abhi null hai");
+				return false;
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception raised in is_baap");
+			return false;
+		}
 	}
 
 	public void connect_to_user(String ip_address) throws Exception
