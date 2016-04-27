@@ -85,7 +85,7 @@ public class BlankArea extends JLabel {
         {   
             ShowString sz = iter.next();
             if(sz.retstr().length()>=9)
-                {System.out.println(sz.retstr().substring(0,9));
+                {//System.out.println(sz.retstr().substring(0,9));
                     if(sz.retstr().substring(0,9).equals("ENTER IP:"))
                     sz.setstr(s.retstr());
             }
@@ -98,7 +98,7 @@ public class BlankArea extends JLabel {
         {   
             ShowString sz = iter.next();
             if(sz.retstr().length()>=5)
-                {System.out.println(sz.retstr().substring(0,5));
+                {//System.out.println(sz.retstr().substring(0,5));
                     if(sz.retstr().substring(0,5).equals("NAME:"))
                     sz.setstr(s.retstr());
             }
@@ -213,7 +213,7 @@ public class BlankArea extends JLabel {
             }
             for(ShowString n:numerals){
                 n.draw(g);
-                System.out.println(n.retstr());
+                //System.out.println(n.retstr());
             }
             i++;
             

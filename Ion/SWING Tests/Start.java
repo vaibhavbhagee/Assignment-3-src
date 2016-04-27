@@ -89,7 +89,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
     public void mouseClicked(MouseEvent e) {
     	switch(sel){
     		case 0: break;
-    		case 1: (new MouseClickOrMotion()).launch(); start_frame.dispose(); break;
+    		case 1: (new MouseClickOrMotion("",0,0,null)).launch(); start_frame.dispose(); break;
     		case 2: mu.launch(); start_frame.dispose(); break;
     		default: break;
     	}

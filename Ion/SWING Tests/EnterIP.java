@@ -157,7 +157,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
             if(e.getY()>EnterIPButton_y2 && e.getY()<EnterIPButton_y1m && e.getX()>(j*ref)/12 && e.getX()<((j+1)*ref)/12)
             {
                 sel=j;
-                digits.get(j).overridecolorwith =new Color(233,3,100,243);
+                digits.get(j).overridecolorwith =new Color(0,0,0,255);
                 blankArea.manyNewRects(digits);
             }    
 

@@ -113,11 +113,13 @@ public class Rectangle{
 			g.setColor(overridecolorwith);
         if(lives==0)
         {
+        	g.setColor(overridecolorwith);
 			if(paddleorientation == 0)
 	        	g.fillRect(midpoint_x-(length/2), midpoint_y-(thickness/2),length,thickness);
 	        else if(paddleorientation == 1)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	        	if(overridecolor == 0)
 	        	g2.setColor(new Color(min(255,50*fired_up),max(0,255-60*fired_up),0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-rf,midpoint_y-(thickness/2), 2*rf,2*rf );  
@@ -129,6 +131,7 @@ public class Rectangle{
 	        else if(paddleorientation == 3)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	        	if(overridecolor == 0)
 	        	g2.setColor(new Color(min(255,50*fired_up),max(0,255-60*fired_up),0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-rf,midpoint_y-(2*rf)+(thickness/2), 2*rf,2*rf );  
@@ -140,6 +143,7 @@ public class Rectangle{
 	        else if(paddleorientation == 2)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	        	if(overridecolor == 0)
 	        	g2.setColor(new Color(min(255,50*fired_up),max(0,255-60*fired_up),0,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-(length/2),midpoint_y-rs, 2*rs,2*rs );  
@@ -151,6 +155,7 @@ public class Rectangle{
 	        else if(paddleorientation == 4)
 	        {
 	            Graphics2D g2 = (Graphics2D)g;
+	        	if(overridecolor == 0)
 	        	g2.setColor(new Color(min(255,50*fired_up),max(0,255-30*fired_up),20*fired_up,255));
 	        	Arc2D.Float arc1 = new Arc2D.Float(Arc2D.CHORD);         
 			    arc1.setFrame(midpoint_x-(2*rs)+(length/2),midpoint_y-rs, 2*rs,2*rs );  

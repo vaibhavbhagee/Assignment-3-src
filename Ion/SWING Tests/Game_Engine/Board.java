@@ -13,7 +13,7 @@ public class Board{
 	String[] joining_order;
 
 
-	public Board(int width, int height, String name){
+	public Board(int width, int height, String name, int singleOrMultiPlayer, int isHost){
 		Var.width = width;
 		Var.height = height;
 		Var.speed = Var.width/Var.freq*Var.speed_factor;
@@ -33,6 +33,12 @@ public class Board{
 		////////////////////////////////////////////////init_network();
 	}			// 460 x 460
 
+	public void setParams(int w, int h)
+	{
+		Var.width = w;
+		Var.height = h;
+	}
+
 	public DataForUI update(DataForEngine o){
 		// called by UI
 		// update the position of the ball
@@ -42,7 +48,7 @@ public class Board{
 
 		Var.speed_increase *= Var.speed_decay_factor;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		periodic_network();
+		////////////////////////////////////////////////////periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
@@ -189,7 +195,8 @@ public class Board{
 			plr[0].ip = socket.my_ip_address();
 		}catch(Exception e){e.printStackTrace();}
 	}
-	void periodic_network(){
+	public void periodic_network(){
+/*ion*/	System.out.println("PeriodicNetwork");
 		get_all_messages();
 		broadcast("lodu");
 		System.out.println(is_pseudo_server());
