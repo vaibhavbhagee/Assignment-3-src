@@ -71,7 +71,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         blankArea.addMouseListener(this);
         blankArea.addKeyListener(this);
  
-        setPreferredSize(new Dimension(1920, 1000));
+        setPreferredSize(new Dimension(960, 700));
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         EnterIP_frame.pack();

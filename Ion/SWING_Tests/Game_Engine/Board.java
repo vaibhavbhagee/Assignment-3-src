@@ -27,7 +27,7 @@ public class Board{
 
 	public void acceptIP(String ip1)
 	{	
-		System.out.println("IP");
+		System.out.println("IP"+ip1);
 		current_ip = ip1;
 	}
 	public void setParams(int w, int h)
