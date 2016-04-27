@@ -11,8 +11,9 @@ public class Board{
 	Socket_handler socket;
 	String name;
 	Queue<Player_Info> plr_q;
-	int game_mode = 0;
+	int game_mode = -100;
 	String current_ip;
+	boolean game_started = false;
 
 	int singleOrMultiPlayer, isHost;
 
@@ -27,7 +28,7 @@ public class Board{
 
 	public void acceptIP(String ip1)
 	{	
-		System.out.println("IP");
+		System.out.println("IP" + ip1);
 		current_ip = ip1;
 	}
 	public void setParams(int w, int h)
@@ -57,13 +58,14 @@ public class Board{
 //Called by host of the game when he presses game start
 	public void hostApproval(boolean b) 
 	{
+		broadcast("Start_Game");
 		//if host approves, b is true
 	}
 
 //this is polled by each client user. return true when host has started the game
 	public boolean requestForHostApproval()
 	{
-		return false; //true when game has started by host
+		return game_started; //true when game has started by host
 	}
 
 	public int min(int a, int b)
@@ -76,7 +78,7 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-		System.out.println("update");
+		// System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
 		if(game_mode!=0) periodic_network();
@@ -236,7 +238,9 @@ public class Board{
 			plr[0].ip = socket.my_ip_address();
 		}catch(Exception e){e.printStackTrace();}
 	}
+
 	public void periodic_network(){
+		if(game_mode==-100) return;
 		System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
@@ -259,6 +263,7 @@ public class Board{
 				return socket.is_pseudo_server();
 			}catch(Exception e){
 				e.printStackTrace();
+				System.out.println("IS PSEUDO SERVER RETURNS FALSE");
 				return false;
 			}
 		}
@@ -297,6 +302,11 @@ public class Board{
 				ip_temp = s[1].substring(0, s[1].indexOf("#"));
 				for(int i=1; i<4; ++i)
 					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1]);
+				break;
+			}
+			case "Start_Game" : {
+				game_started = true;
+				System.out.println("The game has started!!!");
 				break;
 			}
 			case "User-Added" : 
@@ -379,7 +389,9 @@ public class Board{
 			decode(s);
 			System.out.println(s);
 		}
-		}catch(Exception e){e.printStackTrace();}
+		}catch(Exception e){
+			System.out.println("Get all messages null hai");
+		}
 		
 		// System.out.println(messageQueue);
 		//System.out.println(socket.message_queue);
