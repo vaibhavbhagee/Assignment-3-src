@@ -11,6 +11,7 @@ public class Board{
 	Socket_handler socket;
 	String name;
 	Queue<Player_Info> plr_q;
+	int game_mode = 0;
 
 	public Board(int width, int height, String name){
 		Var.width = width;
@@ -66,7 +67,7 @@ public class Board{
 			int y = (int)(Var.height - b.posY);
 			data_out.setBallPos(x,y);
 		}
-		periodic_network();
+		if(game_mode!=0) periodic_network();
 		return data_out;
 	}
 
@@ -182,6 +183,8 @@ public class Board{
 	}
 
 	void init_network(){
+		game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
+		if(game_mode!=0)
 		try{
 			String s1 = System.console().readLine("Enter Choice: ");
 			socket = new Socket_handler(s1);
@@ -207,12 +210,17 @@ public class Board{
 
 	boolean is_pseudo_server(){
 		// returns true depending on whether the current player is the pseudo server
-		try{
-			return socket.is_pseudo_server();
-		}catch(Exception e){
-			e.printStackTrace();
-			return false;
+		if(game_mode==0) return true;
+		else{
+			try{
+				return socket.is_pseudo_server();
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("KYA HAE???????"+counter);
+				return false;
+			}
 		}
+
 	}
 
 	void broadcast(String str){
