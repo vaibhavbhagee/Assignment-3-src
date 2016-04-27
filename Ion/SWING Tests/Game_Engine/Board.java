@@ -19,6 +19,7 @@ public class Board{
 		Var.width = width;
 		Var.height = height;
 		Var.speed = Var.width/Var.freq*Var.speed_factor;
+		Var.speed_increase = 0;
 		epsilon = Var.speed;
 		plr[0] = new Player("Shreyan", "a", 0);
 		plr[1] = new Player("Shreyan", "b", 1);
@@ -35,6 +36,8 @@ public class Board{
 		// take care of reflections
 		// return an Object to render the board
 		++counter;
+		Var.speed_increase *= Var.speed_decay_factor;
+		epsilon = Var.speed * (Var.speed_increase + 1);
 		//////////////////////////////////////////////////////////////////////periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
@@ -62,13 +65,6 @@ public class Board{
 
 		return data_out;
 	}
-
-	// public int getX(){
-	// 	return (int)b.posX;
-	// }
-	// public int getY(){
-	// 	return (int)(Var.height - b.posY);
-	// }
 
 	void hit_paddle(int paddle_num, Ball b){
 		double x,l,phi;
@@ -108,8 +104,9 @@ public class Board{
 		// w0
 		if((Math.abs(b.posY - b.diameter/2 - plr[0].p.delta) < epsilon)&&(b.posX > plr[0].p.d1)&&(b.posX < plr[0].p.d2)){
 			hit_paddle(0,b);
-			b.addSpin(plr[0].p.paddle_speed);
 			data_out.collisionPaddle(0);
+			b.addSpin(plr[0].p.paddle_speed);
+			Var.speed_increase += Var.level_power[plr[0].p.current_power];		
 			//System.out.println("Paddle 0");
 			//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
 		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
@@ -123,6 +120,8 @@ public class Board{
 		if((Math.abs(b.posX - b.diameter/2 - plr[1].p.delta) < epsilon)&&(b.posY > plr[1].p.d1)&&(b.posY < plr[1].p.d2)){
 			hit_paddle(1,b);
 			data_out.collisionPaddle(1);
+			b.addSpin(plr[1].p.paddle_speed);
+			Var.speed_increase += Var.level_power[plr[1].p.current_power];
 			//System.out.println("Paddle 1");
 		}else if(Math.abs(b.posX-b.diameter/2) < epsilon){		//w1
 			// b.velX*=-1;
@@ -138,6 +137,8 @@ public class Board{
 		{
 			hit_paddle(2,b);
 			data_out.collisionPaddle(2);
+			b.addSpin(plr[2].p.paddle_speed);
+			Var.speed_increase += Var.level_power[plr[2].p.current_power];
 			//System.out.println("Paddle 2");
 		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
 			// b.velY*=-1;
@@ -151,10 +152,12 @@ public class Board{
 		if((Math.abs(b.posX + b.diameter/2 + plr[3].p.delta - Var.width) < epsilon)&&(b.posY > plr[3].p.d1)&&(b.posY < plr[3].p.d2)){
 			hit_paddle(3,b);
 			data_out.collisionPaddle(3);
+			b.addSpin(plr[3].p.paddle_speed);
+			Var.speed_increase += Var.level_power[plr[2].p.current_power];
 			//System.out.println("Paddle 3");
 		}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
 			// b.velX*=-1;
-			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
+			if(b.theetha < Math.PI) b.theetha = Math.PI -b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			data_out.collisionWall(3);
 			System.out.println("wall 3");
@@ -163,8 +166,10 @@ public class Board{
 
 	void init_network(){
 		try{
+			System.out.print("Enter Choice: ");
 			socket = new Socket_handler("2");
 			new Thread(socket).start();
+			System.out.print("Enter IP: ");
 			socket.connect_to_user("10.208.20.161");
 		}catch(Exception e){e.printStackTrace();}
 	}
@@ -186,6 +191,8 @@ public class Board{
 	}
 
 	void broadcast(){
+		String msg1 = b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String();
+		String msg2 = plr[0].to_String();
 		try{
 			socket.send_message_to_all("Message;"+counter);
 		}catch(Exception e){e.printStackTrace();}
