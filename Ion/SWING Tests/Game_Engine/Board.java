@@ -9,18 +9,15 @@ public class Board{
 	Player[] plr = new Player[4];	// player[0] is the current_player
 	DataForUI data_out;
 	Socket_handler socket;
+	String name;
 
-	public int getSpeed()
-	{
-		return (int)(Var.speed);
-	}
-
-	public Board(int width, int height){
+	public Board(int width, int height, String name){
 		Var.width = width;
 		Var.height = height;
 		Var.speed = Var.width/Var.freq*Var.speed_factor;
 		Var.speed_increase = 0;
 		epsilon = Var.speed;
+		this.name = name;
 		plr[0] = new Player("Shreyan", "a", 0);
 		plr[1] = new Player("Shreyan", "b", 1);
 		plr[2] = new Player("Shreyan", "c", 2);
@@ -185,14 +182,13 @@ public class Board{
 			e.printStackTrace();
 			return false;
 		}
-		
 	}
 
-	void broadcast(){
+	void broadcast(String str){
 		String msg1 = b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String();
 		String msg2 = plr[0].to_String();
 		try{
-			socket.send_message_to_all("Message;"+msg2);
+			socket.send_message_to_all(str);
 		}catch(Exception e){e.printStackTrace();}
 		
 
@@ -216,5 +212,43 @@ public class Board{
 		// 2) position of paddle of a certain player
 		// 3) new player has been added - Get me the details of the player along with player number
 	}
+	void decode(String str){
+		String s[] = str.split[";"];
+		switch(s[0]){
+			case "Message" : {
+				break;
+			}
+			case "User-Added" : 
+			case "User-Joined" : 
+			case "New-User-Added" : {
+				broadcast("User-Name;"+socket.my_ip_address()+";"+name);
+				break;
+			}
+			case "User-Name" : {
+				break;
+			}
+			case "User-Reconnected" : {
+				break;
+			}
+			case "User-Disconnected" : {
+				break;
+			}
+			case "Joining-Order" : {
+				break;
+			}
+		}
+	}
 
+	public int getSpeed()
+	{
+		return (int)(Var.speed);
+	}
+	//User-Added;10.208.20.232
+	//User-Added;10.192.34.150
+	//Joining-Order;10.208.20.232;0;10.192.34.150;1
+
+	//User-Added;10.208.20.232
+	//User-Reconnected;10.192.34.150
+	//Joining-Order;10.208.20.232;0;10.192.34.150;1;10.192.45.162;2
+	//User-Disconnected;10.192.45.162
 }

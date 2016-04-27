@@ -132,10 +132,10 @@ public class Socket_handler implements Runnable
 						System.out.println(key);
 			    	}
 
-			    	// if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
-			    	// {
-			    	// 	this.send_joining_order();
-			    	// }
+			    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.send_joining_order();
+			    	}
 	            }
 	            else if (decode[0].equals("Handshake-Request"))
 	            {
