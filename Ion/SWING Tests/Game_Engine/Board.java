@@ -38,7 +38,7 @@ public class Board{
 		Var.height = h;
 	}
 	public void setGameMode(int i){
-		game_mode = 1;
+		game_mode = i; //TODO: yeh yaad rakhiyo and shreyan ki gpl
 		init_network();
 		// 0 - single player
 		// 1 - Hosting
