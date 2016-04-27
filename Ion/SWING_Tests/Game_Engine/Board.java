@@ -22,9 +22,9 @@ public class Board{
 		this.name = name;
 
 		plr[0] = new Player(name, null, 0);
-		plr[1] = new Player("AI_1", null, 1);
-		plr[2] = new Player("AI_2", null, 2);
-		plr[3] = new Player("AI_3", null, 3);
+		plr[1] = new Player("AI_1", "", 1);
+		plr[2] = new Player("AI_2", "", 2);
+		plr[3] = new Player("AI_3", "", 3);
 		plr[0].is_AI = false;
 		plr_q = new LinkedList<Player_Info>();
 
@@ -39,6 +39,7 @@ public class Board{
 	}
 	public void setGameMode(int i){
 		game_mode = i;
+
 		init_network();
 		// 0 - single player
 		// 1 - Hosting
@@ -296,7 +297,13 @@ public class Board{
 				System.out.println("Message2");
 				ip_temp = s[1].substring(0, s[1].indexOf("#"));
 				for(int i=1; i<4; ++i)
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1]);
+					if(plr[i].
+						ip.
+						equals(
+							ip_temp)) 
+						plr[i].
+					from_String(
+						s[1]);
 				break;
 			}
 			case "User-Added" : 
@@ -327,7 +334,10 @@ public class Board{
 			case "User-Disconnected" : {
 				System.out.println("User-Disconnected");
 				for(int i=0; i<4; ++i){
-					if(plr[i].ip.equals(s[1])){
+					if(plr[i].
+						ip.
+						equals(
+							s[1])){
 						plr[i].is_AI = true;
 						break;
 					}
@@ -378,6 +388,7 @@ public class Board{
 		System.out.println(socket.message_queue);
 		for(String s : messageQueue){
 			decode(s);
+			System.out.println(s);
 		}
 
 		// receive the broadcasted message from the server and decode them appropriately
