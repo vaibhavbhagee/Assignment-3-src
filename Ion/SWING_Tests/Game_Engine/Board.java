@@ -76,7 +76,7 @@ public class Board{
 		// return an Object to render the board
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		////////////////////////////////////////////////////periodic_network();
+		if(game_mode!=0) periodic_network();
 
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
@@ -222,6 +222,7 @@ public class Board{
 
 	void init_network(){
 		//game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
+		System.out.println("lskdjf "+isHost+" "+current_ip);
 		if(game_mode!=0)
 		try{
 			//String s1 = System.console().readLine("Enter Choice: ");
@@ -369,13 +370,17 @@ public class Board{
 		}
 	}
 	void get_all_messages(){
-		Queue<String> messageQueue = socket.ret_q();
-		// System.out.println(messageQueue);
-		//System.out.println(socket.message_queue);
-		for(String s : messageQueue){
+		try{
+			Queue<String> messageQueue = socket.ret_q();
+			for(String s : messageQueue){
 			decode(s);
 			System.out.println(s);
 		}
+		}catch(Exception e){e.printStackTrace();}
+		
+		// System.out.println(messageQueue);
+		//System.out.println(socket.message_queue);
+		
 
 		// receive the broadcasted message from the server and decode them appropriately
 		// type of messages
