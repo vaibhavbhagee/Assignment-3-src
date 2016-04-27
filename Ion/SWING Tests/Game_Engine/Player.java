@@ -12,7 +12,7 @@ public class Player{
 	public Player(String name, String ip, int player_number){
 		this.name = name;
 		this.ip = ip;
-		this.player_number = player_number;
+		this.player_number = -100;
 		is_AI = true;
 		level_AI = 3;
 		// score = 0;
@@ -27,20 +27,21 @@ public class Player{
 	}
 
 	public String to_String(){
-		return (name+"#"+ip+"#"+player_number+"#"+
+		return (ip+"#"+name+"#"+player_number+"#"+
 			is_AI+"#"+level_AI+"#"+lives+"%"+p.to_String());
 	}
 	public void from_String(String val){
 		String[] s1 = val.split("%");
 		String[] s = s1[0].split("#");
-		//orientation = Integer.parseInt(s[0]);
-		name = s[0];
-		ip = s[1];
-		player_number = Integer.parseInt(s[2]);
-		is_AI = Boolean.parseBoolean(s[3]);
-		level_AI = Integer.parseInt(s[4]);
-		lives = Integer.parseInt(s[5]);
-		p.from_String(s1[1]);
+		boolean is_AI_temp = Boolean.parseBoolean(s[3]);
+		if(!is_AI_temp){		
+			ip = s[0];
+			name = s[1];
+			player_number = Integer.parseInt(s[2]);
+			level_AI = Integer.parseInt(s[4]);
+			lives = Integer.parseInt(s[5]);
+			p.from_String(s1[1]);
+		}
 	}
 
 }
