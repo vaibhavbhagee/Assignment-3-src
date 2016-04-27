@@ -194,7 +194,9 @@ long c1=0,c2=0;
                         dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     try{
-                        dfui = board_b.update(dfe);
+                        dfui = 
+                        board_b.update(
+                            dfe);
                     }catch(Exception e){e.printStackTrace();}
                     //if(dfui.getFlag() == true)
                     //  playSound("something.wav");
@@ -269,7 +271,7 @@ long c1=0,c2=0;
 
         board_side = (int)(0.8*min( (int)(frame.getSize().getHeight()), (int)(frame.getSize().getWidth()) ));
         
-        board_b = new Board(board_side,board_side);
+        board_b = new Board(board_side,board_side, "bancho");
         //System.out.println("banka"+board_side);
         
         paddle_length[0] = (int)(board_side*0.25);
