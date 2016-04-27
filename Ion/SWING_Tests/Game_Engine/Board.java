@@ -12,6 +12,7 @@ public class Board{
 	String name;
 	Queue<Player_Info> plr_q;
 	int game_mode = 0;
+	String current_ip;
 
 	int singleOrMultiPlayer, isHost;
 
@@ -32,6 +33,10 @@ public class Board{
 		data_out = new DataForUI();
 	}			// 460 x 460
 
+	public void acceptIP(String ip1);
+	{	
+		current_ip = ip1;
+	}
 	public void setParams(int w, int h)
 	{
 		Var.width = w;
@@ -41,11 +46,29 @@ public class Board{
 		epsilon = Var.speed;
 	}
 	public void setGameMode(int i){
-		game_mode = i; //TODO: yeh yaad rakhiyo and shreyan ki gpl
+		game_mode = i;
+
 		init_network();
 		// 0 - single player
 		// 1 - Hosting
 		// 2 - connecting
+	}
+
+//Called by host of the game when he presses game start
+	public void hostApproval(boolean b) 
+	{
+		//if host approves, b is true
+	}
+
+//this is polled by each client user. return true when host has started the game
+	public boolean requestForHostApproval()
+	{
+		return false; //true when game has started by host
+	}
+
+	public int min(int a, int b)
+	{
+		if(a<b) return a; else return b;
 	}
 
 	public DataForUI update(DataForEngine o){
@@ -133,7 +156,7 @@ public class Board{
 			hit_paddle(0,b);
 			data_out.collisionPaddle(0);
 			b.addSpin(plr[0].p.paddle_speed);
-			Var.speed_increase += Var.level_power[plr[0].p.current_power];		
+			Var.speed_increase += Var.level_power[min(4,plr[0].p.current_power)];		
 			//System.out.println("Paddle 0");
 			//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
 		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0

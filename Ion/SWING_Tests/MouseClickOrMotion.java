@@ -29,6 +29,9 @@ import java.awt.Font;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 public class MouseClickOrMotion extends JPanel implements MouseMotionListener, MouseListener{
 
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
@@ -71,9 +74,9 @@ long c1=0,c2=0;
     private Game_Engine.DataForEngine dfe = new Game_Engine.DataForEngine();
     private Game_Engine.DataForUI dfui = new Game_Engine.DataForUI();
 
-    private static MouseClickOrMotion newContentPane;
+    private  MouseClickOrMotion newContentPane;
 
-    private static JFrame frame = new JFrame("PingPong");
+    private  JFrame frame = new JFrame("PingPong");
 
     private int min(int a, int b)
     {

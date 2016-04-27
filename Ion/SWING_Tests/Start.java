@@ -22,9 +22,9 @@ import java.awt.Font;
 
 public class Start extends JPanel implements MouseMotionListener, MouseListener{
 
-	private static JFrame start_frame = new JFrame("Start");
+	private  static JFrame start_frame = new JFrame("Start");
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
-    private static Start newContentPane;
+    private  static Start newContentPane;
     private int sel=0;
 	//MouseClickOrMotion m = new MouseClickOrMotion();
 	MultiOpt mu = new MultiOpt();
@@ -186,13 +186,14 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
         start_frame.setVisible(true);
     }
 
-    public void launch()
+    public static void launch()
     {
         createAndShowGUI();
     }
 
 	public static void main(String args[])
 	{
-		createAndShowGUI();
+		//Start s = new Start();
+        createAndShowGUI();
 	}
 }

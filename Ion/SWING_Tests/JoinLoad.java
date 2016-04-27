@@ -32,8 +32,8 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     private static JoinLoad newContentPane;
     private int sel=0;
 
-    private String ipAddress = "";
-    private String playerName = "";
+    private static String ipAddress = "";
+    private static String playerName = "";
 
     private Board board_b;
     Timer t1;
@@ -83,7 +83,9 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
 
-        board_b = new Board(20,20,"Host",1,1);
+        board_b = new Board(20,20,playerName,1,1);
+
+        board_b.acceptIP(ipAddress);
 
         t1 = new Timer();
         t1.scheduleAtFixedRate(new TimerTask(){
@@ -91,6 +93,13 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
             public void run()
             {
                 board_b.periodic_network();
+                if( board_b.requestForHostApproval() )
+                {
+                     t1.cancel(); 
+                     t1.purge(); 
+                     (new MouseClickOrMotion(playerName,1,0,board_b)).launch(); 
+                     JoinLoad_frame.dispose();
+                }
             }
         },0,20);
 
@@ -112,7 +121,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: t1.cancel(); t1.purge(); (new MouseClickOrMotion("Host",1,0,board_b)).launch(); JoinLoad_frame.dispose(); break;
+    		case 2: break;
     		default: break;
     	}
     }
@@ -173,7 +182,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
     }
 
-    private void createAndShowGUI() {
+    private static void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -208,7 +217,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoad_frame.setVisible(true);
     }
 
-    public void launch(){
+    public static  void launch(){
         createAndShowGUI();
     }
 }
