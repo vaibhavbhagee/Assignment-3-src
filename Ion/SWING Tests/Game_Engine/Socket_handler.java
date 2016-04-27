@@ -316,6 +316,21 @@ public class Socket_handler implements Runnable
 		}
 	}
 
+	public String my_ip_address()
+	{
+		public boolean is_pseudo_server()
+	{
+		try
+		{
+			return this.my_ip_address;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	}
+
 	public void connect_to_user(String ip_address) throws Exception
 	{
 		if (this.connect_list.get(ip_address) == null)

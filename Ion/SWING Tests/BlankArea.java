@@ -9,10 +9,13 @@ import java.util.List;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import java.awt.Font;
+
 import java.util.*;
 
 public class BlankArea extends JLabel {
-    Dimension minSize = new Dimension(100, 100);
+    Dimension gameOverDim = new Dimension(100, 100);
+    int board_side;
     Rectangle r1,r2,r3,r4,r5 = new Rectangle(0,0,0,0,0);
     Circle c1 = new Circle(0,0,0);
     Circle[] trail = new Circle[10];
@@ -21,6 +24,9 @@ public class BlankArea extends JLabel {
     List<Rectangle> digits = new ArrayList<Rectangle>();
     List<ShowString> numerals = new ArrayList<ShowString>();
     List<Rectangle> lives = new ArrayList<Rectangle>();
+    
+    ShowString gameOverMessage;
+    private boolean gameOverSorry = false;
     public Rectangle redZone1;
     public Rectangle redZone2;
     public Rectangle redZone3;
@@ -31,6 +37,18 @@ public class BlankArea extends JLabel {
     public int gWidth=0;
     public int gHeight=0;
     public int bSize=0;
+
+    public void setGameOverDim(Dimension d, int bs)
+    {
+        gameOverDim = d;
+        board_side = bs;
+        gameOverMessage = new ShowString("Game Over. Kat Gaya Aapka :(",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,20));
+    }
+
+    public void showGameOverLol()
+    {
+        gameOverSorry = true;
+    }
 
     public void setRed()
     {
@@ -198,6 +216,10 @@ public class BlankArea extends JLabel {
                 System.out.println(n.retstr());
             }
             i++;
+            
+            if(gameOverSorry)
+                gameOverMessage.draw(g);
+
             renderDone = true;
             
     }
@@ -228,7 +250,7 @@ public class BlankArea extends JLabel {
         numerals = num;
     }
 
-    public Dimension getMinimumSize() {
+/*    public Dimension getMinimumSize() {
         return minSize;
     }
 
@@ -236,7 +258,7 @@ public class BlankArea extends JLabel {
     public Dimension getPreferredSize() {
         return minSize;
     }
-
+*/
     public void reDraw()
     {
         //repaint(1,180,0,832,832);
