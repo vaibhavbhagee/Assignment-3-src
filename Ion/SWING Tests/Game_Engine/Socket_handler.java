@@ -71,7 +71,7 @@ public class Socket_handler implements Runnable
 		        this.update_pseudo_server();
 			}
 
-			new Thread(new message_sender_thread(this)).start();
+			// new Thread(new message_sender_thread(this)).start();
 
 			Timer timer = new Timer();
 
