@@ -406,7 +406,7 @@ public class Board{
 
 	public int getSpeed()
 	{
-		return (int)(Var.speed);
+		return (int)(Var.speed*(1+Var.speed_increase));
 	}
 
 	class Player_Info{

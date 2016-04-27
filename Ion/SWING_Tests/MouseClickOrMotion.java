@@ -171,7 +171,7 @@ long c1=0,c2=0;
             public void run(){
                 if(blankArea.renderDone == true)
                 {
-                    if(board_b!=null && board_b.getSpeed()>10)
+                    if(board_b!=null && board_b.getSpeed()>12)
                         blankArea.trail_on();
                     else
                         blankArea.trail_off();

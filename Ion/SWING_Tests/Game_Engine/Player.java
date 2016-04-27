@@ -17,10 +17,10 @@ public class Player{
 		level_AI = 3;
 		// score = 0;
 		lives = 5;
-		if(player_number == 0) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05);
-		if(player_number == 1) p = new Paddle(2,0, Var.height*0.25, Var.width*0.05);
-		if(player_number == 2) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05);
-		if(player_number == 3) p = new Paddle(2,0, Var.height*0.25, Var.width*0.05);
+		if(player_number == 0) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05,0);
+		if(player_number == 1) p = new Paddle(2,0, Var.height*0.25, Var.width*0.05,1);
+		if(player_number == 2) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05,2);
+		if(player_number == 3) p = new Paddle(2,0, Var.height*0.25, Var.width*0.05,3);
 	}
 	public void movePaddle(double x, double y){
 		p.movePaddle(x,y,level_AI);

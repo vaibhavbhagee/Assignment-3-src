@@ -3,18 +3,26 @@ public class Paddle{
 	int orientation;	// 1 for horizontal and 2 for vertical
 	double d1;
 	double d2;
+	int playerID;
 	int current_power;
 	int paddle_speed;
 	double delta;		// gap from the base
 
-	public Paddle(int orientation, double d1, double d2, double delta){
+	public Paddle(int orientation, double d1, double d2, double delta, int playerID){
 		this.orientation = orientation;
 		this.d1 = d1;
 		this.d2 = d2;
 		this.delta = delta;
 		this.current_power = 0;
 		paddle_speed = 0;
+		this.playerID = playerID;
 		//System.out.println("PADDLE VALUES: "+d1+" "+d2);
+	}
+
+	public double mod(double a)
+	{
+		if(a>0) return a;
+		else return (-a);
 	}
 
 	public String to_String(){
@@ -33,22 +41,81 @@ public class Paddle{
 	public void movePaddle(double x, double y, int level_AI){
 		double factor = 1;
 		double center = (d1+d2)/2;
-		if(orientation==1){
-			if(center>x){
-				d1 -= Var.speed * Var.level_AI[level_AI];
-				d2 -= Var.speed * Var.level_AI[level_AI];
-			}else{
-				d1 += Var.speed * Var.level_AI[level_AI];
-				d2 += Var.speed * Var.level_AI[level_AI];
+		if(orientation==1 && playerID==0){
+			if(y<286)
+			{
+				if(center>x && mod(center-x)>10 ){
+					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}else if(center<x && mod(center-x)>10 ){
+					d1 += Var.speed*1.9*Var.level_AI[level_AI];
+					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}
+			}
+
+		}else if(orientation==1 && playerID==2){
+			if(y>300)
+			{
+				if(center>x && mod(center-x)>10 ){
+					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}else if(center<x && mod(center-x)>10 ){
+					d1 += Var.speed*1.9*Var.level_AI[level_AI];
+					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}
+			}
+		}else if(orientation==2 && playerID==3){
+			if(x>300)
+			{
+				if(center>y && mod(center-y)>10 ){
+					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}else if(center<y && mod(center-y)>10 ){
+					d1 += Var.speed*1.9*Var.level_AI[level_AI];
+					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}
+			}
+		}else if(orientation==2 && playerID==1){
+			if(x<286)
+			{
+				if(center>y && mod(center-y)>10 ){
+					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}else if(center<y && mod(center-y)>10 ){
+					d1 += Var.speed*1.9*Var.level_AI[level_AI];
+					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
+				}
 			}
 		}else{
-			if(center>y){
-				d1 -= Var.speed * Var.level_AI[level_AI];
-				d2 -= Var.speed * Var.level_AI[level_AI];
-			}else{
-				d1 += Var.speed * Var.level_AI[level_AI];
-				d2 += Var.speed * Var.level_AI[level_AI];
-			}
+			paddle_speed = 0;
+		}
+		paddle_speed /=5;
+		approveTheseValues(d1,d2,d2-d1);
+	}
+
+	public void approveTheseValues(double a,double b,double or)
+	{
+		if(a<0)
+		{
+			System.out.println("too left" + playerID);
+			d1=0;
+			d2=or;
+		}
+		else if(b>586)
+		{
+			System.out.println("too right" +playerID);
+			d2=586;
+			d1=586-or;
 		}
 	}
+
+
 }
