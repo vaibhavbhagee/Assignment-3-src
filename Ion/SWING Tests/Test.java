@@ -7,7 +7,8 @@ class Test{
 	Timer t;
 	public Test(){
 		d = new DataForEngine();
-		b = new Board(500,500, "bancho");
+		b = new Board(500,500, "bancho",1,1);
+		b.setGameMode(1);
 		t = new Timer();
 		t.schedule(new TimerTask(){
 			@Override

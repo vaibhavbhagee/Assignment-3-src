@@ -38,7 +38,7 @@ public class Board{
 		Var.height = h;
 	}
 	public void setGameMode(int i){
-		game_mode = i;
+		game_mode = 1;
 		init_network();
 		// 0 - single player
 		// 1 - Hosting
@@ -213,11 +213,11 @@ public class Board{
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase;
-			System.out.println(msg1);
+			//System.out.println(msg1);
 			broadcast(msg1);
 		}else{
 			String msg2 = "Message2;"+plr[0].to_String();
-			System.out.println(msg2);
+			//System.out.println(msg2);
 			broadcast(msg2);
 		}
 		//System.out.println(is_pseudo_server());
@@ -239,8 +239,8 @@ public class Board{
 	}
 
 	void broadcast(String str){
-		String msg1 = b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String();
-		String msg2 = plr[0].to_String();
+		//String msg1 = b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String();
+		//String msg2 = plr[0].to_String();
 		try{
 			socket.send_message_to_all(str);
 		}catch(Exception e){e.printStackTrace();}
@@ -259,6 +259,7 @@ public class Board{
 		String s[] = str.split(";");
 		switch(s[0]){
 			case "Message1" : if(!is_pseudo_server()) {
+				System.out.println("Message1");
 				b.from_String(s[1]);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
@@ -275,6 +276,7 @@ public class Board{
 				Var.speed_increase = Double.parseDouble(s[6]);
 			}	break;
 			case "Message2" : {
+				System.out.println("Message2");
 				ip_temp = s[1].substring(0, s[1].indexOf("#"));
 				for(int i=1; i<4; ++i)
 					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1]);
@@ -283,17 +285,20 @@ public class Board{
 			case "User-Added" : 
 			case "User-Joined" : 
 			case "New-User-Added" : {
+				System.out.println("New User");
 				broadcast("User-Name;"+socket.my_ip_address()+";"+name);
 				plr_q.add(new Player_Info(s[1]));
 				break;
 			}
 			case "User-Name" : {
+				System.out.println("User Name");
 				for(Player_Info p : plr_q){
 					if(p.ip.equals(s[1])) p.name = s[2];
 				}
 				break;
 			}
 			case "User-Reconnected" : {
+				System.out.println("Reconnected");
 				for(int i=0; i<4; ++i){
 					if(plr[i].ip.equals(s[1])){
 						plr[i].is_AI = false;
@@ -303,6 +308,7 @@ public class Board{
 				break;
 			}
 			case "User-Disconnected" : {
+				System.out.println("User-Disconnected");
 				for(int i=0; i<4; ++i){
 					if(plr[i].ip.equals(s[1])){
 						plr[i].is_AI = true;
@@ -312,6 +318,7 @@ public class Board{
 				break;
 			}
 			case "Joining-Order" : {
+				System.out.println("Joining order");
 				int my_joining_order = -100;
 				try{
 					for(Player_Info p : plr_q){
