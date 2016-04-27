@@ -132,10 +132,10 @@ public class Socket_handler implements Runnable
 						System.out.println(key);
 			    	}
 
-			    	// if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
-			    	// {
-			    	// 	this.send_joining_order();
-			    	// }
+			    	if (this.connect_list.get(this.my_ip_address).is_pseudo_server)
+			    	{
+			    		this.send_joining_order();
+			    	}
 	            }
 	            else if (decode[0].equals("Handshake-Request"))
 	            {
@@ -314,6 +314,21 @@ public class Socket_handler implements Runnable
 			System.out.println("Exception raised in is_baap");
 			return false;
 		}
+	}
+
+	public String my_ip_address()
+	{
+		public boolean is_pseudo_server()
+	{
+		try
+		{
+			return this.my_ip_address;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 	}
 
 	public void connect_to_user(String ip_address) throws Exception
