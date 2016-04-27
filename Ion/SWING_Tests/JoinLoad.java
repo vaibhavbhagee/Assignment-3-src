@@ -85,6 +85,8 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
         board_b = new Board(20,20,playerName,1,1);
 
+        board_b.acceptIP(ipAddress);
+
         t1 = new Timer();
         t1.scheduleAtFixedRate(new TimerTask(){
             @Override

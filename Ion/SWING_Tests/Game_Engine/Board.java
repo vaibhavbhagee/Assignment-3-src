@@ -12,6 +12,7 @@ public class Board{
 	String name;
 	Queue<Player_Info> plr_q;
 	int game_mode = 0;
+	String current_ip;
 
 	public Board(int width, int height, String name, int singleOrMultiPlayer, int isHost){
 		Var.width = width;
@@ -32,6 +33,10 @@ public class Board{
 		data_out = new DataForUI();
 	}			// 460 x 460
 
+	public void acceptIP(String ip1);
+	{	
+		current_ip = ip1;
+	}
 	public void setParams(int w, int h)
 	{
 		Var.width = w;
