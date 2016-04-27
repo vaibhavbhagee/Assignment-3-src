@@ -10,6 +10,8 @@ public class Board{
 	DataForUI data_out;
 	Socket_handler socket;
 	String name;
+	String[] joining_order;
+
 
 	public Board(int width, int height, String name){
 		Var.width = width;
@@ -18,10 +20,14 @@ public class Board{
 		Var.speed_increase = 0;
 		epsilon = Var.speed;
 		this.name = name;
-		plr[0] = new Player("Shreyan", "a", 0);
-		plr[1] = new Player("Shreyan", "b", 1);
-		plr[2] = new Player("Shreyan", "c", 2);
-		plr[3] = new Player("Shreyan", "d", 3);
+		joining_order = new String[4];
+
+		plr[0] = new Player(name, null, 0);
+		plr[1] = new Player("AI_1", null, 1);
+		plr[2] = new Player("AI_2", null, 2);
+		plr[3] = new Player("AI_3", null, 3);
+		plr[0].is_AI = false;
+
 		b = new Ball(width/2,height/2,Math.PI/5,20);
 		data_out = new DataForUI();
 		init_network();
@@ -36,7 +42,7 @@ public class Board{
 
 		Var.speed_increase *= Var.speed_decay_factor;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		/////////////////////////////////////////////////////////////////periodic_network();
+		periodic_network();
 		{		
 			plr[0].p.d1 = o.getLeftPosition();
 			plr[0].p.d2 = o.getRightPosition();
@@ -171,11 +177,12 @@ public class Board{
 			socket = new Socket_handler(System.console().readLine("Enter Choice: "));
 			new Thread(socket).start();
 			socket.connect_to_user(System.console().readLine("Enter IP: "));
+			plr[0].ip = socket.my_ip_address();
 		}catch(Exception e){e.printStackTrace();}
 	}
 	void periodic_network(){
 		get_all_messages();
-		broadcast();
+		broadcast("lodu");
 		System.out.println(is_pseudo_server());
 	}
 
@@ -205,20 +212,8 @@ public class Board{
 		// 	RequestHandler.broadcast("Appropriate Message");
 		// }
 	}
-	void get_all_messages(){
-		Queue<String> messageQueue = socket.ret_q();
-		// System.out.println(messageQueue);
-		System.out.println(socket.message_queue);
-		
-
-		// receive the broadcasted message from the server and decode them appropriately
-		// type of messages
-		// 1) position of ball and all players
-		// 2) position of paddle of a certain player
-		// 3) new player has been added - Get me the details of the player along with player number
-	}
 	void decode(String str){
-		String s[] = str.split[";"];
+		String s[] = str.split(";");
 		switch(s[0]){
 			case "Message" : {
 				break;
@@ -227,9 +222,11 @@ public class Board{
 			case "User-Joined" : 
 			case "New-User-Added" : {
 				broadcast("User-Name;"+socket.my_ip_address()+";"+name);
+				
 				break;
 			}
 			case "User-Name" : {
+
 				break;
 			}
 			case "User-Reconnected" : {
@@ -239,9 +236,33 @@ public class Board{
 				break;
 			}
 			case "Joining-Order" : {
+				try{
+					joining_order[Integer.parseInt(s[2])] = s[1];
+					joining_order[Integer.parseInt(s[4])] = s[3];
+					joining_order[Integer.parseInt(s[6])] = s[5];
+					joining_order[Integer.parseInt(s[8])] = s[7];
+				}catch(Exception e){e.printStackTrace();}
+				System.out.println("0: "+joining_order[0]);
+				System.out.println("1: "+joining_order[1]);
+				System.out.println("2: "+joining_order[2]);
+				System.out.println("3: "+joining_order[3]);
 				break;
 			}
 		}
+	}
+	void get_all_messages(){
+		Queue<String> messageQueue = socket.ret_q();
+		// System.out.println(messageQueue);
+		System.out.println(socket.message_queue);
+		for(String s : messageQueue){
+			decode(s);
+		}
+
+		// receive the broadcasted message from the server and decode them appropriately
+		// type of messages
+		// 1) position of ball and all players
+		// 2) position of paddle of a certain player
+		// 3) new player has been added - Get me the details of the player along with player number
 	}
 
 	public int getSpeed()

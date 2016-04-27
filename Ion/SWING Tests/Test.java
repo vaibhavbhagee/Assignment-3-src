@@ -7,7 +7,7 @@ class Test{
 	Timer t;
 	public Test(){
 		d = new DataForEngine();
-		b = new Board(500,500);
+		b = new Board(500,500, "bancho");
 		t = new Timer();
 		t.schedule(new TimerTask(){
 			@Override
