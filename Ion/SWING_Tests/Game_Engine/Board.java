@@ -54,9 +54,14 @@ public class Board{
 		
 	}
 	public void setGameMode(int i){
-		game_mode = i;
-		System.out.println("Set gam mode");
-		init_network();
+		if(game_mode==-100){
+			game_mode = i;
+			System.out.println("Set gam mode " + i);
+			init_network();
+		}else{
+			System.out.println("FUCK YOU ION");
+		}
+		
 		// 0 - single player
 		// 1 - Hosting
 		// 2 - connecting
