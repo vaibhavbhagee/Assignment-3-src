@@ -29,8 +29,8 @@ import java.awt.Font;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 
 public class MouseClickOrMotion extends JPanel implements MouseMotionListener, MouseListener{
 

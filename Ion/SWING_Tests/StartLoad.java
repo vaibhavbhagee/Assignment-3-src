@@ -82,6 +82,12 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         System.out.println("wtf");
         board_b = new Board(20,20,"Host",1,1);
         System.out.println("seriously");
+        board_b.setParams(586,586);
+
+        board_b.acceptIP(ipAddress);
+
+        board_b.setGameMode(1);
+
         t1 = new Timer();
         t1.scheduleAtFixedRate(new TimerTask(){
             @Override
