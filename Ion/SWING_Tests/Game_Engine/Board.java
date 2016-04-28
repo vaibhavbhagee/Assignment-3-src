@@ -97,7 +97,7 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-		System.out.println("update");
+		// System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
 		if(game_mode!=0) periodic_network();
@@ -449,7 +449,7 @@ public class Board{
 	}
 
 	public void end_game(){
-		t.stop();
+		if(t!=null) t.stop();
 		socket = null;
 		System.out.println("Game khatam ho gaya");
 	}
