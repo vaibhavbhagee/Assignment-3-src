@@ -48,14 +48,14 @@ public class Player{
 			name = s[1];
 			player_number = Integer.parseInt(s[2]);
 			level_AI = Integer.parseInt(s[4]);
-			if(!is_baap)
+			//if(!is_baap)
 			lives = Integer.parseInt(s[5]);
 			//System.out.println("lives update: "+s[5]);
 			p.from_String(s1[1], (difference==1 || difference==2));
 		}
 	}
 	public void reduce_life(){
-		--lives;
+		if(lives > 0) --lives;
 		if(lives <= 0) p.disable();
 	}
 
