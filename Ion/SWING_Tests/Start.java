@@ -58,7 +58,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
         blankArea.addMouseMotionListener(this);
         blankArea.addMouseListener(this);
  
-        setPreferredSize(new Dimension(960, 500));
+        setPreferredSize(new Dimension(960, 700));
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         start_frame.pack();
