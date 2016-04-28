@@ -69,7 +69,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         blankArea.addMouseMotionListener(this);
         blankArea.addMouseListener(this);
  
-        setPreferredSize(new Dimension(1920, 1000));
+        setPreferredSize(new Dimension(960, 700));
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         JoinLoad_frame.pack();

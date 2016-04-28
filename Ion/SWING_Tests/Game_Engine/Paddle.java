@@ -119,7 +119,7 @@ public class Paddle{
 		}else{
 			paddle_speed = 0;
 		}
-		paddle_speed /=5;
+		paddle_speed /=2;
 		approveTheseValues(d1,d2,d2-d1);
 	}
 
