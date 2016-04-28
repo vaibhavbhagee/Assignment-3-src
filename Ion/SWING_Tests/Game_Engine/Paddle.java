@@ -40,23 +40,6 @@ public class Paddle{
 			d1 = Double.parseDouble(s[0]);
 			d2 = Double.parseDouble(s[1]);
 		}
-
-		// if(difference==0){
-		// 	d1 = Double.parseDouble(s[0]);
-		// 	d2 = Double.parseDouble(s[1]);
-		// }
-		// else if(difference==1){
-		// 	d2 = Var.height - Double.parseDouble(s[0]);
-		// 	d1 = Var.height - Double.parseDouble(s[1]);
-		// }else if(difference==2){
-		// 	d2 = Var.width - Double.parseDouble(s[0]);
-		// 	d1 = Var.width - Double.parseDouble(s[1]);
-		// }else if(difference==3){
-		// 	d1 = Double.parseDouble(s[0]);
-		// 	d2 = Double.parseDouble(s[1]);
-		// }
-		// d1 = Double.parseDouble(s[0]);
-		// d2 = Double.parseDouble(s[1]);
 		current_power = Integer.parseInt(s[2]);
 		paddle_speed = Integer.parseInt(s[3]);
 		disable = Boolean.parseBoolean(s[4]);
@@ -64,7 +47,7 @@ public class Paddle{
 
 	public void movePaddle(double x, double y, int level_AI){
 		if(disable) return;
-		double factor = 1;
+		//double factor = 1;
 		double center = (d1+d2)/2;
 		if(orientation==1 && playerID==0){
 			if(y<286)
@@ -126,17 +109,12 @@ public class Paddle{
 		approveTheseValues(d1,d2,d2-d1);
 	}
 
-	public void approveTheseValues(double a,double b,double or)
-	{
-		if(a<0)
-		{
-			//System.out.println("too left" + playerID);
+	public void approveTheseValues(double a,double b,double or){
+		if(a<0){
 			d1=0;
 			d2=or;
 		}
-		else if(b>586)
-		{
-			//System.out.println("too right" +playerID);
+		else if(b>586){
 			d2=586;
 			d1=586-or;
 		}

@@ -17,6 +17,7 @@ public class Board{
 	boolean already_set_param = false;
 	int singleOrMultiPlayer, isHost;
 	int my_joining_order = -100;
+	Thread t;
 
 	public Board(int a, int b, String name, int singleOrMultiPlayer, int isHost){
 		this.name = name;
@@ -101,11 +102,13 @@ public class Board{
 		epsilon = Var.speed * (Var.speed_increase + 1);
 		if(game_mode!=0) periodic_network();
 
-		{		
-			plr[0].p.d1 = o.getLeftPosition();
-			plr[0].p.d2 = o.getRightPosition();
-			plr[0].p.current_power = o.getCurrentPower();
-			plr[0].p.paddle_speed = o.getCurrentVelocity();
+		{
+			if(!plr[0].p.disable){
+				plr[0].p.d1 = o.getLeftPosition();
+				plr[0].p.d2 = o.getRightPosition();
+				plr[0].p.current_power = o.getCurrentPower();
+				plr[0].p.paddle_speed = o.getCurrentVelocity();
+			}
 			data_out.noCollision();
 			data_out.resetAllFlags();
 		}
@@ -260,7 +263,8 @@ public class Board{
 			if(socket==null){
 				System.out.println("socket null tha");
 				socket = new Socket_handler(isHost+"");
-				new Thread(socket).start();
+				t = new Thread(socket);
+				t.start();
 				if(isHost==2)
 				socket.connect_to_user(current_ip);
 				plr[0].ip = socket.my_ip_address();
@@ -444,13 +448,9 @@ public class Board{
 		return (int)(Var.speed*(1+Var.speed_increase));
 	}
 
-
-	//User-Added;10.208.20.232
-	//User-Added;10.192.34.150
-	//Joining-Order;10.208.20.232;0;10.192.34.150;1
-
-	//User-Added;10.208.20.232
-	//User-Reconnected;10.192.34.150
-	//Joining-Order;10.208.20.232;0;10.192.34.150;1;10.192.45.162;2
-	//User-Disconnected;10.192.45.162
+	public void end_game(){
+		t.stop();
+		socket = null;
+		System.out.println("Game khatam ho gaya");
+	}
 }
