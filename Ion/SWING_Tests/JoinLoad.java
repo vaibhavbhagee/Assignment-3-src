@@ -86,6 +86,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         board_b = new Board(20,20,playerName,1,2);
         board_b.setParams(586,586);
 
+
         board_b.acceptIP(ipAddress);
 
         board_b.setGameMode(1);

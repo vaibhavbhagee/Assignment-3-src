@@ -15,8 +15,8 @@ public class Board{
 	String current_ip;
 	boolean game_started = false;
 	boolean already_set_param = false;
-
 	int singleOrMultiPlayer, isHost;
+	int my_joining_order = -100;
 
 	public Board(int a, int b, String name, int singleOrMultiPlayer, int isHost){
 		this.name = name;
@@ -59,9 +59,14 @@ public class Board{
 		
 	}
 	public void setGameMode(int i){
-		game_mode = i;
-		System.out.println("Set gam mode");
-		init_network();
+		if(game_mode==-100){
+			game_mode = i;
+			System.out.println("Set gam mode " + i);
+			init_network();
+		}else{
+			System.out.println("FAQ YOU ION");
+		}
+		
 		// 0 - single player
 		// 1 - Hosting
 		// 2 - connecting
@@ -71,6 +76,7 @@ public class Board{
 	public void hostApproval(boolean b) 
 	{
 		broadcast("Start_Game");
+		game_started = true;
 		//if host approves, b is true
 	}
 
@@ -261,7 +267,7 @@ public class Board{
 		//System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
-			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase;
+			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
 			//System.out.println(msg1);
 			broadcast(msg1);
 		}else{
@@ -269,6 +275,7 @@ public class Board{
 			//System.out.println(msg2);
 			broadcast(msg2);
 		}
+		if(counter<10000 && game_started) broadcast("Start_Game");
 		//System.out.println(is_pseudo_server());
 	}
 
@@ -299,7 +306,7 @@ public class Board{
 		switch(s[0]){
 			case "Message1" : if(!is_pseudo_server()) {
 				System.out.println("Message1");
-				b.from_String(s[1]);
+				b.from_String(s[1], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
 					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2]);
@@ -363,7 +370,7 @@ public class Board{
 			}
 			case "Joining-Order" : {
 				System.out.println("Joining order");
-				int my_joining_order = -100;
+				my_joining_order = -100;
 				try{
 					for(Player_Info p : plr_q){
 						if(p.ip.equals(s[1])) 
@@ -429,16 +436,7 @@ public class Board{
 		return (int)(Var.speed*(1+Var.speed_increase));
 	}
 
-	class Player_Info{
-		public String name;
-		public String ip;
-		public int joining_order;
-		public Player_Info(String ip){
-			this.name = null;
-			this.ip = ip;
-			joining_order = -100;
-		}
-	}
+
 	//User-Added;10.208.20.232
 	//User-Added;10.192.34.150
 	//Joining-Order;10.208.20.232;0;10.192.34.150;1
