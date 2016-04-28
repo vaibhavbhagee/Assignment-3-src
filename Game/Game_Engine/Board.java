@@ -498,14 +498,26 @@ public class Board{
 	}
 
 	public void end_game(){
-		if(t!=null) t.interrupt();
-		if (socket != null) socket.socket.close();
-		socket = null;
-		game_mode = -100;
-		my_joining_order = -100;
-		game_started = false;
-		already_set_param = false;
-		setParams((int)Var.width, (int)Var.height);
-		System.out.println("Game khatam ho gaya");
+		// TODO: Figure out why giving null pointer on reconnection multiplayer game
+		try
+		{
+			if(t!=null)
+			{ 
+				if (socket != null) socket.socket_close();
+				t.stop();
+			}
+			socket = null;
+			//
+			game_mode = -100;
+			my_joining_order = -100;
+			game_started = false;
+			already_set_param = false;
+			setParams((int)Var.width, (int)Var.height);
+			//
+			System.out.println("Game khatam ho gaya");
+		}
+		catch (Exception e) {
+			System.out.println("exception inside end game method");
+		}
 	}
 }

@@ -18,6 +18,8 @@ public class Socket_handler implements Runnable
 
 	public int users_joined = 0;
 
+	public Timer timer;
+
 	public String getIp() throws SocketException 
 	{
 
@@ -53,9 +55,9 @@ public class Socket_handler implements Runnable
 
 			// new Thread(new message_sender_thread(this)).start();
 
-			Timer timer = new Timer();
+			this.timer = new Timer();
 
-			timer.scheduleAtFixedRate(new connectivity_check(this),0,500);
+			this.timer.scheduleAtFixedRate(new connectivity_check(this),0,500);
 
 			while(true)
 			{
@@ -362,6 +364,18 @@ public class Socket_handler implements Runnable
 			}
     	}
         this.connect_list.get(ip_addr).send_message("Handshake-Request"+/*my_ip_address+";true"+*/this.get_ip_list()+"");
+    }
+
+    public void socket_close()
+    {
+    	try
+    	{
+    		this.timer.cancel();
+    		this.socket.close();
+    	}
+    	catch (Exception e) {
+    		System.out.println("Exception in close socket");
+    	}
     }
 
     public void update_pseudo_server()
