@@ -358,6 +358,12 @@ public class Board{
 				for(Player_Info p : plr_q){
 					if(p.ip.equals(s[1])) p.name = s[2];
 				}
+				for(int i=1; i<4; ++i){
+					if(plr[i].ip.equals(s[1])){
+						plr[i].name = s[2];
+						break;
+					}
+				}
 				break;
 			}
 			case "User-Reconnected" : {
