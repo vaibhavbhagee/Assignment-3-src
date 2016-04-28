@@ -18,6 +18,7 @@ public class Board{
 	int singleOrMultiPlayer, isHost;
 	int my_joining_order = -100;
 	Thread t;
+	public String[] connectedPlayers = new String[4];
 
 	public Board(int a, int b, String name, int singleOrMultiPlayer, int isHost){
 		this.name = name;
@@ -26,7 +27,30 @@ public class Board{
 		this.isHost = isHost;
 		plr_q = new LinkedList<Player_Info>();
 		data_out = new DataForUI();
+		connectedPlayers[0]="PEER1";
+		connectedPlayers[1]="PEER2";
+		connectedPlayers[2]="PEER3";
+		connectedPlayers[3]="PEER4";
 	}			// 460 x 460
+
+	public void getConnectedPlayers()
+	{
+		String[] connectedPlayers2 = new String[4];
+		int j=0;
+		for(Player_Info p:plr_q)
+		{
+			boolean flag = true;
+			for(int i=0;i<4;i++)
+				if( flag == true && connectedPlayers[i].equals("PEER"+j+":"+p.name+":"+p.ip) )
+				{
+					flag = false;
+					connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
+				}
+			if(flag)
+				connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
+		}
+		connectedPlayers = connectedPlayers2;
+	}
 
 	public void setIndividualAILevel(int ai)
 	{
