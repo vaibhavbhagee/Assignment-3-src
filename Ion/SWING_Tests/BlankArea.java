@@ -159,9 +159,11 @@ public class BlankArea extends JLabel {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
-            if(sz.retstr().length()>=5)
+            if(sz!=null&& sz.retstr()!=null)
+            {System.out.println(sz.retstr()+":(");
+                if(sz.retstr().length()>=5)
                 if(sz.retstr().substring(0,5).equals("PEER1"))
-                    sz.setstr(s.retstr());
+                    sz.setstr(s.retstr());}
         }       
     }
 
@@ -170,9 +172,10 @@ public class BlankArea extends JLabel {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
-            if(sz.retstr().length()>=5)
-                if(sz.retstr().substring(0,5).equals("PEER2"))
-                    sz.setstr(s.retstr());
+            if(sz!=null && sz.retstr()!=null )    
+                if(sz.retstr().length()>=5)
+                    if(sz.retstr().substring(0,5).equals("PEER2"))
+                        sz.setstr(s.retstr());
         }       
     }
 
@@ -181,6 +184,7 @@ public class BlankArea extends JLabel {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
+            if(sz!=null&& sz.retstr()!=null)
             if(sz.retstr().length()>=5)
                 if(sz.retstr().substring(0,5).equals("PEER3"))
                     sz.setstr(s.retstr());
@@ -192,6 +196,7 @@ public class BlankArea extends JLabel {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {
             ShowString sz = iter.next();
+            if(sz!=null&& sz.retstr()!=null)
             if(sz.retstr().length()>=5)
                 if(sz.retstr().substring(0,5).equals("PEER4"))
                     sz.setstr(s.retstr());

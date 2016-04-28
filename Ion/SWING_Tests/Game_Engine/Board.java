@@ -35,19 +35,31 @@ public class Board{
 
 	public void getConnectedPlayers()
 	{
+		//System.out.println("##############################################################################"+plr_q.size());
+		for(Player_Info p:plr_q)
+		{
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+p.ip);
+		}
 		String[] connectedPlayers2 = new String[4];
 		int j=0;
 		for(Player_Info p:plr_q)
 		{
 			boolean flag = true;
 			for(int i=0;i<4;i++)
-				if( flag == true && connectedPlayers[i].equals("PEER"+j+":"+p.name+":"+p.ip) )
-				{
-					flag = false;
-					connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
-				}
+			{
+				if(connectedPlayers[i]!=null)
+					if( flag == true && connectedPlayers[i].equals("PEER"+j+":"+p.name+":"+p.ip) )
+					{
+						flag = false;
+						connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
+						System.out.println("wow");
+					}
+				
+				System.out.println("LOOPNE"+connectedPlayers[i]);
+			}
 			if(flag)
 				connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
+			System.out.println("FUCKBHKJSBHKJSAHDLALDJFBDKGBADFGKFGVBKSAJFDBJLGHFC<JVFHKFKHBVFJKKFCZ>FbKFVGBJBSVDJFBGVSDKgbfSFgbKFGBVKBDGf"+connectedPlayers2[j-1]);
 		}
 		connectedPlayers = connectedPlayers2;
 	}
