@@ -28,6 +28,11 @@ public class Board{
 		data_out = new DataForUI();
 	}			// 460 x 460
 
+	public void setIndividualAILevel(int ai)
+	{
+
+	}
+
 	public String playerIName(int i)
 	{
 		return plr[i].getName();

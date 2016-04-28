@@ -100,7 +100,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
                 {
                      t1.cancel(); 
                      t1.purge(); 
-                     (new MouseClickOrMotion(playerName,1,0,board_b)).launch(); 
+                     (new MouseClickOrMotion(playerName,1,0,board_b,0)).launch(); 
                      JoinLoad_frame.dispose();
                 }
             }

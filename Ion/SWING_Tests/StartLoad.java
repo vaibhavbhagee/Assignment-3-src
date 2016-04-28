@@ -115,7 +115,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
+    		case 2: board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
     		default: break;
     	}
         blankArea.reDraw();
