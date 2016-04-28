@@ -33,11 +33,14 @@ public class ShowString{
        		Graphics2D g2x = (Graphics2D)g;
        		g2x.rotate(Math.toRadians(-90));
        		g2x.translate(-400,0);
-			if(planame.substring(0,2).equals("AI") == false)
-				g2x.drawString(planame + str.substring(7,str.length()),x-width/2,y);
-			else
-				g2x.drawString(str,x-width/2,y);
-
+			try{
+				if(planame.length()>=2 && planame.substring(0,2).equals("AI") == false)
+					g2x.drawString(planame + str.substring(7,str.length()),x-width/2,y);
+				else
+					g2x.drawString(str,x-width/2,y);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			g2x.translate(400,0);
        		g2x.rotate(Math.toRadians(90));
        	}
@@ -45,10 +48,14 @@ public class ShowString{
        	{
 			Graphics2D g2x = (Graphics2D)g;
        		g2x.translate(410,0);
-       		if(planame.substring(0,2).equals("AI") == false)
-				g2x.drawString(planame + str.substring(7,str.length()),x-width/2,y);
-			else
-				g2x.drawString(str,x-width/2,y);
+       		try{
+       			if(planame.length()>=2 && planame.substring(0,2).equals("AI") == false)
+					g2x.drawString(planame + str.substring(7,str.length()),x-width/2,y);
+				else
+					g2x.drawString(str,x-width/2,y);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 
 			g2x.translate(-410,0);
        	}

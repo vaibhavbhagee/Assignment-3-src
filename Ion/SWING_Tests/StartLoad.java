@@ -65,7 +65,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         blankArea.addMouseMotionListener(this);
         blankArea.addMouseListener(this);
  
-        setPreferredSize(new Dimension(1920, 1000));
+        setPreferredSize(new Dimension(960, 700));
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         StartLoad_frame.pack();
