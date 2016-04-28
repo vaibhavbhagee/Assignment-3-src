@@ -171,6 +171,7 @@ long c1=0,c2=0;
             public void run(){
                 if(blankArea.renderDone == true)
                 {
+                    System.out.println("drawthread:");
                     if(board_b!=null && board_b.getSpeed()>12)
                         blankArea.trail_on();
                     else
@@ -188,7 +189,7 @@ long c1=0,c2=0;
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-
+System.out.println("workthread");
                 i++;
                 cur=System.currentTimeMillis();
                 blankArea.setTrails();
@@ -208,14 +209,16 @@ long c1=0,c2=0;
                             dfe);
                     }catch(Exception e){e.printStackTrace();System.out.println("bancho");}
 
-                    if(i>3)
-                    {
-                        blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
-                        blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
-                        blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
-                        blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
-                        //blankArea.reDraw2();
-                    }
+                    try{
+                        if(i>3)
+                        {
+                            blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
+                            blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
+                            blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
+                            blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
+                            //blankArea.reDraw2();
+                        }
+                    }catch(Exception e){e.printStackTrace();}
                     
 
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
@@ -253,11 +256,7 @@ long c1=0,c2=0;
                             p4.killPaddle();
 
                     }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
-                    // System.out.println("beforeredraw"+(System.currentTimeMillis()-cur));
-                   //System.out.println(System.currentTimeMillis()-cur);
-                    //c2++;
-                    //System.out.println("c2:"+c2);
-                        // curp = System.currentTimeMillis();
+     
 
             }
         },0,20);

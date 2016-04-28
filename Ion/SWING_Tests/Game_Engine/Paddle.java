@@ -29,23 +29,31 @@ public class Paddle{
 		return (d1+"#"+d2+"#"+current_power+"#"+paddle_speed+";");
 	}
 
-	public void from_String(String val, int difference){
+	public void from_String(String val, boolean invert){
 		String[] s = val.split("#");
 		// System.out.println("paddle");
-		if(difference==0){
-			d1 = Double.parseDouble(s[0]);
-			d2 = Double.parseDouble(s[1]);
-		}
-		else if(difference==1){
+		if(invert){
 			d2 = Var.height - Double.parseDouble(s[0]);
 			d1 = Var.height - Double.parseDouble(s[1]);
-		}else if(difference==2){
-			d2 = Var.width - Double.parseDouble(s[0]);
-			d1 = Var.width - Double.parseDouble(s[1]);
-		}else if(difference==3){
+		}else{
 			d1 = Double.parseDouble(s[0]);
 			d2 = Double.parseDouble(s[1]);
 		}
+
+		// if(difference==0){
+		// 	d1 = Double.parseDouble(s[0]);
+		// 	d2 = Double.parseDouble(s[1]);
+		// }
+		// else if(difference==1){
+		// 	d2 = Var.height - Double.parseDouble(s[0]);
+		// 	d1 = Var.height - Double.parseDouble(s[1]);
+		// }else if(difference==2){
+		// 	d2 = Var.width - Double.parseDouble(s[0]);
+		// 	d1 = Var.width - Double.parseDouble(s[1]);
+		// }else if(difference==3){
+		// 	d1 = Double.parseDouble(s[0]);
+		// 	d2 = Double.parseDouble(s[1]);
+		// }
 		// d1 = Double.parseDouble(s[0]);
 		// d2 = Double.parseDouble(s[1]);
 		current_power = Integer.parseInt(s[2]);

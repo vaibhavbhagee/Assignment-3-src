@@ -12,7 +12,7 @@ public class Player{
 	public Player(String name, String ip, int player_number){
 		this.name = name;
 		this.ip = ip;
-		this.player_number = -100;
+		this.player_number = player_number;
 		is_AI = true;
 		level_AI = 3;
 		// score = 0;
@@ -48,7 +48,7 @@ public class Player{
 			player_number = Integer.parseInt(s[2]);
 			level_AI = Integer.parseInt(s[4]);
 			lives = Integer.parseInt(s[5]);
-			p.from_String(s1[1], difference);
+			p.from_String(s1[1], difference%2==1);
 		}
 	}
 

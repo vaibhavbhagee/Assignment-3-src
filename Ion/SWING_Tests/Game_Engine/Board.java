@@ -96,7 +96,7 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-		// System.out.println("update");
+		System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
 		if(game_mode!=0) periodic_network();
@@ -309,7 +309,7 @@ public class Board{
 				b.from_String(s[1], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[7]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[2], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[3].substring(0, s[3].indexOf("#"));
 				for(int i=1; i<4; ++i) 
 					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[3], Integer.parseInt(s[7]), my_joining_order);
