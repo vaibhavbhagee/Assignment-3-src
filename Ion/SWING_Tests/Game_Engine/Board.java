@@ -127,6 +127,10 @@ public class Board{
 			int x = (int)b.posX;
 			int y = (int)(Var.height - b.posY);
 			data_out.setBallPos(x,y);
+			data_out.lives[0] = plr[0].lives;
+			data_out.lives[1] = plr[1].lives;
+			data_out.lives[2] = plr[2].lives;
+			data_out.lives[3] = plr[3].lives;
 		}
 		if(game_mode!=0) periodic_network();
 		return data_out;
@@ -183,7 +187,8 @@ public class Board{
 		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
-			data_out.oneLifeLostBy(0);
+			//data_out.oneLifeLostBy(0);
+			plr[0].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(0);
 			//System.out.println("wall 0");
@@ -200,7 +205,8 @@ public class Board{
 			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
-			data_out.oneLifeLostBy(1);
+			//data_out.oneLifeLostBy(1);
+			plr[1].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(1);
 			System.out.println("wall 1");
@@ -218,7 +224,8 @@ public class Board{
 		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
-			data_out.oneLifeLostBy(2);
+			//data_out.oneLifeLostBy(2);
+			plr[2].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(2);
 			System.out.println("wall 2");
@@ -236,7 +243,8 @@ public class Board{
 			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI -b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
-			data_out.oneLifeLostBy(3);
+			//data_out.oneLifeLostBy(3);
+			plr[3].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(3);
 			System.out.println("wall 3");

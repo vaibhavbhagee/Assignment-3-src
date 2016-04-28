@@ -7,6 +7,7 @@ public class Paddle{
 	int current_power;
 	int paddle_speed;
 	double delta;		// gap from the base
+	boolean disable = false;
 
 	public Paddle(int orientation, double d1, double d2, double delta, int playerID){
 		this.orientation = orientation;
@@ -26,7 +27,7 @@ public class Paddle{
 	}
 
 	public String to_String(){
-		return (d1+"#"+d2+"#"+current_power+"#"+paddle_speed+";");
+		return (d1+"#"+d2+"#"+current_power+"#"+paddle_speed+"#"+disable+";");
 	}
 
 	public void from_String(String val, boolean invert){
@@ -58,9 +59,11 @@ public class Paddle{
 		// d2 = Double.parseDouble(s[1]);
 		current_power = Integer.parseInt(s[2]);
 		paddle_speed = Integer.parseInt(s[3]);
+		disable = Boolean.parseBoolean(s[4]);
 	}
 
 	public void movePaddle(double x, double y, int level_AI){
+		if(disable) return;
 		double factor = 1;
 		double center = (d1+d2)/2;
 		if(orientation==1 && playerID==0){
@@ -138,6 +141,10 @@ public class Paddle{
 			d1=586-or;
 		}
 	}
-
+	public void disable(){
+		disable = true;
+		d1 = 10000000;
+		d2 = 10000000;
+	}
 
 }

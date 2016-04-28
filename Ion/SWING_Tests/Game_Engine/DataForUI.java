@@ -36,7 +36,7 @@ public class DataForUI{
 
 	private boolean[] ball_paddle_collision = new boolean[4];
 	private boolean[] ball_wall_collision = new boolean[4];
-	private int[] lives = new int[4];
+	public int[] lives = new int[4];
 	public int paddle_pos[] = new int[4];
 	public int powered_up[] = new int[4];
 	private int ballX;

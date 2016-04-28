@@ -52,5 +52,9 @@ public class Player{
 			p.from_String(s1[1], (difference==1 || difference==2));
 		}
 	}
+	public void reduce_life(){
+		--lives;
+		if(lives <= 0) p.disable();
+	}
 
 }
