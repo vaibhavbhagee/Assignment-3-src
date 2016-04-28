@@ -27,6 +27,11 @@ public class Board{
 		data_out = new DataForUI();
 	}			// 460 x 460
 
+	public String playerIName(int i)
+	{
+		return plr[i].getName();
+	}
+
 	public void acceptIP(String ip1)
 	{	
 		System.out.println("IP" + ip1);

@@ -84,7 +84,8 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 		blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
 
         board_b = new Board(20,20,playerName,1,2);
-       board_b.setParams(586,586);
+        board_b.setParams(586,586);
+
 
         board_b.acceptIP(ipAddress);
 
@@ -169,8 +170,8 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
         blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
-   		blankArea.addString(new ShowString("WAITING FOR ADMIN:\nList",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-   		blankArea.addString(new ShowString("BE READY",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+   		blankArea.addString(new ShowString("WAITING FOR ADMIN:\nList",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+   		blankArea.addString(new ShowString("BE READY",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
         JoinLoadButton_x1 = (int)(JoinLoad_frame.getSize().getWidth()/2) - (int)(JoinLoad_frame.getSize().getWidth()/5)/2;
         JoinLoadButton_x2 = (int)(JoinLoad_frame.getSize().getWidth()/2) + (int)(JoinLoad_frame.getSize().getWidth()/5)/2; 
