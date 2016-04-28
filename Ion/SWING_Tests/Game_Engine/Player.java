@@ -37,18 +37,19 @@ public class Player{
 			is_AI+"#"+level_AI+"#"+lives+"%"+p.to_String());
 	}
 	public void from_String(String val, int their_joining_order, int my_joining_order){
-		int difference = my_joining_order - their_joining_order;
+		int difference = their_joining_order - my_joining_order;
 		if(difference < 0) difference+=4;
 		String[] s1 = val.split("%");
 		String[] s = s1[0].split("#");
 		boolean is_AI_temp = Boolean.parseBoolean(s[3]);
+		System.out.println("difference: "+difference+" ip "+ip);
 		if(!is_AI_temp){		
 			ip = s[0];
 			name = s[1];
 			player_number = Integer.parseInt(s[2]);
 			level_AI = Integer.parseInt(s[4]);
 			lives = Integer.parseInt(s[5]);
-			p.from_String(s1[1], difference%2==1);
+			p.from_String(s1[1], (difference==1 || difference==2));
 		}
 	}
 

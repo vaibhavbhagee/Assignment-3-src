@@ -31,7 +31,7 @@ public class Paddle{
 
 	public void from_String(String val, boolean invert){
 		String[] s = val.split("#");
-		// System.out.println("paddle");
+		System.out.println(invert?"invert":"normal");
 		if(invert){
 			d2 = Var.height - Double.parseDouble(s[0]);
 			d1 = Var.height - Double.parseDouble(s[1]);
