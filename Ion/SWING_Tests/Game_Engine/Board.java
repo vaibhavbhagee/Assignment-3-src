@@ -309,16 +309,16 @@ public class Board{
 				b.from_String(s[1], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2]);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[3].substring(0, s[3].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[3]);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[3], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[4].substring(0, s[4].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[4]);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[4], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[5].substring(0, s[5].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[5]);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[5], Integer.parseInt(s[7]), my_joining_order);
 				Var.speed_increase = Double.parseDouble(s[6]);
 			}	break;
 			case "Message2" : {

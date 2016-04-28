@@ -40,8 +40,8 @@ public class Paddle{
 			d2 = Var.height - Double.parseDouble(s[0]);
 			d1 = Var.height - Double.parseDouble(s[1]);
 		}else if(difference==2){
-			d2 = Var.length - Double.parseDouble(s[0]);
-			d1 = Var.length - Double.parseDouble(s[1]);
+			d2 = Var.width - Double.parseDouble(s[0]);
+			d1 = Var.width - Double.parseDouble(s[1]);
 		}else if(difference==3){
 			d1 = Double.parseDouble(s[0]);
 			d2 = Double.parseDouble(s[1]);
