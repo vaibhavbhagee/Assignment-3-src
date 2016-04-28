@@ -94,14 +94,15 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
             public void run()
             {
                 board_b.periodic_network();
+                board_b.getConnectedPlayers();
                 blankArea.replacePeer1(new ShowString(board_b.connectedPlayers[0],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
                 blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
                 blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
                 blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-System.out.println("1"+board_b.connectedPlayers[0]);
-System.out.println("2"+board_b.connectedPlayers[1]);
-System.out.println("3"+board_b.connectedPlayers[2]);
-System.out.println("4"+board_b.connectedPlayers[3]);
+System.out.println(board_b.connectedPlayers[0]+"@@@");
+System.out.println(board_b.connectedPlayers[1]+"@@@");
+System.out.println(board_b.connectedPlayers[2]+"@@@");
+System.out.println(board_b.connectedPlayers[3]+"@@@");
             }
         },0,20);
 
