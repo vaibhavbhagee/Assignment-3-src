@@ -353,6 +353,8 @@ long c1=0,c2=0;
         }
         else
         {
+            if(gameMode!=0)
+                board_b.end_game();
             frame.dispose();
             timer.cancel();
             timer.purge();
