@@ -294,6 +294,7 @@ public class Socket_handler implements Runnable
 
 	public void print_q()
 	{
+		return;
    		System.out.println(this.message_queue);
 	}
 

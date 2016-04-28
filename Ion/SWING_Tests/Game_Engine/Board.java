@@ -227,7 +227,7 @@ public class Board{
 
 	void init_network(){
 		//game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
-		System.out.println("lskdjf "+isHost+" "+current_ip);
+		System.out.println("init_network "+isHost+" "+current_ip);
 		if(game_mode!=0)
 		try{
 			//String s1 = System.console().readLine("Enter Choice: ");
@@ -241,7 +241,7 @@ public class Board{
 
 	public void periodic_network(){
 		if(game_mode==-100) return;
-		System.out.println("PeriodicNetwork");
+		//System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase;
@@ -318,7 +318,7 @@ public class Board{
 				break;
 			}
 			case "User-Name" : {
-				System.out.println("User Name");
+				System.out.println("User Name, IP: "+s[1]+" Name: "+s[2]);
 				for(Player_Info p : plr_q){
 					if(p.ip.equals(s[1])) p.name = s[2];
 				}
@@ -376,7 +376,10 @@ public class Board{
 					plr[index].name = p.name;
 					plr[index].ip = p.ip;
 					plr[index].is_AI = false;
-					System.out.println(index + " "+p.ip+" "+p.name+" "+p.joining_order);
+					//System.out.println(index + " "+p.ip+" "+p.name+" "+p.joining_order);
+				}
+				for(int i=0; i<4;++i){
+					System.out.println("IP: "+plr[i].ip+" Name: "+plr[i].name+" AI? "+plr[i].is_AI);
 				}
 				break;
 			}
@@ -387,7 +390,7 @@ public class Board{
 			Queue<String> messageQueue = socket.ret_q();
 			for(String s : messageQueue){
 			decode(s);
-			System.out.println(s);
+			//System.out.println(s);
 		}
 		}catch(Exception e){
 			System.out.println("Get all messages null hai");
