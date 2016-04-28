@@ -266,7 +266,7 @@ public class Board{
 			//System.out.println(msg1);
 			broadcast(msg1);
 		}else{
-			String msg2 = "Message2;"+plr[0].to_String();
+			String msg2 = "Message2;"+plr[0].to_String()+my_joining_order;
 			//System.out.println(msg2);
 			broadcast(msg2);
 		}
@@ -320,7 +320,7 @@ public class Board{
 				System.out.println("Message2");
 				ip_temp = s[1].substring(0, s[1].indexOf("#"));
 				for(int i=1; i<4; ++i)
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1]);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1], Integer.parseInt(s[2]), my_joining_order);
 				break;
 			}
 			case "Start_Game" : {

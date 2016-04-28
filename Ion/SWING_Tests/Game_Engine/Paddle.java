@@ -29,11 +29,25 @@ public class Paddle{
 		return (d1+"#"+d2+"#"+current_power+"#"+paddle_speed+";");
 	}
 
-	public void from_String(String val){
+	public void from_String(String val, int difference){
 		String[] s = val.split("#");
-		//orientation = Integer.parseInt(s[0]);
-		d1 = Double.parseDouble(s[0]);
-		d2 = Double.parseDouble(s[1]);
+		// System.out.println("paddle");
+		if(difference==0){
+			d1 = Double.parseDouble(s[0]);
+			d2 = Double.parseDouble(s[1]);
+		}
+		else if(difference==1){
+			d2 = Var.height - Double.parseDouble(s[0]);
+			d1 = Var.height - Double.parseDouble(s[1]);
+		}else if(difference==2){
+			d2 = Var.length - Double.parseDouble(s[0]);
+			d1 = Var.length - Double.parseDouble(s[1]);
+		}else if(difference==3){
+			d1 = Double.parseDouble(s[0]);
+			d2 = Double.parseDouble(s[1]);
+		}
+		// d1 = Double.parseDouble(s[0]);
+		// d2 = Double.parseDouble(s[1]);
 		current_power = Integer.parseInt(s[2]);
 		paddle_speed = Integer.parseInt(s[3]);
 	}
