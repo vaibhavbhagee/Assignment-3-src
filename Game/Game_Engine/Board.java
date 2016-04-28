@@ -66,7 +66,9 @@ public class Board{
 
 	public void setIndividualAILevel(int ai)
 	{
-
+		for(int i=0; i<4; ++i){
+			if(plr[i].is_AI) plr[i].level_AI = ai;
+		}
 	}
 
 	public String playerIName(int i)
@@ -141,7 +143,7 @@ public class Board{
 		// System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		if(game_mode!=0) periodic_network();
+		//if(game_mode!=0) periodic_network();
 
 		{
 			if(!plr[0].p.disable){
@@ -328,7 +330,7 @@ public class Board{
 			//System.out.println(msg2);
 			broadcast(msg2);
 		}
-		if(counter<10000 && game_started) broadcast("Start_Game");
+		if(game_started) broadcast("Start_Game");
 		//System.out.println(is_pseudo_server());
 	}
 

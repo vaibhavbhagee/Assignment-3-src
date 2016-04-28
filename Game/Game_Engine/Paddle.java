@@ -47,18 +47,19 @@ public class Paddle{
 
 	public void movePaddle(double x, double y, int level_AI){
 		if(disable) return;
-		//double factor = 1;
 		double center = (d1+d2)/2;
+		double factor1 = 1.9*3*Math.abs(center-x)/Var.width;
+		double factor2 = 1.9*3*Math.abs(center-y)/Var.height;
 		if(orientation==1 && playerID==0){
 			if(y<286)
 			{
 				if(center>x && mod(center-x)>10 ){
-					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
-					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d1 -= Var.speed*Var.level_AI[level_AI]*factor1;
+					d2 -= Var.speed*Var.level_AI[level_AI]*factor1;
 					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}else if(center<x && mod(center-x)>10 ){
-					d1 += Var.speed*1.9*Var.level_AI[level_AI];
-					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					d1 += Var.speed*Var.level_AI[level_AI]*factor1;
+					d2 += Var.speed*Var.level_AI[level_AI]*factor1;
 					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}
 			}
@@ -67,12 +68,12 @@ public class Paddle{
 			if(y>300)
 			{
 				if(center>x && mod(center-x)>10 ){
-					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
-					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d1 -= Var.speed*Var.level_AI[level_AI]*factor1;
+					d2 -= Var.speed*Var.level_AI[level_AI]*factor1;
 					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}else if(center<x && mod(center-x)>10 ){
-					d1 += Var.speed*1.9*Var.level_AI[level_AI];
-					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					d1 += Var.speed*Var.level_AI[level_AI]*factor1;
+					d2 += Var.speed*Var.level_AI[level_AI]*factor1;
 					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}
 			}
@@ -80,12 +81,12 @@ public class Paddle{
 			if(x>300)
 			{
 				if(center>y && mod(center-y)>10 ){
-					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
-					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d1 -= Var.speed*Var.level_AI[level_AI]*factor2;
+					d2 -= Var.speed*Var.level_AI[level_AI]*factor2;
 					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}else if(center<y && mod(center-y)>10 ){
-					d1 += Var.speed*1.9*Var.level_AI[level_AI];
-					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					d1 += Var.speed*Var.level_AI[level_AI]*factor2;
+					d2 += Var.speed*Var.level_AI[level_AI]*factor2;
 					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}
 			}
@@ -93,12 +94,12 @@ public class Paddle{
 			if(x<286)
 			{
 				if(center>y && mod(center-y)>10 ){
-					d1 -= Var.speed*1.9*Var.level_AI[level_AI];
-					d2 -= Var.speed*1.9*Var.level_AI[level_AI];
+					d1 -= Var.speed*Var.level_AI[level_AI]*factor2;
+					d2 -= Var.speed*Var.level_AI[level_AI]*factor2;
 					paddle_speed = (int)(-Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}else if(center<y && mod(center-y)>10 ){
-					d1 += Var.speed*1.9*Var.level_AI[level_AI];
-					d2 += Var.speed*1.9*Var.level_AI[level_AI];
+					d1 += Var.speed*Var.level_AI[level_AI]*factor2;
+					d2 += Var.speed*Var.level_AI[level_AI]*factor2;
 					paddle_speed = (int)(Var.speed*1.9)*(int)Var.level_AI[level_AI];
 				}
 			}
