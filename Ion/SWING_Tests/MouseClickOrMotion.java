@@ -171,7 +171,7 @@ long c1=0,c2=0;
             public void run(){
                 if(blankArea.renderDone == true)
                 {
-                    System.out.println("drawthread:");
+                    //System.out.println("drawthread:");
                     if(board_b!=null && board_b.getSpeed()>12)
                         blankArea.trail_on();
                     else
@@ -189,7 +189,7 @@ long c1=0,c2=0;
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-System.out.println("workthread");
+//System.out.println("workthread");
                 i++;
                 cur=System.currentTimeMillis();
                 blankArea.setTrails();
