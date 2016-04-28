@@ -231,11 +231,16 @@ public class Board{
 		if(game_mode!=0)
 		try{
 			//String s1 = System.console().readLine("Enter Choice: ");
-			socket = new Socket_handler(isHost+"");
-			new Thread(socket).start();
-			if(isHost==2)
-			socket.connect_to_user(current_ip);
-			plr[0].ip = socket.my_ip_address();
+			if(socket==null){
+				System.out.println("socket null tha");
+				socket = new Socket_handler(isHost+"");
+				new Thread(socket).start();
+				if(isHost==2)
+				socket.connect_to_user(current_ip);
+				plr[0].ip = socket.my_ip_address();
+			}else{
+				System.out.println("socket null nahi tha");
+			}
 		}catch(Exception e){e.printStackTrace();}
 	}
 
