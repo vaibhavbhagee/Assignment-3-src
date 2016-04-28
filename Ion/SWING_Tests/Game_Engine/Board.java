@@ -97,7 +97,7 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-		System.out.println("update");
+		// System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
 		if(game_mode!=0) periodic_network();
@@ -358,6 +358,12 @@ public class Board{
 				for(Player_Info p : plr_q){
 					if(p.ip.equals(s[1])) p.name = s[2];
 				}
+				for(int i=1; i<4; ++i){
+					if(plr[i].ip.equals(s[1])){
+						plr[i].name = s[2];
+						break;
+					}
+				}
 				break;
 			}
 			case "User-Reconnected" : {
@@ -449,7 +455,7 @@ public class Board{
 	}
 
 	public void end_game(){
-		t.stop();
+		if(t!=null) t.stop();
 		socket = null;
 		System.out.println("Game khatam ho gaya");
 	}
