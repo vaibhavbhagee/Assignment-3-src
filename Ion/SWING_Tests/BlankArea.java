@@ -154,6 +154,50 @@ public class BlankArea extends JLabel {
        
     }
 
+    public void replacePeer1(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>=5)
+                if(sz.retstr().substring(0,5).equals("PEER1"))
+                    sz.setstr(s.retstr());
+        }       
+    }
+
+    public void replacePeer2(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>=5)
+                if(sz.retstr().substring(0,5).equals("PEER2"))
+                    sz.setstr(s.retstr());
+        }       
+    }
+
+        public void replacePeer3(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>=5)
+                if(sz.retstr().substring(0,5).equals("PEER3"))
+                    sz.setstr(s.retstr());
+        }       
+    }
+
+        public void replacePeer4(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz.retstr().length()>=5)
+                if(sz.retstr().substring(0,5).equals("PEER4"))
+                    sz.setstr(s.retstr());
+        }       
+    }
+
     public BlankArea(Color color) {
         setBackground(color);
         setOpaque(true);

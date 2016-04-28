@@ -67,6 +67,7 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int smoothen_x=0;
     private int diff;
     private String playerName;
+    private int individualDiff;
 
     private int gameMode=0;
     long cur=0;
@@ -103,11 +104,12 @@ long c1=0,c2=0;
           }
     }
 
-    public MouseClickOrMotion(String name, int mode, int isHost, Board b_old) {
+    public MouseClickOrMotion(String name, int mode, int isHost, Board b_old, int individualDifficulty) {
         super(new GridBagLayout());
         System.out.println("MCOM");
         boardFromPrevPage = b_old;
         mode = gameMode;
+        individualDiff = individualDifficulty;
         playerName = name;
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -292,6 +294,9 @@ long c1=0,c2=0;
                  board_b.setParams(board_side,board_side);
             }   
             board_b.setGameMode(gameMode);
+
+            if(individualDiff>0)
+                board_b.setIndividualAILevel(individualDiff);
 
             //System.out.println("banka"+board_side);
             
