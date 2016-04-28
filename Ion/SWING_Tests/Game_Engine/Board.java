@@ -338,7 +338,7 @@ public class Board{
 			}
 			case "Start_Game" : {
 				game_started = true;
-				System.out.println("The game has started!!!");
+				//System.out.println("The game has started!!!");
 				break;
 			}
 			case "User-Added" : 
@@ -384,22 +384,22 @@ public class Board{
 						if(p.ip.equals(s[1])) 
 							p.joining_order = Integer.parseInt(s[2]);
 					}
-					if(socket.my_ip_address().equals(s[1])) if(my_joining_order!=-100) my_joining_order = Integer.parseInt(s[2]);
+					if(socket.my_ip_address().equals(s[1])) if(my_joining_order==-100) my_joining_order = Integer.parseInt(s[2]);
 					for(Player_Info p : plr_q){
 						if(p.ip.equals(s[3])) 
 							p.joining_order = Integer.parseInt(s[4]);
 					}
-					if(socket.my_ip_address().equals(s[3])) if(my_joining_order!=-100) my_joining_order = Integer.parseInt(s[4]);
+					if(socket.my_ip_address().equals(s[3])) if(my_joining_order==-100) my_joining_order = Integer.parseInt(s[4]);
 					for(Player_Info p : plr_q){
 						if(p.ip.equals(s[5])) 
 							p.joining_order = Integer.parseInt(s[6]);
 					}
-					if(socket.my_ip_address().equals(s[5])) if(my_joining_order!=-100) my_joining_order = Integer.parseInt(s[6]);
+					if(socket.my_ip_address().equals(s[5])) if(my_joining_order==-100) my_joining_order = Integer.parseInt(s[6]);
 					for(Player_Info p : plr_q){
 						if(p.ip.equals(s[7])) 
 							p.joining_order = Integer.parseInt(s[8]);
 					}
-					if(socket.my_ip_address().equals(s[7])) if(my_joining_order!=-100) my_joining_order = Integer.parseInt(s[8]);
+					if(socket.my_ip_address().equals(s[7])) if(my_joining_order==-100) my_joining_order = Integer.parseInt(s[8]);
 				}catch(Exception e){e.printStackTrace();}
 				System.out.println("My joining_order: "+my_joining_order);
 				for(Player_Info p : plr_q){
