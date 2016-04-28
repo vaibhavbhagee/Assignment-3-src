@@ -45,6 +45,7 @@ public class Ball{
 	public void from_String(String val, int their_joining_order, int my_joining_order){
 		int difference = my_joining_order - their_joining_order;
 		if(difference < 0) difference+=4;
+		System.out.println("difference is :"+difference);
 		String[] s = val.split("#");
 		spin = Double.parseDouble(s[3]);
 		if(difference == 0){
@@ -52,18 +53,18 @@ public class Ball{
 			posY = Double.parseDouble(s[1]);
 			theetha = Double.parseDouble(s[2]);
 		}else if(difference == 1){
-			posX = -Double.parseDouble(s[1]);
+			posX = Var.width-Double.parseDouble(s[1]);
 			posY = Double.parseDouble(s[0]);
 			theetha = Double.parseDouble(s[2]) + Math.PI/2;
 			if(theetha > 2*Math.PI) theetha -= 2*Math.PI;
 		}else if (difference == 2){
-			posX = -Double.parseDouble(s[0]);
-			posY = -Double.parseDouble(s[1]);
+			posX = Var.width-Double.parseDouble(s[0]);
+			posY = Var.height-Double.parseDouble(s[1]);
 			theetha = Double.parseDouble(s[2]) + Math.PI;
 			if(theetha > 2*Math.PI) theetha -= 2*Math.PI;
 		}else if (difference == 3){
 			posX = Double.parseDouble(s[1]);
-			posY = -Double.parseDouble(s[0]);
+			posY = Var.height-Double.parseDouble(s[0]);
 			theetha = Double.parseDouble(s[2]) + 3*Math.PI/2;
 			if(theetha > 2*Math.PI) theetha -= 2*Math.PI;
 		}		
