@@ -294,7 +294,8 @@ public class Socket_handler implements Runnable
 
 	public void print_q()
 	{
-   		System.out.println(this.message_queue);
+		return;
+   		//System.out.println(this.message_queue);
 	}
 
 	public boolean is_pseudo_server()

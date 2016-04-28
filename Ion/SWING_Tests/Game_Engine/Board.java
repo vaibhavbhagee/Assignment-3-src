@@ -14,6 +14,7 @@ public class Board{
 	int game_mode = -100;
 	String current_ip;
 	boolean game_started = false;
+	boolean already_set_param = false;
 
 	int singleOrMultiPlayer, isHost;
 
@@ -33,18 +34,24 @@ public class Board{
 	}
 	public void setParams(int w, int h)
 	{
-		System.out.println("setParams");
-		Var.width = w;
-		Var.height = h;
-		Var.speed = Var.width/Var.freq*Var.speed_factor;
-		Var.speed_increase = 0;
-		epsilon = Var.speed;
-		b = new Ball(Var.width/2,Var.height/2,Math.PI/5,20);
-		plr[0] = new Player(name, null, 0);
-		plr[1] = new Player("AI_1", "", 1);
-		plr[2] = new Player("AI_2", "", 2);
-		plr[3] = new Player("AI_3", "", 3);
-		plr[0].is_AI = false;
+		if(already_set_param){
+			System.out.println("already_set_param");
+		}else{
+			System.out.println("setParams");
+			Var.width = w;
+			Var.height = h;
+			Var.speed = Var.width/Var.freq*Var.speed_factor;
+			Var.speed_increase = 0;
+			epsilon = Var.speed;
+			b = new Ball(Var.width/2,Var.height/2,Math.PI/5,20);
+			plr[0] = new Player(name, null, 0);
+			plr[1] = new Player("AI_1", "", 1);
+			plr[2] = new Player("AI_2", "", 2);
+			plr[3] = new Player("AI_3", "", 3);
+			plr[0].is_AI = false;
+			already_set_param = true;
+		}
+		
 	}
 	public void setGameMode(int i){
 		game_mode = i;
@@ -227,21 +234,26 @@ public class Board{
 
 	void init_network(){
 		//game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
-		System.out.println("lskdjf "+isHost+" "+current_ip);
+		System.out.println("init_network "+isHost+" "+current_ip+" Game Mode: "+game_mode);
 		if(game_mode!=0)
 		try{
 			//String s1 = System.console().readLine("Enter Choice: ");
-			socket = new Socket_handler(isHost+"");
-			new Thread(socket).start();
-			if(isHost==2)
-			socket.connect_to_user(current_ip);
-			plr[0].ip = socket.my_ip_address();
+			if(socket==null){
+				System.out.println("socket null tha");
+				socket = new Socket_handler(isHost+"");
+				new Thread(socket).start();
+				if(isHost==2)
+				socket.connect_to_user(current_ip);
+				plr[0].ip = socket.my_ip_address();
+			}else{
+				System.out.println("socket null nahi tha");
+			}
 		}catch(Exception e){e.printStackTrace();}
 	}
 
 	public void periodic_network(){
 		if(game_mode==-100) return;
-		System.out.println("PeriodicNetwork");
+		//System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase;
@@ -318,7 +330,7 @@ public class Board{
 				break;
 			}
 			case "User-Name" : {
-				System.out.println("User Name");
+				System.out.println("User Name, IP: "+s[1]+" Name: "+s[2]);
 				for(Player_Info p : plr_q){
 					if(p.ip.equals(s[1])) p.name = s[2];
 				}
@@ -376,7 +388,10 @@ public class Board{
 					plr[index].name = p.name;
 					plr[index].ip = p.ip;
 					plr[index].is_AI = false;
-					System.out.println(index + " "+p.ip+" "+p.name+" "+p.joining_order);
+					//System.out.println(index + " "+p.ip+" "+p.name+" "+p.joining_order);
+				}
+				for(int i=0; i<4;++i){
+					System.out.println("IP: "+plr[i].ip+" Name: "+plr[i].name+" AI? "+plr[i].is_AI);
 				}
 				break;
 			}
@@ -387,7 +402,7 @@ public class Board{
 			Queue<String> messageQueue = socket.ret_q();
 			for(String s : messageQueue){
 			decode(s);
-			System.out.println(s);
+			//System.out.println(s);
 		}
 		}catch(Exception e){
 			System.out.println("Get all messages null hai");

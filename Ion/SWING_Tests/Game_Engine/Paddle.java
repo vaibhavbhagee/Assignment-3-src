@@ -105,13 +105,13 @@ public class Paddle{
 	{
 		if(a<0)
 		{
-			System.out.println("too left" + playerID);
+			//System.out.println("too left" + playerID);
 			d1=0;
 			d2=or;
 		}
 		else if(b>586)
 		{
-			System.out.println("too right" +playerID);
+			//System.out.println("too right" +playerID);
 			d2=586;
 			d1=586-or;
 		}
