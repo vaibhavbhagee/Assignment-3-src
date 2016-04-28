@@ -210,10 +210,10 @@ long c1=0,c2=0;
 
                     if(i>3)
                     {
-                        blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-                        blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-                        blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-                        blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+                        blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
+                        blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
+                        blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
+                        blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
                         //blankArea.reDraw2();
                     }
                     
@@ -305,10 +305,10 @@ long c1=0,c2=0;
             paddle_length[3] = (int)(board_side*0.05);
             paddle_height[3] = (int)(board_side*0.25);
 
-            blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+400,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-            blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)-80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-            blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)-180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-            blankArea.addString(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+580,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+            blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+400,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
+            blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)-80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
+            blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)-180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
+            blankArea.addString(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+580,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
 
             p1 = new Rectangle((int)(frame.getSize().getWidth()/2),(int)((frame.getSize().getHeight()+board_side)/2)-paddle_height[0]/2,paddle_length[0],paddle_height[0],1);
             p4 = new Rectangle((int)(frame.getSize().getWidth()/2)-paddle_length[1]/2+board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[1],paddle_height[1],2);
@@ -359,7 +359,6 @@ long c1=0,c2=0;
     }
 
     public void mouseReleased(MouseEvent e) {
-        for(int i=0;i<e.getClickCount();i++)
             p1.fired_down();
     }
 

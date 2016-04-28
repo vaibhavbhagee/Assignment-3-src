@@ -289,7 +289,7 @@ public class Rectangle{
 
     public void fired_up(){fired_up++;}
 
-    public void fired_down(){fired_up--;}
+    public void fired_down(){fired_up=0;}
 
     public void setFired(int f){fired_up=f;}
 

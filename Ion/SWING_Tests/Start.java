@@ -136,8 +136,8 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
         startButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
         blankArea.newRect(startButton,startButtonMulti,null,null,null);
-   		blankArea.addString(new ShowString("START INDIVIDUAL GAME",(int)(start_frame.getSize().getWidth()/2),(int)(start_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-   		blankArea.addString(new ShowString("START MULTIPLAYER GAME",(int)(start_frame.getSize().getWidth()/2),(int)(2*start_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+   		blankArea.addString(new ShowString("START INDIVIDUAL GAME",(int)(start_frame.getSize().getWidth()/2),(int)(start_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+   		blankArea.addString(new ShowString("START MULTIPLAYER GAME",(int)(start_frame.getSize().getWidth()/2),(int)(2*start_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
         startButton_x1 = (int)(start_frame.getSize().getWidth()/2) - (int)(start_frame.getSize().getWidth()/5)/2;
         startButton_x2 = (int)(start_frame.getSize().getWidth()/2) + (int)(start_frame.getSize().getWidth()/5)/2; 

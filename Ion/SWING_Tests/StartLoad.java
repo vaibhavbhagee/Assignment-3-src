@@ -160,8 +160,8 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
         blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
-   		blankArea.addString(new ShowString("WAITING FOR USERS:List",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
-   		blankArea.addString(new ShowString("START GAME",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20)));
+   		blankArea.addString(new ShowString("WAITING FOR USERS:List",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+   		blankArea.addString(new ShowString("START GAME",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
         StartLoadButton_x1 = (int)(StartLoad_frame.getSize().getWidth()/2) - (int)(StartLoad_frame.getSize().getWidth()/5)/2;
         StartLoadButton_x2 = (int)(StartLoad_frame.getSize().getWidth()/2) + (int)(StartLoad_frame.getSize().getWidth()/5)/2; 

@@ -42,7 +42,7 @@ public class BlankArea extends JLabel {
     {
         gameOverDim = d;
         board_side = bs;
-        gameOverMessage = new ShowString("Game Over. Kat Gaya Aapka :(",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,20));
+        gameOverMessage = new ShowString("Game Over. Kat Gaya Aapka :(",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,20),"");
     }
 
     public void showGameOverLol()

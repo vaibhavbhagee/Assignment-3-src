@@ -9,14 +9,16 @@ public class ShowString{
 	int x,y;
 	Color textcolor;
 	Font font;
+	String planame;
 
-	public ShowString(String strr, int px, int py, Color col, Font fon)
+	public ShowString(String strr, int px, int py, Color col, Font fon, String planam)
 	{
 		str = strr;
 		x = px;
 		y = py;
 		textcolor = col;
 		font = fon;
+		planame = planam;
 	}
 
 	public void draw(Graphics g)
@@ -31,16 +33,24 @@ public class ShowString{
        		Graphics2D g2x = (Graphics2D)g;
        		g2x.rotate(Math.toRadians(-90));
        		g2x.translate(-400,0);
-			g2x.drawString(str,x-width/2,y);
+			if(planame.substring(0,2).equals("AI") == false)
+				g2x.drawString(planame + str.substring(7,str.length()),x-width/2,y);
+			else
+				g2x.drawString(str,x-width/2,y);
+
 			g2x.translate(400,0);
        		g2x.rotate(Math.toRadians(90));
        	}
        	else if(str.length()>6 && (str.charAt(6) == '3'))
        	{
 			Graphics2D g2x = (Graphics2D)g;
-       		//g2x.translate(-400,0);
-			g2x.drawString(str,x-width/2,y);
-			//g2x.translate(400,0);
+       		g2x.translate(410,0);
+       		if(planame.substring(0,2).equals("AI") == false)
+				g2x.drawString(planame + str.substring(7,str.length()),x-width/2,y);
+			else
+				g2x.drawString(str,x-width/2,y);
+
+			g2x.translate(-410,0);
        	}
        	else if(str.length()>6 && (str.charAt(6) == '1'))
        	{
