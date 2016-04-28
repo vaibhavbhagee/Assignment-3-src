@@ -340,8 +340,8 @@ public class Board{
 				return socket.is_pseudo_server();
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println("IS PSEUDO SERVER RETURNS FALSE");
-				return false;
+				System.out.println("IS PSEUDO SERVER RETURNS TRUE");
+				return true;
 			}
 		}
 
@@ -501,10 +501,17 @@ public class Board{
 		{
 			if(t!=null)
 			{ 
-				socket.socket_close();
+				if (socket != null) socket.socket_close();
 				t.stop();
 			}
 			socket = null;
+			//
+			game_mode = -100;
+			my_joining_order = -100;
+			game_started = false;
+			already_set_param = false;
+			setParams((int)Var.width, (int)Var.height);
+			//
 			System.out.println("Game khatam ho gaya");
 		}
 		catch (Exception e) {
