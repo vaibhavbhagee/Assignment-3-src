@@ -39,7 +39,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
 		super(new GridBagLayout());
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
-        this.setBackground(new Color(0,0,123,255));
+        this.setBackground(new Color(0,0,0,255));
 
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -49,7 +49,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
 
         c.insets = new Insets(1, 1, 1, 1);
         gridbag.setConstraints(blankArea, c);
-        blankArea.setBackground(new Color(20,11,231,188));
+        blankArea.setBackground(new Color(0,100,0,188));
         add(blankArea);
       
         c.insets = new Insets(0, 0, 0, 0);

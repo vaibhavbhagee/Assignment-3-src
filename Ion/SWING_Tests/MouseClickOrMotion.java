@@ -41,6 +41,8 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private int[] paddle_height = new int[4];
     private JTextArea textArea;
     private final static String newline = "\n";
+
+    private boolean disableMouse = false;
     
     private Rectangle p1;
     private Rectangle p2,p3,p4;
@@ -109,7 +111,7 @@ long c1=0,c2=0;
         playerName = name;
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
-        this.setBackground(new Color(0,0,123,255));
+        this.setBackground(new Color(0,0,0,255));
 
         l1 = new Rectangle(0,0,0,0,0);
         l2 = new Rectangle(0,0,0,0,0);
@@ -124,7 +126,7 @@ long c1=0,c2=0;
 
         c.insets = new Insets(1, 1, 1, 1);
         gridbag.setConstraints(blankArea, c);
-        blankArea.setBackground(new Color(20,11,231,188));
+        blankArea.setBackground(new Color(160,32,240,188));
         add(blankArea);
       
         c.insets = new Insets(0, 0, 0, 0);
@@ -238,6 +240,7 @@ long c1=0,c2=0;
 
                         if(blankArea.redZone1.marJaApproval())
                         {
+                            disableMouse = true;
                             p1.killPaddle();
                             blankArea.showGameOverLol();
                             if(soundplayed == false)
@@ -313,6 +316,8 @@ long c1=0,c2=0;
             p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
 
             board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
+            board.overridecolor = 1;
+            board.overridecolorwith = new Color(255,255,0,255);
 
             blankArea.setGameOverDim(frame.getSize(),board_side);
 
@@ -369,28 +374,32 @@ long c1=0,c2=0;
     }
 
     public void mouseMoved(MouseEvent e) {
-         if (e.getX() <= (int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2)
-            if(e.getX() >= (int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 )
-                p1.setMidX(e.getX());
+        if(disableMouse == false)
+        {
+            if (e.getX() <= (int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2)
+                if(e.getX() >= (int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 )
+                    p1.setMidX(e.getX());
+                else
+                    p1.setMidX((int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 );
             else
-                p1.setMidX((int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 );
-        else
-            p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
-               blankArea.newRect(board,p1,p2,p3,p4);
-
+                p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
+                   blankArea.newRect(board,p1,p2,p3,p4);
+        }
 
     }
 
     public void mouseDragged(MouseEvent e) {
-        if (e.getX() <= (int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2)
-            if(e.getX() >= (int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 )
-                p1.setMidX(e.getX());
+        if(disableMouse == false)
+        {
+            if (e.getX() <= (int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2)
+                if(e.getX() >= (int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 )
+                    p1.setMidX(e.getX());
+                else
+                    p1.setMidX((int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 );
             else
-                p1.setMidX((int)(frame.getSize().getWidth()/2) - board_side/2 + paddle_length[0]/2 );
-        else
-            p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
-               blankArea.newRect(board,p1,p2,p3,p4);
-
+                p1.setMidX((int)(frame.getSize().getWidth()/2) + board_side/2 - paddle_length[0]/2);
+                   blankArea.newRect(board,p1,p2,p3,p4);
+        }
     }
 
     void saySomething(String eventDescription, MouseEvent e) {
