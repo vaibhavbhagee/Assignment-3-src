@@ -84,7 +84,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         System.out.println("seriously");
         board_b.setParams(586,586);
 
-        board_b.acceptIP(ipAddress);
+        board_b.acceptIP("");
 
         board_b.setGameMode(1);
 
