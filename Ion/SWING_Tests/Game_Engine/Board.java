@@ -112,9 +112,9 @@ public class Board{
 		
 		if(is_pseudo_server()){
 			Var.speed_increase *= Var.speed_decay_factor;
-			collision();
 			b.update_position();
 		}
+		collision();
 
 		artificial_intelligence();
 		
@@ -317,23 +317,23 @@ public class Board{
 				b.from_String(s[1], Integer.parseInt(s[7]), my_joining_order);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[7]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
 				ip_temp = s[3].substring(0, s[3].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[3], Integer.parseInt(s[7]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[3], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
 				ip_temp = s[4].substring(0, s[4].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[4], Integer.parseInt(s[7]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[4], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
 				ip_temp = s[5].substring(0, s[5].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[5], Integer.parseInt(s[7]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[5], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
 				Var.speed_increase = Double.parseDouble(s[6]);
 			}	break;
 			case "Message2" : {
 				System.out.println("Message2");
 				ip_temp = s[1].substring(0, s[1].indexOf("#"));
 				for(int i=1; i<4; ++i)
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1], Integer.parseInt(s[2]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[1], Integer.parseInt(s[2]), my_joining_order, is_pseudo_server());
 				break;
 			}
 			case "Start_Game" : {
