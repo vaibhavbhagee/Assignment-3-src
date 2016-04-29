@@ -253,8 +253,7 @@ long c1=0,c2=0;
             @Override
             public void run()
             {
-                blankArea.threeTwoOne();
-                blankArea.reDraw();
+
                 //if(dfui!=null)dfui.redLife(0);
                 //if(dfui!=null)dfui.redLife(1);
                 //if(dfui!=null)dfui.redLife(2);
@@ -277,11 +276,11 @@ long c1=0,c2=0;
                 c1++;
                 //System.out.println("c1:"+c1);
             }
-        },4000,16);
+        },0,20);
 
         blankArea.trail_on();
 
-        timer.scheduleAtFixedRate(tt,4000,16);
+        timer.scheduleAtFixedRate(tt,0,16);
 
 
     }

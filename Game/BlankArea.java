@@ -37,6 +37,9 @@ public class BlankArea extends JLabel {
     public boolean renderDone=true;
     int i=0;
 
+    ShowString three,two,one,start;
+    int countdown;
+
     public int gWidth=0;
     public int gHeight=0;
     public int bSize=0;
@@ -45,9 +48,15 @@ public class BlankArea extends JLabel {
     {
         gameOverDim = d;
         board_side = bs;
+        
         gameOverMessage = new ShowString("Game Over. Kat Gaya Aapka :(",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,20),"");
         gameWonMessage = new ShowString("You Win _/\\_",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,50),"");
         
+    }
+
+    public void threeTwoOne()
+    {
+        countdown--;
     }
 
     public void showGameOverLol()
@@ -221,6 +230,13 @@ public class BlankArea extends JLabel {
         setBackground(color);
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.black));
+        countdown=4;
+
+        three = new ShowString("3",480,293,new Color(255,0,0,255),new Font("Serif",Font.BOLD,90),"");
+        two = new ShowString("2",480,293,new Color(255,0,0,255),new Font("Serif",Font.BOLD,90),"");
+        one = new ShowString("1",480,293,new Color(255,0,0,255),new Font("Serif",Font.BOLD,90),"");
+        start = new ShowString("GO",480,293,new Color(255,0,0,255),new Font("Serif",Font.BOLD,70),"");
+
         for(int i=0;i<10;i++)
         {
             trail[i] = new Circle(0,0,40-4*i);
@@ -285,9 +301,20 @@ public class BlankArea extends JLabel {
             else if(gameOverSorry)
                 gameOverMessage.draw(g);
 
+            if(countdown == 3)
+                three.draw(g);
+            else if(countdown == 2)
+                two.draw(g);
+            else if(countdown == 1)
+                one.draw(g);
+            else if(countdown == 0)
+                start.draw(g);
 
 
             renderDone = true;
+
+
+
             
     }
 
