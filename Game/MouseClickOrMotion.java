@@ -267,7 +267,7 @@ long c1=0,c2=0;
             public void run(){
                 if(blankArea.renderDone == true)
                 {
-                    if(board_b!=null && board_b.getSpeed()>12)
+                    if(board_b!=null && board_b.getSpeed()>Var.speed*1.05)
                         blankArea.trail_on();
                     else
                         blankArea.trail_off();
@@ -287,8 +287,8 @@ long c1=0,c2=0;
     }
 
     public void reInitBoard() {
-/*        System.out.println("reInitBoard");
-*/        if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
+        // System.out.println("reInitBoard");
+        if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
         {
             for(int i=0;i<10;i++)
                 prev_array[i] = 0;
@@ -302,10 +302,10 @@ long c1=0,c2=0;
 
             if(boardFromPrevPage == null)
             {
-/*                System.out.println("wtf");
-*/                board_b = new Board(board_side,board_side,playerName,0,0);
-/*                System.out.println("ftw");
-*/                board_b.setParams(board_side,board_side);
+                // System.out.println("wtf");
+                board_b = new Board(board_side,board_side,playerName,0,0);
+                // System.out.println("ftw");
+                board_b.setParams(board_side,board_side);
             }    
             else
             {

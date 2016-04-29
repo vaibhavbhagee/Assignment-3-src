@@ -12,7 +12,7 @@ public class Ball{
 		this.ball_number = ball_count;
 		this.posX = posX;
 		this.posY = posY;
-		spin = Var.speed*Math.PI/Var.freq/Var.spin_factor*100;	
+		spin = 0; // Var.speed*Math.PI/Var.freq/Var.spin_factor*100;	
 		this.theetha = theetha;
 		this.diameter = diameter;
 		++ball_count;
