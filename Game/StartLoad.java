@@ -62,8 +62,8 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         if(StartLoad_frame==null)
             StartLoad_frame = new JFrame("StartLoad");
 
-        System.out.println("StartLoadConstructor");
-        GridBagLayout gridbag = (GridBagLayout)getLayout();
+/*        System.out.println("StartLoadConstructor");
+*/        GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
 
@@ -128,7 +128,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: System.out.println("ASDHUAHDOSHADHASODHASHODHASDHAODHASDOH HOST PARROVAL"); tt.cancel(); board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
+    		case 2:  tt.cancel(); board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
     		default: break;
     	}
         //blankArea.reDraw();

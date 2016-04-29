@@ -176,7 +176,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 
     /** Handle the key-pressed event from the text field. */
     public void keyPressed(KeyEvent e) {
-        //System.out.println(e);
+        System.out.println(e);
         if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
         {
             if(nameEntered.length()>0)

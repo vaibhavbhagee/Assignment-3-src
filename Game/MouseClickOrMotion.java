@@ -96,7 +96,7 @@ long c1=0,c2=0;
                         dfui = 
                         board_b.update(
                             dfe);
-                    }catch(Exception e){e.printStackTrace();System.out.println("bancho");}
+                    }catch(Exception e){/*e.printStackTrace();System.out.println("bancho");*/}
 
                     try{
                         if(i>3)
@@ -159,7 +159,7 @@ long c1=0,c2=0;
                             p4.killPaddle();
                             p4dead = true;
                         }
-                    }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
+                    }catch(Exception e){/*e.printStackTrace();System.out.println("maakichy");*/}
      
 
             }
@@ -197,8 +197,8 @@ long c1=0,c2=0;
 
     public MouseClickOrMotion(String name, int mode, int isHost, Board b_old, int individualDifficulty) {
         super(new GridBagLayout());
-        System.out.println("MCOM");
-        boardFromPrevPage = b_old;
+/*        System.out.println("MCOM");
+*/        boardFromPrevPage = b_old;
         mode = gameMode;
         individualDiff = individualDifficulty;
         playerName = name;
@@ -286,8 +286,8 @@ long c1=0,c2=0;
     }
 
     public void reInitBoard() {
-        System.out.println("reInitBoard");
-        if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
+/*        System.out.println("reInitBoard");
+*/        if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
         {
             for(int i=0;i<10;i++)
                 prev_array[i] = 0;
@@ -301,10 +301,10 @@ long c1=0,c2=0;
 
             if(boardFromPrevPage == null)
             {
-                System.out.println("wtf");
-                board_b = new Board(board_side,board_side,playerName,0,0);
-                System.out.println("ftw");
-                board_b.setParams(board_side,board_side);
+/*                System.out.println("wtf");
+*/                board_b = new Board(board_side,board_side,playerName,0,0);
+/*                System.out.println("ftw");
+*/                board_b.setParams(board_side,board_side);
             }    
             else
             {
