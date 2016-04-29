@@ -73,6 +73,11 @@ public class Board{
 		for(int o=0;o<4;o++)
 			connectedPlayers[o] = connectedPlayers2[o];
 
+		if(this.isHost==1)
+		{
+			//connectedPlayers[3]="PEER4:Host:"+getHostIP();
+		}
+
 				for(int c=0;c<4;c++) ;
 			//System.out.println(connectedPlayers[c]+"AOPSDIHASJHBSGBFJFSHBLFJL");
 	}
