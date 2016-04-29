@@ -20,6 +20,8 @@ public class Socket_handler implements Runnable
 
 	public Timer timer;
 
+	public connectivity_check c_check;
+
 	public String getIp() throws SocketException 
 	{
 
@@ -57,7 +59,9 @@ public class Socket_handler implements Runnable
 
 			this.timer = new Timer();
 
-			this.timer.scheduleAtFixedRate(new connectivity_check(this),0,500);
+			this.c_check = new connectivity_check(this);
+
+			this.timer.scheduleAtFixedRate(c_check,0,500);
 
 			while(true)
 			{
@@ -370,7 +374,7 @@ public class Socket_handler implements Runnable
     {
     	try
     	{
-    		this.timer.cancel();
+    		this.c_check.cancel();
     		this.socket.close();
     	}
     	catch (Exception e) {
