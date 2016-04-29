@@ -48,32 +48,20 @@ public class Board{
 			for(int i=0;i<4;i++)
 			{
 				if(connectedPlayers[i]!=null)
-					if( flag == true && connectedPlayers[i].equals("PEER"+(j+1)+":"+p.name+":"+p.ip) )
+					if( flag == true && connectedPlayers[i].equals("PEER"+j+":"+p.name+":"+p.ip) )
 					{
 						flag = false;
-						connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
-						j++;
+						connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
 						System.out.println("wow");
 					}
 				
 				System.out.println("LOOPNE"+connectedPlayers[i]);
 			}
 			if(flag)
-			{
-				connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
-				j++;
-			}
+				connectedPlayers2[j++]="PEER"+j+":"+p.name+":"+p.ip;
 			System.out.println("FUCKBHKJSBHKJSAHDLALDJFBDKGBADFGKFGVBKSAJFDBJLGHFC<JVFHKFKHBVFJKKFCZ>FbKFVGBJBSVDJFBGVSDKgbfSFgbKFGBVKBDGf"+connectedPlayers2[j-1]);
 		}
-		for(;j<4;j++)
-			if(connectedPlayers2[j]==null)
-				connectedPlayers2[j]="PEER"+(j+1);
-
-		for(int o=0;o<4;o++)
-			connectedPlayers[o] = connectedPlayers2[o];
-
-				for(int c=0;c<4;c++)
-			System.out.println(connectedPlayers[c]+"AOPSDIHASJHBSGBFJFSHBLFJL");
+		connectedPlayers = connectedPlayers2;
 	}
 
 	public void setIndividualAILevel(int ai)

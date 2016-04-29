@@ -96,6 +96,15 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
             public void run()
             {
                 board_b.periodic_network();
+                board_b.getConnectedPlayers();
+                blankArea.replacePeer1(new ShowString(board_b.connectedPlayers[0],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                System.out.println(board_b.connectedPlayers[0]+"@@@");
+                System.out.println(board_b.connectedPlayers[1]+"@@@");
+                System.out.println(board_b.connectedPlayers[2]+"@@@");
+                System.out.println(board_b.connectedPlayers[3]+"@@@");
                 if( board_b.requestForHostApproval() )
                 {
                      t1.cancel(); 
@@ -170,8 +179,13 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
         blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
-   		blankArea.addString(new ShowString("WAITING FOR ADMIN:\nList",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-   		blankArea.addString(new ShowString("BE READY",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+   		blankArea.addString(new ShowString("WAITING FOR ADMIN:",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+   		blankArea.addString(new ShowString("PEER1",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+        blankArea.addString(new ShowString("PEER2",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+        blankArea.addString(new ShowString("PEER3",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+        blankArea.addString(new ShowString("PEER4",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+
+        blankArea.addString(new ShowString("BE READY",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
         JoinLoadButton_x1 = (int)(JoinLoad_frame.getSize().getWidth()/2) - (int)(JoinLoad_frame.getSize().getWidth()/5)/2;
         JoinLoadButton_x2 = (int)(JoinLoad_frame.getSize().getWidth()/2) + (int)(JoinLoad_frame.getSize().getWidth()/5)/2; 

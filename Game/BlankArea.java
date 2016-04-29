@@ -160,10 +160,14 @@ public class BlankArea extends JLabel {
         {
             ShowString sz = iter.next();
             if(sz!=null&& sz.retstr()!=null)
-            {System.out.println(sz.retstr()+":(");
-                if(sz.retstr().length()>=5)
-                if(sz.retstr().substring(0,5).equals("PEER1"))
-                    sz.setstr(s.retstr());}
+            {
+                System.out.println(sz.retstr()+":(");
+                    if(sz.retstr().length()>=5)
+                        if(sz.retstr().substring(0,5).equals("PEER1"))
+                        {
+                            sz.setstr(s.retstr());
+                            System.out.println("CONDITION TRUE HUI HAI BANCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");}
+            }
         }       
     }
 
