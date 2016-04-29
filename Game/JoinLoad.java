@@ -101,10 +101,10 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
                 blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
                 blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
                 blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                System.out.println(board_b.connectedPlayers[0]+"@@@");
-                System.out.println(board_b.connectedPlayers[1]+"@@@");
-                System.out.println(board_b.connectedPlayers[2]+"@@@");
-                System.out.println(board_b.connectedPlayers[3]+"@@@");
+                // System.out.println(board_b.connectedPlayers[0]+"@@@");
+                // System.out.println(board_b.connectedPlayers[1]+"@@@");
+                // System.out.println(board_b.connectedPlayers[2]+"@@@");
+                // System.out.println(board_b.connectedPlayers[3]+"@@@");
                 if( board_b.requestForHostApproval() )
                 {
                      t1.cancel(); 

@@ -35,10 +35,11 @@ public class Board{
 
 	public void getConnectedPlayers()
 	{
+		System.out.println("getConnectedPlayers");
 		//System.out.println("##############################################################################"+plr_q.size());
 		for(Player_Info p:plr_q)
 		{
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+p.ip);
+			//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+p.ip);
 		}
 		String[] connectedPlayers2 = new String[4];
 		int j=0;
@@ -53,17 +54,17 @@ public class Board{
 						flag = false;
 						connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
 						j++;
-						System.out.println("wow");
+						//System.out.println("wow");
 					}
 				
-				System.out.println("LOOPNE"+connectedPlayers[i]);
+				//System.out.println("LOOPNE"+connectedPlayers[i]);
 			}
 			if(flag)
 			{
 				connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
 				j++;
 			}
-			System.out.println("FUCKBHKJSBHKJSAHDLALDJFBDKGBADFGKFGVBKSAJFDBJLGHFC<JVFHKFKHBVFJKKFCZ>FbKFVGBJBSVDJFBGVSDKgbfSFgbKFGBVKBDGf"+connectedPlayers2[j-1]);
+			//System.out.println("FUCKBHKJSBHKJSAHDLALDJFBDKGBADFGKFGVBKSAJFDBJLGHFC<JVFHKFKHBVFJKKFCZ>FbKFVGBJBSVDJFBGVSDKgbfSFgbKFGBVKBDGf"+connectedPlayers2[j-1]);
 		}
 		for(;j<4;j++)
 			if(connectedPlayers2[j]==null)
@@ -72,8 +73,8 @@ public class Board{
 		for(int o=0;o<4;o++)
 			connectedPlayers[o] = connectedPlayers2[o];
 
-				for(int c=0;c<4;c++)
-			System.out.println(connectedPlayers[c]+"AOPSDIHASJHBSGBFJFSHBLFJL");
+				for(int c=0;c<4;c++) ;
+			//System.out.println(connectedPlayers[c]+"AOPSDIHASJHBSGBFJFSHBLFJL");
 	}
 
 	public void setIndividualAILevel(int ai)
@@ -152,7 +153,7 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-		// System.out.println("update");
+		System.out.println("update");
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
 		//if(game_mode!=0) periodic_network();
@@ -331,7 +332,7 @@ public class Board{
 
 	public void periodic_network(){
 		if(game_mode==-100) return;
-		//System.out.println("PeriodicNetwork");
+		System.out.println("PeriodicNetwork");
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
@@ -342,8 +343,10 @@ public class Board{
 			//System.out.println(msg2);
 			broadcast(msg2);
 		}
-		if(game_started) broadcast("Start_Game");
-		//System.out.println(is_pseudo_server());
+		if(game_started){ 
+			broadcast("Start_Game");
+			System.out.println("broadcasting Start Game");
+		}
 	}
 
 	boolean is_pseudo_server(){
