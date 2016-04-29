@@ -35,7 +35,8 @@ public class Board{
 
 	public void getConnectedPlayers()
 	{
-		System.out.println("getConnectedPlayers");
+		// System.out.println("getConnectedPlayers");
+		System.out.println("Game Started (Get connectedPlayers): "+game_started);
 		//System.out.println("##############################################################################"+plr_q.size());
 		for(Player_Info p:plr_q)
 		{
@@ -87,6 +88,10 @@ public class Board{
 		for(int i=0; i<4; ++i){
 			plr[i].level_AI = ai;
 		}
+	}
+
+	public String getHostIP(){
+		return socket.my_ip_address();
 	}
 
 	public String playerIName(int i)
@@ -337,7 +342,8 @@ public class Board{
 
 	public void periodic_network(){
 		if(game_mode==-100) return;
-		System.out.println("PeriodicNetwork");
+		// System.out.println("PeriodicNetwork");
+		System.out.println("Game Started (PeriodicNetwork): "+game_started);
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
