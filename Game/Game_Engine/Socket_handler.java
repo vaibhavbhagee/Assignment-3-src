@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class Socket_handler implements Runnable 
+public class Socket_handler extends Thread implements Runnable 
 {
 	public String my_ip_address;
 
@@ -370,12 +370,15 @@ public class Socket_handler implements Runnable
         this.connect_list.get(ip_addr).send_message("Handshake-Request"+/*my_ip_address+";true"+*/this.get_ip_list()+"");
     }
 
-    public void socket_close()
+    @Override
+    public void interrupt()
     {
     	try
     	{
+    		super.interrupt();  
     		this.c_check.cancel();
-    		this.socket.close();
+     		this.socket.close();
+    		// this.socket.close();
     	}
     	catch (Exception e) {
     		System.out.println("Exception in close socket");

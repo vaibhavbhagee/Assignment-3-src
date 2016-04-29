@@ -142,6 +142,7 @@ public class Board{
 //Called by host of the game when he presses game start
 	public void hostApproval(boolean b) 
 	{
+		System.out.println("Teri maa ka hostApproval BANCHUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
 		broadcast("Start_Game");
 		game_started = true;
 		//if host approves, b is true
@@ -377,7 +378,17 @@ public class Board{
 
 	void broadcast(String str){
 		try{
-			socket.send_message_to_all(str);
+			if (socket != null)
+			{
+				socket.send_message_to_all(str);
+			}
+			else
+			{
+				System.out.println("null hai socket yaar ....................................................................................");
+				// System.gc();
+				init_network();
+			}
+
 		}catch(Exception e){e.printStackTrace();}
 	}
 
@@ -529,8 +540,8 @@ public class Board{
 		{
 			if(t!=null)
 			{ 
-				if (socket != null) socket.socket_close();
-				t.stop();
+				if (socket != null) socket.interrupt();
+				t.interrupt();
 			}
 			socket = null;
 			//

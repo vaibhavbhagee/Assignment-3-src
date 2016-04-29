@@ -27,7 +27,7 @@ import java.util.TimerTask;
 
 public class StartLoad extends JPanel implements MouseMotionListener, MouseListener{
 
-	private static JFrame StartLoad_frame = new JFrame("StartLoad");
+	private static JFrame StartLoad_frame=null;
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private static StartLoad newContentPane;
     private int sel=0;
@@ -58,6 +58,10 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
 	StartLoad(){
 		super(new GridBagLayout());
+        
+        if(StartLoad_frame==null)
+            StartLoad_frame = new JFrame("StartLoad");
+
         System.out.println("StartLoadConstructor");
         GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -127,7 +131,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     		case 2: System.out.println("ASDHUAHDOSHADHASODHASHODHASDHAODHASDOH HOST PARROVAL"); tt.cancel(); board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
     		default: break;
     	}
-        blankArea.reDraw();
+        //blankArea.reDraw();
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -150,7 +154,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         	blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
     		sel = 0;
     	}
-        blankArea.reDraw();
+        //blankArea.reDraw();
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -192,6 +196,8 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     private /*static*/ void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
+
+        StartLoad_frame = new JFrame("StartLoad");
 
         StartLoad_frame.setResizable(false);
 
