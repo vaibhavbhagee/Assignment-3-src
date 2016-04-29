@@ -273,7 +273,7 @@ public class Board{
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			//data_out.oneLifeLostBy(1);
-			plr[1].reduce_life();
+			if(plr[1].is_AI) plr[1].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(1);
 			// System.out.println("wall 1");
@@ -292,7 +292,7 @@ public class Board{
 			// b.velY*=-1;
 			b.theetha = 2*Math.PI - b.theetha;
 			//data_out.oneLifeLostBy(2);
-			plr[2].reduce_life();
+			if(plr[2].is_AI) plr[2].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(2);
 			// System.out.println("wall 2");
@@ -311,7 +311,7 @@ public class Board{
 			if(b.theetha < Math.PI) b.theetha = Math.PI -b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
 			//data_out.oneLifeLostBy(3);
-			plr[3].reduce_life();
+			if(plr[3].is_AI) plr[3].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(3);
 			// System.out.println("wall 3");
@@ -344,7 +344,7 @@ public class Board{
 		// System.out.println("Game Started (PeriodicNetwork): "+game_started);
 		get_all_messages();
 		if(is_pseudo_server()){
-			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
+			//String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+Var.speed_increase+";"+my_joining_order;
 			// String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+Var.speed_increase+";"+
 			// plr[0].ip+";"+plr[0].lives+";"+	//3,4

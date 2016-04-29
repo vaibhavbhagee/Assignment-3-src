@@ -14,7 +14,7 @@ public class Player{
 		this.ip = ip;
 		this.player_number = player_number;
 		is_AI = true;
-		level_AI = 3;
+		level_AI = 1;
 		// score = 0;
 		lives = 5;
 		if(player_number == 0) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05,0);
@@ -48,7 +48,7 @@ public class Player{
 			name = s[1];
 			player_number = Integer.parseInt(s[2]);
 			level_AI = Integer.parseInt(s[4]);
-			//lives = Integer.parseInt(s[5]);
+			lives = Integer.parseInt(s[5]);
 			p.from_String(s1[1], (difference==1 || difference==2));
 		}
 	}
