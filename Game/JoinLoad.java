@@ -27,7 +27,7 @@ import java.util.TimerTask;
 
 public class JoinLoad extends JPanel implements MouseMotionListener, MouseListener{
 
-	private static JFrame JoinLoad_frame = new JFrame("JoinLoad");
+	private static JFrame JoinLoad_frame; 
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private static JoinLoad newContentPane;
     private int sel=0;
@@ -146,14 +146,14 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     		JoinLoadButton.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 1;
-            blankArea.reDraw();
+            //blankArea.reDraw();
     	}
     	else if (e.getX()>JoinLoadButton_x1m && e.getX()<JoinLoadButton_x2m && e.getY()>JoinLoadButton_y1m && e.getY()<JoinLoadButton_y2m)
     	{
     		JoinLoadButtonMulti.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 2;	
-            blankArea.reDraw();
+            //blankArea.reDraw();
     	}
     	else
     	{
@@ -161,7 +161,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     		JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 0;
-            blankArea.reDraw();
+            //blankArea.reDraw();
     	}
     }
 
@@ -204,6 +204,8 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     private /*static*/ void createAndShowGUI() {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
+
+        JoinLoad_frame = new JFrame("JoinLoad");
 
         JoinLoad_frame.setResizable(false);
 
