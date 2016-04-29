@@ -1,9 +1,7 @@
 TODO List
 
 ** 1) Keep an option to pause the game in single player (don’t call update :P )
-** 2) 321 Go kar le… another solution to that is what I have currently done…. it takes time for the ball to start motion.
 3) Display Reconnected and disconnected - not sure whether done or not
-4) Stop thread - bhagee aur shreyan ko dekhna hai
 5) Waiting for user list - I think ion has done this
 ** 6) Setting the AI level…. I have improved the AI! :D
 7) In case of joining an invalid IP (Abhi null hai Abhi null hai) we should be able to tell the user it’s a bad IP.

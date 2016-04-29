@@ -7,7 +7,7 @@ public class Var{
 	public static double[] level_AI = {0.5, 0.75, 1.5, 2.0};
 	// public static double[] level_AI = {0.0, 2.0, 2.0, 2.0};
 	public static double[] level_power = {0.0, 0.5, 0.75, 1.0, 1.0, 1.0};
-	public static double speed_factor = 0.8;
+	public static double speed_factor = 0.9;
 	public static double speed_increase;
 	public static double speed_decay_factor = 0.99;
 	public static double length_factor = 3;
