@@ -69,6 +69,10 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
 	JoinLoad(String ip, String name){
 		super(new GridBagLayout());
+
+        if(JoinLoad_frame==null)
+            JoinLoad_frame = new JFrame("JoinLoad");
+
         ipAddress = ip;
         playerName = name;
         GridBagLayout gridbag = (GridBagLayout)getLayout();
