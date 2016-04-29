@@ -35,6 +35,24 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     private Board board_b=null;
     Timer t1;
 
+    TimerTask tt = new TimerTask(){
+            @Override
+            public void run()
+            {
+                board_b.periodic_network();
+                board_b.getConnectedPlayers();
+                blankArea.replacePeer1(new ShowString(board_b.connectedPlayers[0],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                System.out.println(board_b.connectedPlayers[0]+"@@@");
+                System.out.println(board_b.connectedPlayers[1]+"@@@");
+                System.out.println(board_b.connectedPlayers[2]+"@@@");
+                System.out.println(board_b.connectedPlayers[3]+"@@@");
+                blankArea.reDraw();
+            }
+        };
+
 	Rectangle StartLoadButton;
 	int StartLoadButton_x1,StartLoadButton_x2,StartLoadButton_y1,StartLoadButton_y2;
 
@@ -89,22 +107,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         board_b.setGameMode(1);
 
         t1 = new Timer();
-        t1.scheduleAtFixedRate(new TimerTask(){
-            @Override
-            public void run()
-            {
-                board_b.periodic_network();
-                board_b.getConnectedPlayers();
-                blankArea.replacePeer1(new ShowString(board_b.connectedPlayers[0],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                System.out.println(board_b.connectedPlayers[0]+"@@@");
-                System.out.println(board_b.connectedPlayers[1]+"@@@");
-                System.out.println(board_b.connectedPlayers[2]+"@@@");
-                System.out.println(board_b.connectedPlayers[3]+"@@@");
-            }
-        },0,20);
+        t1.scheduleAtFixedRate(tt,0,20);
 
     }
 
@@ -124,7 +127,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     	switch(sel){
     		case 0: break;
     		case 1: break;
-    		case 2: board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
+    		case 2: tt.cancel(); board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
     		default: break;
     	}
         blankArea.reDraw();

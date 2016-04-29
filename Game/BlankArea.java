@@ -27,6 +27,9 @@ public class BlankArea extends JLabel {
     
     ShowString gameOverMessage;
     private boolean gameOverSorry = false;
+    ShowString gameWonMessage;
+    private boolean gameWonSwag = false;
+
     public Rectangle redZone1;
     public Rectangle redZone2;
     public Rectangle redZone3;
@@ -43,11 +46,18 @@ public class BlankArea extends JLabel {
         gameOverDim = d;
         board_side = bs;
         gameOverMessage = new ShowString("Game Over. Kat Gaya Aapka :(",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,20),"");
+        gameWonMessage = new ShowString("You Win _/\\_",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,50),"");
+        
     }
 
     public void showGameOverLol()
     {
         gameOverSorry = true;
+    }
+
+    public void showGameWon()
+    {
+        gameWonSwag = true;
     }
 
     public void setRed()
@@ -161,12 +171,12 @@ public class BlankArea extends JLabel {
             ShowString sz = iter.next();
             if(sz!=null&& sz.retstr()!=null)
             {
-                System.out.println(sz.retstr()+":(");
+                //System.out.println(sz.retstr()+":(");
                     if(sz.retstr().length()>=5)
                         if(sz.retstr().substring(0,5).equals("PEER1"))
                         {
                             sz.setstr(s.retstr());
-                            System.out.println("CONDITION TRUE HUI HAI BANCHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");}
+                        }
             }
         }       
     }
@@ -269,9 +279,13 @@ public class BlankArea extends JLabel {
                 //System.out.println(n.retstr());
             }
             i++;
-            
-            if(gameOverSorry)
+
+            if(gameWonSwag)
+                gameWonMessage.draw(g);            
+            else if(gameOverSorry)
                 gameOverMessage.draw(g);
+
+
 
             renderDone = true;
             

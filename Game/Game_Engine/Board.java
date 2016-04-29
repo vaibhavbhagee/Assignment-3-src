@@ -79,7 +79,7 @@ public class Board{
 	public void setIndividualAILevel(int ai)
 	{
 		for(int i=0; i<4; ++i){
-			if(plr[i].is_AI) plr[i].level_AI = ai;
+			plr[i].level_AI = ai;
 		}
 	}
 

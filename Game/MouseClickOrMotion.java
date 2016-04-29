@@ -69,10 +69,101 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private String playerName;
     private int individualDiff;
 
+    private boolean p2dead=false,p3dead=false,p4dead=false;
+
     private int gameMode=0;
     long cur=0;
 long curp=0;
 long c1=0,c2=0;
+
+	TimerTask tt = new TimerTask(){
+            @Override
+            public void run(){
+                i++;
+                cur=System.currentTimeMillis();
+                blankArea.setTrails();
+                    if(p1!=null)
+                    {
+                        diff = p1.getMidX()-prev_x;
+                        prev_x = p1.getMidX();
+                        
+                        smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
+                        prev_array[prev_array_index] = diff;
+                        prev_array_index = (prev_array_index + 1)%10;
+                        dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
+                    }
+                    try{
+                        dfui = 
+                        board_b.update(
+                            dfe);
+                    }catch(Exception e){e.printStackTrace();System.out.println("bancho");}
+
+                    try{
+                        if(i>3)
+                        {
+                            blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
+                            blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
+                            blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
+                            blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
+                            //blankArea.reDraw2();
+                        }
+                    }catch(Exception e){e.printStackTrace();}
+                    
+
+                    renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
+                    try{
+                        //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
+                        p2.setMidY(dfui.paddle_pos[1]+offsety);
+                        p3.setMidX(dfui.paddle_pos[2]+offsetx);
+                        p4.setMidY(dfui.paddle_pos[3]+offsety);
+                        p2.setFired(dfui.getPowers()[1]);
+                        p3.setFired(dfui.getPowers()[2]);
+                        p4.setFired(dfui.getPowers()[3]);
+                        
+                        if(dfui.getBallPaddleCollide())
+                            playSound("ballpaddlecollision.wav");
+                        if(dfui.getBallWallCollide())
+                            playSound("ballwallcollision.wav");
+
+                        blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
+
+                        if(p2dead && p3dead && p4dead)
+                        {
+                        	blankArea.showGameWon();
+                        	disableMouse = true;
+                        	soundplayed = true;
+                        }
+                        else if(blankArea.redZone1.marJaApproval())
+                        {
+                            disableMouse = true;
+                            p1.killPaddle();
+                            blankArea.showGameOverLol();
+                            if(soundplayed == false)
+                            {
+                                playSound("gameover.wav");
+                                soundplayed = true;
+                            }
+                        }
+                        if(blankArea.redZone2.marJaApproval())
+                        {
+                            p2.killPaddle();
+                        	p2dead = true;
+                        }
+                        if(blankArea.redZone3.marJaApproval())
+                        {
+                            p3.killPaddle();
+                        	p3dead = true;
+                        }
+                        if(blankArea.redZone4.marJaApproval())
+                        {
+                            p4.killPaddle();
+                            p4dead = true;
+                        }
+                    }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
+     
+
+            }
+        };
 
     private boolean soundplayed = false;
 
@@ -189,80 +280,7 @@ long c1=0,c2=0;
 
         blankArea.trail_on();
 
-        timer.scheduleAtFixedRate(new TimerTask(){
-            @Override
-            public void run(){
-                i++;
-                cur=System.currentTimeMillis();
-                blankArea.setTrails();
-                    if(p1!=null)
-                    {
-                        diff = p1.getMidX()-prev_x;
-                        prev_x = p1.getMidX();
-                        
-                        smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
-                        prev_array[prev_array_index] = diff;
-                        prev_array_index = (prev_array_index + 1)%10;
-                        dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
-                    }
-                    try{
-                        dfui = 
-                        board_b.update(
-                            dfe);
-                    }catch(Exception e){e.printStackTrace();System.out.println("bancho");}
-
-                    try{
-                        if(i>3)
-                        {
-                            blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
-                            blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
-                            blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
-                            blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
-                            //blankArea.reDraw2();
-                        }
-                    }catch(Exception e){e.printStackTrace();}
-                    
-
-                    renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
-                    try{
-                        //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
-                        p2.setMidY(dfui.paddle_pos[1]+offsety);
-                        p3.setMidX(dfui.paddle_pos[2]+offsetx);
-                        p4.setMidY(dfui.paddle_pos[3]+offsety);
-                        p2.setFired(dfui.getPowers()[1]);
-                        p3.setFired(dfui.getPowers()[2]);
-                        p4.setFired(dfui.getPowers()[3]);
-                        
-                        if(dfui.getBallPaddleCollide())
-                            playSound("ballpaddlecollision.wav");
-                        if(dfui.getBallWallCollide())
-                            playSound("ballwallcollision.wav");
-
-                        blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
-
-                        if(blankArea.redZone1.marJaApproval())
-                        {
-                            disableMouse = true;
-                            p1.killPaddle();
-                            blankArea.showGameOverLol();
-                            if(soundplayed == false)
-                            {
-                                playSound("gameover.wav");
-                                soundplayed = true;
-                            }
-                        }
-                        if(blankArea.redZone2.marJaApproval())
-                            p2.killPaddle();
-                        if(blankArea.redZone3.marJaApproval())
-                            p3.killPaddle();
-                        if(blankArea.redZone4.marJaApproval())
-                            p4.killPaddle();
-
-                    }catch(Exception e){e.printStackTrace();System.out.println("maakichy");}
-     
-
-            }
-        },0,20);
+        timer.scheduleAtFixedRate(tt,0,20);
 
 
     }
@@ -359,6 +377,7 @@ long c1=0,c2=0;
         else
         {
             // if(gameMode!=0)
+            tt.cancel();
             board_b.end_game();
             frame.dispose();
             timer.cancel();

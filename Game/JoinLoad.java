@@ -35,6 +35,32 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     private static String ipAddress = "";
     private static String playerName = "";
 
+    private TimerTask tt = new TimerTask(){
+            @Override
+            public void run()
+            {
+                board_b.periodic_network();
+                board_b.getConnectedPlayers();
+                blankArea.replacePeer1(new ShowString(board_b.connectedPlayers[0],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+                System.out.println(board_b.connectedPlayers[0]+"@@@");
+                System.out.println(board_b.connectedPlayers[1]+"@@@");
+                System.out.println(board_b.connectedPlayers[2]+"@@@");
+                System.out.println(board_b.connectedPlayers[3]+"@@@");
+                if( board_b.requestForHostApproval() )
+                {
+                     this.cancel();
+                     t1.cancel(); 
+                     t1.purge(); 
+                     (new MouseClickOrMotion(playerName,1,0,board_b,0)).launch(); 
+                     JoinLoad_frame.dispose();
+                }
+                blankArea.reDraw();
+            }
+        };
+
     private Board board_b;
     Timer t1;
 
@@ -91,29 +117,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
         board_b.setGameMode(1);
         t1 = new Timer();
-        t1.scheduleAtFixedRate(new TimerTask(){
-            @Override
-            public void run()
-            {
-                board_b.periodic_network();
-                board_b.getConnectedPlayers();
-                blankArea.replacePeer1(new ShowString(board_b.connectedPlayers[0],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+20,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                blankArea.replacePeer2(new ShowString(board_b.connectedPlayers[1],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                blankArea.replacePeer3(new ShowString(board_b.connectedPlayers[2],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                blankArea.replacePeer4(new ShowString(board_b.connectedPlayers[3],(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3)+80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
-                System.out.println(board_b.connectedPlayers[0]+"@@@");
-                System.out.println(board_b.connectedPlayers[1]+"@@@");
-                System.out.println(board_b.connectedPlayers[2]+"@@@");
-                System.out.println(board_b.connectedPlayers[3]+"@@@");
-                if( board_b.requestForHostApproval() )
-                {
-                     t1.cancel(); 
-                     t1.purge(); 
-                     (new MouseClickOrMotion(playerName,1,0,board_b,0)).launch(); 
-                     JoinLoad_frame.dispose();
-                }
-            }
-        },0,20);
+        t1.scheduleAtFixedRate(tt,0,20);
 
 	}
 
