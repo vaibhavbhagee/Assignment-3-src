@@ -345,6 +345,7 @@ public class Board{
 		get_all_messages();
 		if(is_pseudo_server()){
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
+			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+Var.speed_increase+";"+my_joining_order;
 			// String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+Var.speed_increase+";"+
 			// plr[0].ip+";"+plr[0].lives+";"+	//3,4
 			// plr[1].ip+";"+plr[1].lives+";"+	//5,6
@@ -401,10 +402,10 @@ public class Board{
 		switch(s[0]){
 			case "Message1" : if(!is_pseudo_server()) {
 				// System.out.println("Message1");
-				b.from_String(s[1], Integer.parseInt(s[7]), my_joining_order);
+				b.from_String(s[1], Integer.parseInt(s[4]), my_joining_order);
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
-					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[7]), my_joining_order);
+					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[4]), my_joining_order);
 				// ip_temp = s[3].substring(0, s[3].indexOf("#"));
 				// for(int i=1; i<4; ++i) 
 				// 	if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[3], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
@@ -414,7 +415,7 @@ public class Board{
 				// ip_temp = s[5].substring(0, s[5].indexOf("#"));
 				// for(int i=1; i<4; ++i) 
 				// 	if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[5], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
-				Var.speed_increase = Double.parseDouble(s[6]);
+				Var.speed_increase = Double.parseDouble(s[3]);
 			}	break;
 			case "Message2" : {
 				// System.out.println("Message2");
