@@ -18,7 +18,6 @@ public class Paddle{
 		this.current_power = 0;
 		paddle_speed = 0;
 		this.playerID = playerID;
-		//System.out.println("PADDLE VALUES: "+d1+" "+d2);
 	}
 
 	public double mod(double a)
@@ -33,7 +32,6 @@ public class Paddle{
 
 	public void from_String(String val, boolean invert){
 		String[] s = val.split("#");
-		// System.out.println(invert?"invert":"normal");
 		if(invert){
 			d2 = Var.height - Double.parseDouble(s[0]);
 			d1 = Var.height - Double.parseDouble(s[1]);
@@ -48,7 +46,6 @@ public class Paddle{
 
 	public void movePaddle(double x, double y, int level_AI){
 		if(disable) return;
-		//set_power_up(level_AI);
 		double center = (d1+d2)/2;
 		double factor1 = 1.9*3*Math.abs(center-x)/Var.width;
 		double factor2 = 1.9*3*Math.abs(center-y)/Var.height;
@@ -114,8 +111,6 @@ public class Paddle{
 
 	public void set_power_up(int level_AI){
 		int x = (int)(Math.random()*100);
-		// if(x<10) current_power = 1;
-		// else current_power = 0;
 		if(level_AI==1)
 		{
 			if(x<87)
@@ -161,7 +156,7 @@ public class Paddle{
 			else if(x<100)
 				current_power = 5;
 		}
-		System.out.println("current_power: "+current_power);
+		//System.out.println("current_power: "+current_power);
 	}
 
 	public void approveTheseValues(double a,double b,double or){

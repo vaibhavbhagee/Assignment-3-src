@@ -1,7 +1,5 @@
 package Game_Engine;
 public class Ball{
-	static int ball_count = 0;
-	int ball_number;// ball number
 	double posX;	// x coordinate of ball
 	double posY;	// y coordinate of ball
 	double theetha;	// tan_inverse
@@ -9,13 +7,11 @@ public class Ball{
 	double diameter;	// diameter of ball
 
 	public Ball(double posX, double posY, double theetha, double diameter){
-		this.ball_number = ball_count;
 		this.posX = posX;
 		this.posY = posY;
 		spin = 0; // Var.speed*Math.PI/Var.freq/Var.spin_factor*100;	
 		this.theetha = theetha;
 		this.diameter = diameter;
-		++ball_count;
 	}
 
 	public void set_velocity(double t){

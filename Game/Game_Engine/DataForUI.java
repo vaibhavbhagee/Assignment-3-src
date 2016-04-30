@@ -6,7 +6,7 @@ public class DataForUI{
 	private boolean ball_paddle_collide;	//Any ball paddle collision takes place
 	private boolean ball_wall_collide;		//Any ball wall collision takes place
 	private boolean lifeLostByPlayer;		//A player just lost a life because above
-	private int playerDead;				//This player died
+	private int playerDead;					//This player died
 	private boolean spin_ball_paddle_collide;//Like first, but spin imparted
 	private boolean power_ball_paddle_collide;//Like first, but power up hit
 
