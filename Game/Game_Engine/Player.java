@@ -14,7 +14,7 @@ public class Player{
 		this.ip = ip;
 		this.player_number = player_number;
 		is_AI = true;
-		level_AI = 1;
+		level_AI = 2;
 		// score = 0;
 		lives = 5;
 		if(player_number == 0) p = new Paddle(1,0, Var.width*0.25, Var.height*0.05,0);

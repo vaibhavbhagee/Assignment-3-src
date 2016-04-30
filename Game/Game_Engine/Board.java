@@ -520,11 +520,7 @@ public class Board{
 		}
 		}catch(Exception e){
 			System.out.println("Get all messages null hai");
-		}
-		
-		// System.out.println(messageQueue);
-		//System.out.println(socket.message_queue);
-		
+		}		
 
 		// receive the broadcasted message from the server and decode them appropriately
 		// type of messages

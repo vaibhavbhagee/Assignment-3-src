@@ -1,4 +1,5 @@
 package Game_Engine;
+
 public class Paddle{
 	int orientation;	// 1 for horizontal and 2 for vertical
 	double d1;
@@ -47,6 +48,7 @@ public class Paddle{
 
 	public void movePaddle(double x, double y, int level_AI){
 		if(disable) return;
+		set_power_up();
 		double center = (d1+d2)/2;
 		double factor1 = 1.9*3*Math.abs(center-x)/Var.width;
 		double factor2 = 1.9*3*Math.abs(center-y)/Var.height;
@@ -108,6 +110,10 @@ public class Paddle{
 		}
 		paddle_speed /=2;
 		approveTheseValues(d1,d2,d2-d1);
+	}
+
+	void set_power_up(){
+		int x = (int)(Math.random()*100);
 	}
 
 	public void approveTheseValues(double a,double b,double or){
