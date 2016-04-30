@@ -6,7 +6,11 @@ DEVIATIONS FROM DESIGN DOCUMENT
 
 Gameplay
 ********
-(A) Spin and power shots were added to the game, which were originally mentioned in further scop
+(A) Spin and power shots were added to the game, which were originally mentioned in further scope
+(B) Other than the 3 functions is_pseudo_server(), broadcast() and get_all_messages(), there is a third function my_ip_address() which interacts with the socket class
+(C) For interacting with the UI, ranther than having 2 functions update() and move_paddle(), we now have 2 classes DataForUI and DataForEngine which do the exchange of data between the UI and the Game Engine.
+(C) Just before the start of the game, the periodic_network() function is polled by the UI to establish a connection.
+(D) Unlike initially mentioned, the AI is now handled by not just the pseudo host but by all the players independently. But since the motion of the AI is pre determined and the Ball position is synced, it doesn't make a big difference but rather only makes the rendering more smooth.
 
 UI Related
 **********
@@ -18,4 +22,3 @@ UI Related
 (B) New Classes Added
 	-Start, MultiOpt, StartLoad, EnterIP, JoinLoad
 	 These new classes are used for displaying intermediate screens and miscellaneous stuff.
-
