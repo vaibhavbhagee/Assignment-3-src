@@ -76,7 +76,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 
         EnterIP_frame.pack();
 
-        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/5),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
+        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()),(int)(EnterIP_frame.getSize().getHeight()/8),0 );
         EnterIPButton.overridecolor = 1;
         EnterIPButton.overridecolorwith = new Color(33,200,200,243);
 
@@ -199,7 +199,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         ref = (int)EnterIP_frame.getSize().getWidth();
         EnterIP_frame.pack();
 
-        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/5),0 );
+        EnterIPButton = new Rectangle((int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3),(int)(EnterIP_frame.getSize().getWidth()),(int)(EnterIP_frame.getSize().getHeight()/5),0 );
         EnterIPButton.overridecolor = 1;
         EnterIPButton.overridecolorwith = new Color(33,200,200,243);
 
@@ -212,8 +212,8 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
    		blankArea.addString(new ShowString("JOIN GAME",(int)(EnterIP_frame.getSize().getWidth()/2),(int)(2*EnterIP_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
         blankArea.addString(new ShowString("NAME:",(int)(EnterIP_frame.getSize().getWidth()/2),(int)(EnterIP_frame.getSize().getHeight()/3)+40,new Color(0,255,0,255),new Font("Serif", Font.BOLD, 30),""));
 
-        EnterIPButton_x1 = (int)(EnterIP_frame.getSize().getWidth()/2) - (int)(EnterIP_frame.getSize().getWidth()/5)/2;
-        EnterIPButton_x2 = (int)(EnterIP_frame.getSize().getWidth()/2) + (int)(EnterIP_frame.getSize().getWidth()/5)/2; 
+        EnterIPButton_x1 = (int)(EnterIP_frame.getSize().getWidth()/2) - (int)(EnterIP_frame.getSize().getWidth())/2;
+        EnterIPButton_x2 = (int)(EnterIP_frame.getSize().getWidth()/2) + (int)(EnterIP_frame.getSize().getWidth())/2; 
         EnterIPButton_y1 = (int)(EnterIP_frame.getSize().getHeight()/3)-(int)(EnterIP_frame.getSize().getHeight()/8)/2;
         EnterIPButton_y2 = (int)(EnterIP_frame.getSize().getHeight()/3)+(int)(EnterIP_frame.getSize().getHeight()/8)/2;
 

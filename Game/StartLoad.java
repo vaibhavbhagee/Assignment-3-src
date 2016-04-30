@@ -164,7 +164,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
         StartLoad_frame.pack();
 
-        StartLoadButton = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()/5),(int)(StartLoad_frame.getSize().getHeight()/8),0 );
+        StartLoadButton = new Rectangle((int)(StartLoad_frame.getSize().getWidth()/2),(int)(StartLoad_frame.getSize().getHeight()/3),(int)(StartLoad_frame.getSize().getWidth()),(int)(StartLoad_frame.getSize().getHeight()/4),0 );
         StartLoadButton.overridecolor = 1;
         StartLoadButton.overridecolorwith = new Color(33,200,200,243);
 
@@ -181,10 +181,10 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
    		blankArea.addString(new ShowString("START GAME",(int)(StartLoad_frame.getSize().getWidth()/2),(int)(2*StartLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
-        StartLoadButton_x1 = (int)(StartLoad_frame.getSize().getWidth()/2) - (int)(StartLoad_frame.getSize().getWidth()/5)/2;
-        StartLoadButton_x2 = (int)(StartLoad_frame.getSize().getWidth()/2) + (int)(StartLoad_frame.getSize().getWidth()/5)/2; 
-        StartLoadButton_y1 = (int)(StartLoad_frame.getSize().getHeight()/3)-(int)(StartLoad_frame.getSize().getHeight()/8)/2;
-        StartLoadButton_y2 = (int)(StartLoad_frame.getSize().getHeight()/3)+(int)(StartLoad_frame.getSize().getHeight()/8)/2;
+        StartLoadButton_x1 = (int)(StartLoad_frame.getSize().getWidth()/2) - (int)(StartLoad_frame.getSize().getWidth())/2;
+        StartLoadButton_x2 = (int)(StartLoad_frame.getSize().getWidth()/2) + (int)(StartLoad_frame.getSize().getWidth())/2; 
+        StartLoadButton_y1 = (int)(StartLoad_frame.getSize().getHeight()/3)-(int)(StartLoad_frame.getSize().getHeight()/4)/2;
+        StartLoadButton_y2 = (int)(StartLoad_frame.getSize().getHeight()/3)+(int)(StartLoad_frame.getSize().getHeight()/4)/2;
 
         StartLoadButton_x1m = (int)(StartLoad_frame.getSize().getWidth()/2) - (int)(StartLoad_frame.getSize().getWidth()/5)/2;
         StartLoadButton_x2m = (int)(StartLoad_frame.getSize().getWidth()/2) + (int)(StartLoad_frame.getSize().getWidth()/5)/2; 

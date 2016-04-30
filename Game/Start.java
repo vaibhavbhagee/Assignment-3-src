@@ -163,7 +163,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
         startButton.overridecolor = 1;
         startButton.overridecolorwith = new Color(33,200,200,243);
 
-        startButtonM = new Rectangle((int)(2*start_frame.getSize().getWidth()/4),(int)(start_frame.getSize().getHeight()/3),(int)(start_frame.getSize().getWidth()/5),(int)(start_frame.getSize().getHeight()/8),0 );
+        startButtonM = new Rectangle((int)(2*start_frame.getSize().getWidth()/4),(int)(start_frame.getSize().getHeight()/3),(int)(2*start_frame.getSize().getWidth()/9),(int)(start_frame.getSize().getHeight()/8),0 );
         startButtonM.overridecolor = 1;
         startButtonM.overridecolorwith = new Color(33,200,200,243);
 
@@ -190,8 +190,8 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
         startButton_y1m = (int)(2*start_frame.getSize().getHeight()/3)-(int)(start_frame.getSize().getHeight()/8)/2;
         startButton_y2m = (int)(2*start_frame.getSize().getHeight()/3)+(int)(start_frame.getSize().getHeight()/8)/2;
 
-        startMx1 = (int)(2*start_frame.getSize().getWidth()/4) - (int)(start_frame.getSize().getWidth()/5)/2;
-        startMx2 = (int)(2*start_frame.getSize().getWidth()/4) + (int)(start_frame.getSize().getWidth()/5)/2; 
+        startMx1 = (int)(2*start_frame.getSize().getWidth()/4) - (int)(start_frame.getSize().getWidth()/9)/1;
+        startMx2 = (int)(2*start_frame.getSize().getWidth()/4) + (int)(start_frame.getSize().getWidth()/9)/1; 
         startMy1 = (int)(start_frame.getSize().getHeight()/3)-(int)(start_frame.getSize().getHeight()/8)/2;
         startMy2 = (int)(start_frame.getSize().getHeight()/3)+(int)(start_frame.getSize().getHeight()/8)/2;
 

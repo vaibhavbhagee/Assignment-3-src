@@ -176,7 +176,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
         JoinLoad_frame.pack();
 
-        JoinLoadButton = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()/5),(int)(JoinLoad_frame.getSize().getHeight()/8),0 );
+        JoinLoadButton = new Rectangle((int)(JoinLoad_frame.getSize().getWidth()/2),(int)(JoinLoad_frame.getSize().getHeight()/3),(int)(JoinLoad_frame.getSize().getWidth()),(int)(JoinLoad_frame.getSize().getHeight()/4),0 );
         JoinLoadButton.overridecolor = 1;
         JoinLoadButton.overridecolorwith = new Color(33,200,200,243);
 
@@ -193,10 +193,10 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
         blankArea.addString(new ShowString("BE READY",(int)(JoinLoad_frame.getSize().getWidth()/2),(int)(2*JoinLoad_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
-        JoinLoadButton_x1 = (int)(JoinLoad_frame.getSize().getWidth()/2) - (int)(JoinLoad_frame.getSize().getWidth()/5)/2;
-        JoinLoadButton_x2 = (int)(JoinLoad_frame.getSize().getWidth()/2) + (int)(JoinLoad_frame.getSize().getWidth()/5)/2; 
-        JoinLoadButton_y1 = (int)(JoinLoad_frame.getSize().getHeight()/3)-(int)(JoinLoad_frame.getSize().getHeight()/8)/2;
-        JoinLoadButton_y2 = (int)(JoinLoad_frame.getSize().getHeight()/3)+(int)(JoinLoad_frame.getSize().getHeight()/8)/2;
+        JoinLoadButton_x1 = (int)(JoinLoad_frame.getSize().getWidth()/2) - (int)(JoinLoad_frame.getSize().getWidth())/2;
+        JoinLoadButton_x2 = (int)(JoinLoad_frame.getSize().getWidth()/2) + (int)(JoinLoad_frame.getSize().getWidth())/2; 
+        JoinLoadButton_y1 = (int)(JoinLoad_frame.getSize().getHeight()/3)-(int)(JoinLoad_frame.getSize().getHeight()/4)/2;
+        JoinLoadButton_y2 = (int)(JoinLoad_frame.getSize().getHeight()/3)+(int)(JoinLoad_frame.getSize().getHeight()/4)/2;
 
         JoinLoadButton_x1m = (int)(JoinLoad_frame.getSize().getWidth()/2) - (int)(JoinLoad_frame.getSize().getWidth()/5)/2;
         JoinLoadButton_x2m = (int)(JoinLoad_frame.getSize().getWidth()/2) + (int)(JoinLoad_frame.getSize().getWidth()/5)/2; 

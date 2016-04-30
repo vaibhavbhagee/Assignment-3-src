@@ -204,7 +204,7 @@ public class Board{
 	}
 
 	void hit_paddle(int paddle_num, Ball b){
-		if(plr[paddle_num].is_AI) plr[paddle_num].p.set_power_up(1);
+		if(plr[paddle_num].is_AI) plr[paddle_num].p.set_power_up(plr[paddle_num].level_AI);
 
 		double x,l,phi;
 		//System.out.print("Previous angle: "+(b.theetha*180/Math.PI));
