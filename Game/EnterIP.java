@@ -33,7 +33,6 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     private static EnterIP newContentPane;
     private int sel=0;
     private String ip_number_string="";
-    //private JoinLoad jl = new JoinLoad();
     private String nameEntered ="";
     int ref;
 
@@ -50,8 +49,8 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     List<Rectangle> digits = new ArrayList<Rectangle>();
 
 	EnterIP(){
-		super(new GridBagLayout());
-        GridBagLayout gridbag = (GridBagLayout)getLayout();
+		super(new GridBagLayout());                                   //This whole piece of incomprehensible code
+        GridBagLayout gridbag = (GridBagLayout)getLayout();           //is used to set paramteres of the board (color etc)
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
 
@@ -88,7 +87,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 		blankArea.newRect(EnterIPButton,EnterIPButtonMulti,null,null,null);
 
 	}
-
+//Event handlers. Should be obvious when they are called
 	public void mousePressed(MouseEvent e) {
     }
 
@@ -103,6 +102,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
 
     public void mouseClicked(MouseEvent e) {
     	switch(sel){
+            //Set IP on the screen
     		case 0: ip_number_string = ip_number_string +"0"; break;
             case 1: ip_number_string = ip_number_string +"1"; break;
             case 2: ip_number_string = ip_number_string +"2"; break;
@@ -129,7 +129,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
         blankArea.reDraw();
         blankArea.requestFocus();
     }
-
+//These event handlers are used to detect which region of the screen the mouse is in
     public void mouseMoved(MouseEvent e) {
 
         if(e.getX()>EnterIPButton_x1 && e.getX()<EnterIPButton_x2 && e.getY()>EnterIPButton_y1 && e.getY()<EnterIPButton_y2)
@@ -185,6 +185,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     public void keyTyped(KeyEvent e) {
     }
 
+//Enter characters fromk eyboard
     /** Handle the key-pressed event from the text field. */
     public void keyPressed(KeyEvent e) {
         //System.out.println(e);
@@ -204,7 +205,7 @@ public class EnterIP extends JPanel implements MouseMotionListener, MouseListene
     public void keyReleased(KeyEvent e) {
         //System.out.println(e);
     }
-
+//Sets size, colour etc of all objects on the board
     public void reInitBoard() {
 
         ref = (int)EnterIP_frame.getSize().getWidth();

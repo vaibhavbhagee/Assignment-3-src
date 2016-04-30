@@ -17,7 +17,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-
+//THIS FILE IS SIMILAR TO ENTERIP.JAVA AND SIMILAR FUNCITONS ARE USED
 import java.awt.Font;
 
 public class MultiOpt extends JPanel implements MouseMotionListener, MouseListener{
@@ -26,9 +26,7 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private static MultiOpt newContentPane;
     private int sel=0;
-	//private StartLoad sl = new StartLoad();
-    //private EnterIP ei = new EnterIP();
-    //MouseClickOrMotion m = new MouseClickOrMotion();
+
 
 	Rectangle MultiOptButton;
 	int MultiOptButton_x1,MultiOptButton_x2,MultiOptButton_y1,MultiOptButton_y2;

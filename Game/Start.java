@@ -17,7 +17,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-
+//SIMILAR TO ENTERIP.JAVA
 import java.awt.Font;
 
 public class Start extends JPanel implements MouseMotionListener, MouseListener{
@@ -26,8 +26,7 @@ public class Start extends JPanel implements MouseMotionListener, MouseListener{
 	private BlankArea blankArea = new BlankArea(new Color(20,11,231,188));
     private  static Start newContentPane;
     private int sel=0;
-	//MouseClickOrMotion m = new MouseClickOrMotion();
-	//MultiOpt mu = new MultiOpt();
+
 
 	Rectangle startButton;
 	int startButton_x1,startButton_x2,startButton_y1,startButton_y2;

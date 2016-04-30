@@ -15,13 +15,13 @@ public class Circle{
 		midpoint_x = midx;
 		diameter = d;
 	}
-
+//Draws the circle on the board
 	public void draw(Graphics g) 
 	{
         g.fillOval(midpoint_x-(diameter/2), midpoint_y-(diameter/2),diameter,diameter);
         Toolkit.getDefaultToolkit().sync();
     }
-
+//Get/Set functions for various variables
 	public int getMidX(){return midpoint_x;}
 
 	public int getMidY(){return midpoint_y;}

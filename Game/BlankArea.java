@@ -46,7 +46,7 @@ public class BlankArea extends JLabel {
     public int gWidth=0;
     public int gHeight=0;
     public int bSize=0;
-
+//Locates The messages
     public void setGameOverDim(Dimension d, int bs)
     {
         gameOverDim = d;
@@ -56,22 +56,22 @@ public class BlankArea extends JLabel {
         gameWonMessage = new ShowString("You Win _/\\_",(int)(gameOverDim.getWidth()/2),(int)(gameOverDim.getHeight()/2),new Color(255,0,0,255),new Font("Serif",Font.BOLD,50),"");
         
     }
-
+//Countdown
     public void threeTwoOne()
     {
         countdown--;
     }
-
+//On game over
     public void showGameOverLol()
     {
         gameOverSorry = true;
     }
-
+//On Game won
     public void showGameWon()
     {
         gameWonSwag = true;
     }
-
+//Called once to set vlues
     public void setRed()
     {
         redZone1 = new Rectangle(gWidth/2,gHeight/2,bSize,bSize,0);
@@ -83,11 +83,11 @@ public class BlankArea extends JLabel {
         redZone4 = new Rectangle(gWidth/2,gHeight/2,bSize,bSize,0);
         redZone4.setLifeRect(4);
     }
-
+//Called when ball speeds up/down
     public void trail_on(){trail_present=true;}
 
     public void trail_off(){trail_present=false;}
-
+//Strings added here are displayed eventually
     public void addString(ShowString s)
     {
         stringsToDisplay.add(s);
@@ -100,14 +100,14 @@ public class BlankArea extends JLabel {
         redZone3.lostLifeSet(c);
         redZone1.lostLifeSet(a);
     }
-
+//These replace* functions replace a string starting with * to s
     public void replaceEnterIP(ShowString s)
     {
         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
         {   
             ShowString sz = iter.next();
             if(sz.retstr().length()>=9)
-                {//System.out.println(sz.retstr().substring(0,9));
+                {
                     if(sz.retstr().substring(0,9).equals("ENTER IP:"))
                     sz.setstr(s.retstr());
             }
@@ -120,7 +120,7 @@ public class BlankArea extends JLabel {
         {   
             ShowString sz = iter.next();
             if(sz.retstr().length()>=5)
-                {//System.out.println(sz.retstr().substring(0,5));
+                {
                     if(sz.retstr().substring(0,5).equals("NAME:"))
                     sz.setstr(s.retstr());
             }
@@ -183,7 +183,6 @@ public class BlankArea extends JLabel {
             ShowString sz = iter.next();
             if(sz!=null&& sz.retstr()!=null)
             {
-                //System.out.println(sz.retstr()+":(");
                     if(sz.retstr().length()>=6)
                         if(sz.retstr().substring(0,6).equals("STATUS"))
                         {
@@ -200,7 +199,6 @@ public class BlankArea extends JLabel {
             ShowString sz = iter.next();
             if(sz!=null&& sz.retstr()!=null)
             {
-                //System.out.println(sz.retstr()+":(");
                     if(sz.retstr().length()>=5)
                         if(sz.retstr().substring(0,5).equals("PEER1"))
                         {
@@ -245,7 +243,7 @@ public class BlankArea extends JLabel {
                     sz.setstr(s.retstr());
         }       
     }
-
+//Constructor
     public BlankArea(Color color) {
         setBackground(color);
         setOpaque(true);
@@ -262,7 +260,7 @@ public class BlankArea extends JLabel {
             trail[i] = new Circle(0,0,40-4*i);
         }
     }
-
+//Ball trail effect, set the coordinates
     public void setTrails()
     {
         for(int i=9; i>0;i--)
@@ -273,12 +271,11 @@ public class BlankArea extends JLabel {
                 trail[0].setMidX(c1.getMidX());
                 trail[0].setMidY(c1.getMidY());
     }
-
+//Renders everything on board
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
             long l = System.nanoTime();
-            //System.out.println("Step1:"+l);
 
             g.setColor(new Color(233,233,235,235));
             if(r1!=null)r1.draw(g);
@@ -316,7 +313,6 @@ public class BlankArea extends JLabel {
             }
             for(ShowString n:numerals){
                 n.draw(g);
-                //System.out.println(n.retstr());
             }
             i++;
 
@@ -342,26 +338,23 @@ public class BlankArea extends JLabel {
 
             
     }
-
+//Adds the ball to the list of objects to be rendered
     public void newCirc(Circle ball)
     {
         c1 = ball;
-        //repaint(10);
     }
-
+//These add rectangles to be rendered
     public void newRect(Rectangle board,Rectangle bottom, Rectangle left, Rectangle right, Rectangle top) {
         r1 = board;
         r2 = bottom;
         r3 = left;
         r4 = right;
         r5 = top;
-        //repaint(10);
     }
 
     public void manyNewRects(List<Rectangle> alr)
     {
         digits = alr;
-        //repaint(10);
     }
 
     public void manyNewerRects(List<ShowString> num)
@@ -369,18 +362,9 @@ public class BlankArea extends JLabel {
         numerals = num;
     }
 
-/*    public Dimension getMinimumSize() {
-        return minSize;
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return minSize;
-    }
-*/
+//Called to refresh the screen
     public void reDraw()
     {
-        //repaint(1,180,0,832,832);
         repaint(1);
     }
 

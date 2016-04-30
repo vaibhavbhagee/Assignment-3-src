@@ -29,8 +29,6 @@ import java.awt.Font;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//import javafx.scene.media.Media;
-//import javafx.scene.media.MediaPlayer;
 
 public class MouseClickOrMotion extends JPanel implements MouseMotionListener, MouseListener{
 
@@ -80,13 +78,13 @@ long c1=0,c2=0;
 
 	TimerTask tt = new TimerTask(){
             @Override
-            public void run(){
+            public void run(){          //This whole function is called repeatedly at 50Hz
                 i++;
                 cur=System.currentTimeMillis();
                 blankArea.setTrails();
                     if(p1!=null)
-                    {
-                        diff = p1.getMidX()-prev_x;
+                    {                   
+                        diff = p1.getMidX()-prev_x;         //Obtain velocity of paddles
                         prev_x = p1.getMidX();
                         
                         smoothen_x = (smoothen_x - prev_array[prev_array_index] +diff);
@@ -95,19 +93,18 @@ long c1=0,c2=0;
                         dfe.setAll(p1.getMidX()-paddle_length[0]/2-offsetx,p1.getMidX()+paddle_length[0]/2-offsetx,p1.getFired(),smoothen_x);
                     }
                     try{
-                        dfui = 
+                        dfui =                      //Update all positions of paddles, balls etc
                         board_b.update(
                             dfe);
-                    }catch(Exception e){/*e.printStackTrace();System.out.println("bancho");*/}
+                    }catch(Exception e){}
 
                     try{
                         if(i>3)
-                        {
+                        {           ///Strings which are displayed on the main game bboard
                             blankArea.replaceLives1(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
                             blankArea.replaceLives2(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+60,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
                             blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
                             blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
-                            //blankArea.reDraw2();
                         	String stet="STATUS";
                         	if(board_b.playerIName(0)!=null)
                         	stet = stet +":(1):"+board_b.playerIName(0)+(dfui.player_disconnected[0]?":Disconnected":":Connected");
@@ -125,7 +122,6 @@ long c1=0,c2=0;
 
                     renderNewCoordinates(dfui.getBallX(),dfui.getBallY());
                     try{
-                        //System.out.println(dfui.paddle_pos[1]+":"+dfui.paddle_pos[2]+":"+dfui.paddle_pos[3]+"?"+offsety);
                         p2.setMidY(dfui.paddle_pos[1]+offsety);
                         p3.setMidX(dfui.paddle_pos[2]+offsetx);
                         p4.setMidY(dfui.paddle_pos[3]+offsety);
@@ -133,13 +129,13 @@ long c1=0,c2=0;
                         p3.setFired(dfui.getPowers()[2]);
                         p4.setFired(dfui.getPowers()[3]);
                         
-                        if(dfui.getBallPaddleCollide())
+                        if(dfui.getBallPaddleCollide()) //pplay sounds
                             playSound("ballpaddlecollision.wav");
                         if(dfui.getBallWallCollide())
                             playSound("ballwallcollision.wav");
 
                         blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
-
+//these functioins set various event parameters, like whether gae is won or lost etc
                         if(p2dead && p3dead && p4dead && !p1dead)
                         {
                         	blankArea.showGameWon();
@@ -173,7 +169,7 @@ long c1=0,c2=0;
                             p4.killPaddle();
                             p4dead = true;
                         }
-                    }catch(Exception e){/*e.printStackTrace();System.out.println("maakichy");*/}
+                    }catch(Exception e){}
      
 
             }
@@ -195,7 +191,7 @@ long c1=0,c2=0;
         else
             return b;
     }
-
+//obvious what this does
     public void playSound(String clipname)
     {
         try {
@@ -208,11 +204,10 @@ long c1=0,c2=0;
             System.err.println(e.getMessage());
           }
     }
-
+//constructor similsr to other pages
     public MouseClickOrMotion(String name, int mode, int isHost, Board b_old, int individualDifficulty) {
         super(new GridBagLayout());
-/*        System.out.println("MCOM");
-*/        boardFromPrevPage = b_old;
+        boardFromPrevPage = b_old;
         mode = gameMode;
         individualDiff = individualDifficulty;
         playerName = name;
@@ -256,7 +251,6 @@ long c1=0,c2=0;
         paddle_length[0] = (int)(board_side*0.25);
         paddle_height[0] = (int)(board_side*0.05);
 
-        // board_b = new Board(board_side,board_side);
         b1 = new Circle(300,302,40);
         
         timer = new Timer();
@@ -269,13 +263,10 @@ long c1=0,c2=0;
             {
                 blankArea.threeTwoOne();
                 blankArea.reDraw();
-                //if(dfui!=null)dfui.redLife(0);
-                //if(dfui!=null)dfui.redLife(1);
-                //if(dfui!=null)dfui.redLife(2);
-                //if(dfui!=null)dfui.redLife(3);
+
             }
         },0,1000);
-
+//tiemr class
         timer2.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
@@ -289,7 +280,6 @@ long c1=0,c2=0;
                     blankArea.reDraw();
                 }    
                 c1++;
-                //System.out.println("c1:"+c1);
             }
         },4000,16);
 
@@ -299,9 +289,8 @@ long c1=0,c2=0;
 
 
     }
-
+//this function sets colour size etc and was necessary because swing sucks
     public void reInitBoard() {
-        // System.out.println("reInitBoard");
         if(onlyGodKnowsWhyThisFunctionIsBeingCalledTwice == false)
         {
             for(int i=0;i<10;i++)
@@ -316,9 +305,7 @@ long c1=0,c2=0;
 
             if(boardFromPrevPage == null)
             {
-                // System.out.println("wtf");
                 board_b = new Board(board_side,board_side,playerName,0,0);
-                // System.out.println("ftw");
                 board_b.setParams(board_side,board_side);
             }    
             else
@@ -331,7 +318,6 @@ long c1=0,c2=0;
             if(individualDiff>0)
                 board_b.setIndividualAILevel(individualDiff);
 
-            //System.out.println("banka"+board_side);
             
             paddle_length[0] = (int)(board_side*0.25);
             paddle_height[0] = (int)(board_side*0.05);
@@ -475,7 +461,6 @@ long c1=0,c2=0;
         frame.setResizable(false);
 
         //Create and set up the content pane.
-        //newContentPane = new MouseClickOrMotion();
         newContentPane = this;
         newContentPane.setOpaque(true); //content panes must be opaque
 

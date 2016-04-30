@@ -20,7 +20,7 @@ public class ShowString{
 		font = fon;
 		planame = planam;
 	}
-
+//Draw the string
 	public void draw(Graphics g)
 	{
 		g.setColor(textcolor);
@@ -28,8 +28,7 @@ public class ShowString{
         int width = g.getFontMetrics(font).stringWidth(str);
         if(str.length()>6 && (str.charAt(6) == '2' ||str.charAt(6)=='4') )
        	{
-       		//System.out.println("rota");
-       		//((Graphics2D)g).translate(-(x),-y);
+
        		Graphics2D g2x = (Graphics2D)g;
        		g2x.rotate(Math.toRadians(-90));
        		g2x.translate(-400,0);

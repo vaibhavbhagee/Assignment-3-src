@@ -37,7 +37,7 @@ public class Rectangle{
 	private double playerDeadFallThePaddleInTheHole = 1.00000000000;
 	private int waitTillPaddleFallInTheHole = 0;
 	private int deadFlag = 0;
-
+//Functions for special uses
 	public void killPaddle()
 	{
 		playerDeadFallThePaddleInTheHole = 0.98;
@@ -102,7 +102,7 @@ public class Rectangle{
 		thetas = l!=0?(4*t)/l:0.0;
 		rs = l!=0?(t*t)/(8*l):0.0;
 	}
-
+//Draw the rectangle/arc paddle/whatever
 	public void draw(Graphics g) 
 	{
 		rf = playerDeadFallThePaddleInTheHole*rf;
@@ -286,7 +286,7 @@ public class Rectangle{
 
 	    }
     }
-
+//Normal functions
     public void fired_up(){fired_up++;}
 
     public void fired_down(){fired_up=0;}

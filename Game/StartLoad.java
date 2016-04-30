@@ -34,7 +34,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
     private Board board_b=null;
     Timer t1;
-
+//This is called repeatedly, to poll some parameterers
     TimerTask tt = new TimerTask(){
             @Override
             public void run()
@@ -55,15 +55,14 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
 
 	Rectangle StartLoadButtonMulti;
 	int StartLoadButton_x1m,StartLoadButton_x2m,StartLoadButton_y1m,StartLoadButton_y2m;
-
+//Constructor to uinitialise everything
 	StartLoad(){
 		super(new GridBagLayout());
         
         if(StartLoad_frame==null)
             StartLoad_frame = new JFrame("StartLoad");
 
-/*        System.out.println("StartLoadConstructor");
-*/        GridBagLayout gridbag = (GridBagLayout)getLayout();
+       GridBagLayout gridbag = (GridBagLayout)getLayout();
         GridBagConstraints c = new GridBagConstraints();
         this.setBackground(new Color(0,0,123,255));
 
@@ -98,9 +97,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
 		blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
 
-        // System.out.println("wtf");
         board_b = new Board(20,20,"Host",1,1);
-        // System.out.println("seriously");
         board_b.setParams(586,586);
 
         board_b.acceptIP("");
@@ -111,7 +108,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         t1.scheduleAtFixedRate(tt,0,20);
 
     }
-
+//Event handlers uselsess
 	public void mousePressed(MouseEvent e) {
     }
 
@@ -131,7 +128,6 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
     		case 2:  tt.cancel(); board_b.hostApproval(true); (new MouseClickOrMotion("Host",1,1,board_b,0)).launch(); t1.cancel(); t1.purge();StartLoad_frame.dispose();  break;
     		default: break;
     	}
-        //blankArea.reDraw();
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -154,12 +150,11 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         	blankArea.newRect(StartLoadButton,StartLoadButtonMulti,null,null,null);
     		sel = 0;
     	}
-        //blankArea.reDraw();
     }
 
     public void mouseDragged(MouseEvent e) {
     }
-
+//Reinitialise everything cuz swing _\/_
     public void reInitBoard() {
 
         StartLoad_frame.pack();
@@ -202,7 +197,7 @@ public class StartLoad extends JPanel implements MouseMotionListener, MouseListe
         StartLoad_frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = this;//new StartLoad();
+        newContentPane = this;
         newContentPane.setOpaque(true); //content panes must be opaque
 
 

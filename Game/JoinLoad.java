@@ -69,7 +69,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
 	JoinLoad(String ip, String name){
 		super(new GridBagLayout());
-
+//Initialises objects on board
         if(JoinLoad_frame==null)
             JoinLoad_frame = new JFrame("JoinLoad");
 
@@ -122,7 +122,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
 
 	}
-
+//Event handlers forr nothing but they had to be declared so...
 	public void mousePressed(MouseEvent e) {
     }
 
@@ -134,7 +134,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
 
     public void mouseExited(MouseEvent e) {
     }
-
+//Lol. Ghulam class hai ye
     public void mouseClicked(MouseEvent e) {
     	switch(sel){
     		case 0: break;
@@ -143,21 +143,19 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     		default: break;
     	}
     }
-
+//Detect which region of the screen mouse is
     public void mouseMoved(MouseEvent e) {
     	if(e.getX()>JoinLoadButton_x1 && e.getX()<JoinLoadButton_x2 && e.getY()>JoinLoadButton_y1 && e.getY()<JoinLoadButton_y2)
     	{
     		JoinLoadButton.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 1;
-            //blankArea.reDraw();
     	}
     	else if (e.getX()>JoinLoadButton_x1m && e.getX()<JoinLoadButton_x2m && e.getY()>JoinLoadButton_y1m && e.getY()<JoinLoadButton_y2m)
     	{
     		JoinLoadButtonMulti.overridecolorwith = new Color(33,23,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 2;	
-            //blankArea.reDraw();
     	}
     	else
     	{
@@ -165,13 +163,12 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
     		JoinLoadButtonMulti.overridecolorwith = new Color(33,200,200,243);
         	blankArea.newRect(JoinLoadButton,JoinLoadButtonMulti,null,null,null);
     		sel = 0;
-            //blankArea.reDraw();
     	}
     }
 
     public void mouseDragged(MouseEvent e) {
     }
-
+//Set colour size etc of objects on board
     public void reInitBoard() {
 
         JoinLoad_frame.pack();
@@ -214,7 +211,7 @@ public class JoinLoad extends JPanel implements MouseMotionListener, MouseListen
         JoinLoad_frame.setResizable(false);
 
         //Create and set up the content pane.
-        newContentPane = this;//new JoinLoad(ipAddress,playerName);
+        newContentPane = this;
         newContentPane.setOpaque(true); //content panes must be opaque
 
 
