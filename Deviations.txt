@@ -1,5 +1,17 @@
-Shreyan Deviations:
+Physics Deviations:
 
-Ion Deviations:
+User Interface Deviations:
 
-Bhagee Deviations:
+Networking Deviations:
+
+1) In the design doc we had mentioned that the Socket handler class will wait for incoming connections and spawn a new thread of the individual connection handler
+	class which will manage the further communication. However in the actual implementation, the individual connection handler is not a thread but only a simple object having the
+	functionality of sending the messages to the peer to which it belongs. Spawning a new thread was not deemed necessary here as for a particular peer, a single thread namely the 
+	socket_handler() thread could handle the receiving of messages sent out to that peer.
+
+2) In the design doc we had mentioned that the socket_handler() class would contain a function called ping_all_clients() which will check a peer disconnectiona and reconnection. However
+	in the actual implementation, we have created a class connectivity_check() which extends the TimerTask class of java. This provided us the advantage of checking for disconnection and reconnection 
+	of a peer in the run() method of the class. So, this timer runs in parallel to the socket_handler thread and reports any disconnection or reconnection of peers to the socket_handler thread.
+	Thus disconnection and reconnection can be considered independent of socket handling. This class also provides us the advantage that if the packet containing the message or disconnection or 
+	reconnection of a peer gets lost for some other peer, we are actually pinging a connected list to all the connected peers who can add a client in case they don't have its details with them
+	if it is connected.
