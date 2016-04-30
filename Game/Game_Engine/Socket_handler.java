@@ -7,10 +7,12 @@ import java.util.*;
 public class Socket_handler extends Thread implements Runnable 
 {
 	public String my_ip_address;
+	// IP Address of this peer
 
 	public DatagramSocket socket = null;
 
 	public HashMap<String,indiv_connection_handler> connect_list;
+	//List of peers connected
 
 	public Queue<String> message_queue;
 
@@ -252,6 +254,7 @@ public class Socket_handler extends Thread implements Runnable
 		}
 	}
 
+	//To print Hash Map
 	public void print_hm()
 	{
 		System.out.println("HashMap status:");
@@ -262,12 +265,14 @@ public class Socket_handler extends Thread implements Runnable
     	}
 	}
 
+	//To print queue
 	public void print_q()
 	{
 		return;
    		//System.out.println(this.message_queue);
 	}
 
+	// To check for pseudo server
 	public boolean is_pseudo_server()
 	{
 		try
@@ -300,6 +305,7 @@ public class Socket_handler extends Thread implements Runnable
 		}
 	}
 
+	// To connect to a new user through the network
 	public void connect_to_user(String ip_address) throws Exception
 	{
 		if (this.connect_list.get(ip_address) == null)
@@ -329,6 +335,7 @@ public class Socket_handler extends Thread implements Runnable
 		return retq;
 	}
 
+	// To be called on addition of a new user
 	public void new_user(String ip_addr) throws Exception
 	{
         System.out.println("New User: "+ip_addr+" joined.");
@@ -370,6 +377,7 @@ public class Socket_handler extends Thread implements Runnable
         this.connect_list.get(ip_addr).send_message("Handshake-Request"+/*my_ip_address+";true"+*/this.get_ip_list()+"");
     }
 
+    //To close the socket
     @Override
     public void interrupt()
     {
@@ -385,6 +393,7 @@ public class Socket_handler extends Thread implements Runnable
     	}
     }
 
+    // To update the pseudo server on disconnection or reconnection
     public void update_pseudo_server()
     {
     	TreeMap t_map = new TreeMap(this.connect_list);
@@ -411,6 +420,7 @@ public class Socket_handler extends Thread implements Runnable
 
     }
 
+    // To send the joining order of peers to other peers
     public void send_joining_order() throws Exception
     {
     	String to_send = "Joining-Order";
@@ -453,6 +463,7 @@ public class Socket_handler extends Thread implements Runnable
     	return ip_list;
     }
 
+    // To be called on adding a new user
     public void add_user(String ip_addr) throws Exception  
 	{
         System.out.println("New User: "+ip_addr+" joined.");
@@ -481,6 +492,7 @@ public class Socket_handler extends Thread implements Runnable
         // this.connect_list.get(ip_addr).send_message("Handshake-Request;"+InetAddress.getLocalHost().getHostAddress()my_ip_address+"");
     }
 
+    // To broadcast messages to all peers
     public void send_message_to_all(String message) throws Exception
     {
     	for (String key: this.connect_list.keySet()) 
@@ -497,6 +509,7 @@ public class Socket_handler extends Thread implements Runnable
     	}
     }
 
+    // To be called on connection confirmation from the user
     public void user_handshake(String resp) throws Exception
 	{
         // System.out.println("New User: "+ip_addr+" joined.");
@@ -558,6 +571,7 @@ class indiv_connection_handler
 		this.socket = new DatagramSocket();
 	}
 
+	// Send message to the particular peer
 	public void send_message(String message) throws Exception
 	{
 		byte[] data = message.getBytes();
@@ -593,6 +607,7 @@ class message_sender_thread implements Runnable
 	}
 }
 
+// To check for disconnection and reconnection of peers
 class connectivity_check extends TimerTask
 {
 	public Socket_handler sh;

@@ -1,4 +1,3 @@
-
 ===============================
 DEVIATIONS FROM DESIGN DOCUMENT
 ===============================
@@ -6,10 +5,19 @@ DEVIATIONS FROM DESIGN DOCUMENT
 
 Gameplay
 ********
-(A) Spin and power shots were added to the game, which were originally mentioned in further scop
+(A) Spin and power shots were added to the game, which were originally mentioned in further scope
+(B) Interaction with server class -
+	Other than the 3 functions is_pseudo_server(), broadcast() and get_all_messages(), there is a third function my_ip_address() which interacts with the socket class
+(C) Interaction with UI -
+	For interacting with the UI, ranther than having 2 functions update() and move_paddle(), we now have 2 classes DataForUI and DataForEngine which do the exchange of data between the UI and the Game Engine.
+(C) Polling -
+	Just before the start of the game, the periodic_network() function is polled by the UI to establish a connection.
+(D) AI -
+	Unlike initially mentioned, the AI is now handled by not just the pseudo host but by all the players independently. But since the motion of the AI is pre determined and the Ball position is synced, it doesn't make a big difference but rather only makes the rendering more smooth.
 
 UI Related
 **********
+
 (A) Deviations in existing classes
 	-class Rectangle
 	 The class was originally meant to render all rectangles on the board, including the paddles. Later, the shape of the paddles were changed to arcs, and the class' draw functions were updated to render arc-shaped paddles as well. Several functions were added to make the code in remaining classes more readable, including functions meant for paddles only, other objects on the screen etc.
@@ -19,3 +27,17 @@ UI Related
 	-Start, MultiOpt, StartLoad, EnterIP, JoinLoad
 	 These new classes are used for displaying intermediate screens and miscellaneous stuff.
 
+Networking Related
+******************
+
+(A) In the design doc we had mentioned that the Socket handler class will wait for incoming connections and spawn a new thread of the individual connection handler
+	class which will manage the further communication. However in the actual implementation, the individual connection handler is not a thread but only a simple object having the
+	functionality of sending the messages to the peer to which it belongs. Spawning a new thread was not deemed necessary here as for a particular peer, a single thread namely the 
+	socket_handler() thread could handle the receiving of messages sent out to that peer.
+
+(B) In the design doc we had mentioned that the socket_handler() class would contain a function called ping_all_clients() which will check a peer disconnectiona and reconnection. However
+	in the actual implementation, we have created a class connectivity_check() which extends the TimerTask class of java. This provided us the advantage of checking for disconnection and reconnection 
+	of a peer in the run() method of the class. So, this timer runs in parallel to the socket_handler thread and reports any disconnection or reconnection of peers to the socket_handler thread.
+	Thus disconnection and reconnection can be considered independent of socket handling. This class also provides us the advantage that if the packet containing the message or disconnection or 
+	reconnection of a peer gets lost for some other peer, we are actually pinging a connected list to all the connected peers who can add a client in case they don't have its details with them
+	if it is connected.

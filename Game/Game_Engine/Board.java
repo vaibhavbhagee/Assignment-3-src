@@ -10,16 +10,18 @@ public class Board{
 	DataForUI data_out;
 	Socket_handler socket;
 	String name;
-	Queue<Player_Info> plr_q;
-	int game_mode = -100;
 	String current_ip;
+	Queue<Player_Info> plr_q;
+	
+	int game_mode = -100;
 	boolean game_started = false;
 	boolean already_set_param = false;
 	int singleOrMultiPlayer, isHost;
 	int my_joining_order = -100;
-	Thread t;
 	public String[] connectedPlayers = new String[4];
-
+	Thread t;
+	
+//================================= Constructor
 	public Board(int a, int b, String name, int singleOrMultiPlayer, int isHost){
 		this.name = name;
 		System.out.println("Constructor");
@@ -31,117 +33,8 @@ public class Board{
 		connectedPlayers[1]="PEER2";
 		connectedPlayers[2]="PEER3";
 		connectedPlayers[3]="PEER4";
-	}			// 460 x 460
-
-	public void getConnectedPlayers()
-	{
-		String[] connectedPlayers2 = new String[4];
-		int j=0;
-		for(Player_Info p:plr_q)
-		{
-			boolean flag = true;
-			for(int i=0;i<4;i++)
-			{
-				if(connectedPlayers[i]!=null)
-					if( flag == true && connectedPlayers[i].equals("PEER"+(j+1)+":"+p.name+":"+p.ip) )
-					{
-						flag = false;
-						connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
-						j++;
-					}
-			}
-			if(flag)
-			{
-				connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
-				j++;
-			}
-		}
-		for(;j<4;j++)
-			if(connectedPlayers2[j]==null)
-				connectedPlayers2[j]="PEER"+(j+1);
-
-		for(int o=0;o<4;o++)
-			connectedPlayers[o] = connectedPlayers2[o];
-
-		if(this.isHost==1)
-		{
-			connectedPlayers[3]="PEER4:Host:"+getHostIP();
-		}
 	}
-
-	public void setIndividualAILevel(int ai)
-	{
-		for(int i=0; i<4; ++i){
-			plr[i].level_AI = ai;
-		}
-	}
-
-	public String getHostIP(){
-		return socket.my_ip_address();
-	}
-
-	public String playerIName(int i)
-	{
-		//System.out.println(plr[i].name);
-		return plr[i].name;
-	}
-
-	public void acceptIP(String ip1)
-	{	
-		System.out.println("IP" + ip1);
-		current_ip = ip1;
-	}
-	public void setParams(int w, int h)
-	{
-		if(already_set_param){
-			// System.out.println("already_set_param");
-		}else{
-			// System.out.println("setParams");
-			Var.width = w;
-			Var.height = h;
-			Var.speed = Var.width/Var.freq*Var.speed_factor;
-			Var.speed_increase = 0;
-			epsilon = Var.speed;
-			b = new Ball(Var.width/2,Var.height/2,Math.PI/5,20);
-			plr[0] = new Player(name, null, 0);
-			plr[1] = new Player("AI_1", "", 1);
-			plr[2] = new Player("AI_2", "", 2);
-			plr[3] = new Player("AI_3", "", 3);
-			plr[0].is_AI = false;
-			already_set_param = true;
-		}
-		
-	}
-	public void setGameMode(int i){
-		if(game_mode==-100){
-			game_mode = i;
-			init_network();
-		}else{
-			System.out.println("BANCHO ION");
-		}
-		// 0 - single player
-		// 1 - Hosting
-		// 2 - connecting
-	}
-
-//Called by host of the game when he presses game start
-	public void hostApproval(boolean b) 
-	{
-		broadcast("Start_Game");
-		game_started = true;
-	}
-
-//this is polled by each client user. return true when host has started the game
-	public boolean requestForHostApproval()
-	{
-		return game_started; //true when game has started by host
-	}
-
-	public int min(int a, int b)
-	{
-		if(a<b) return a; else return b;
-	}
-
+//================================= update function and its dependences
 	public DataForUI update(DataForEngine o){
 		// called by UI
 		// update the position of the ball
@@ -184,7 +77,6 @@ public class Board{
 		if(game_mode!=0) periodic_network();
 		return data_out;
 	}
-
 	void hit_paddle(int paddle_num, Ball b){
 		if(plr[paddle_num].is_AI) plr[paddle_num].p.set_power_up(plr[paddle_num].level_AI);
 
@@ -215,7 +107,6 @@ public class Board{
 		data_out.setBallPaddleCollide(true);
 		b.set_velocity(2*phi - b.theetha + Math.PI);
 	}
-
 	void artificial_intelligence(){
 		// i is the player who's paddle has to be updated
 		for(int i=1;i<4;++i)
@@ -290,6 +181,7 @@ public class Board{
 		}
 	}
 
+//================================= Network related functions
 	void init_network(){
 		if(game_mode!=0)
 		try{
@@ -305,7 +197,6 @@ public class Board{
 			}
 		}catch(Exception e){e.printStackTrace();}
 	}
-
 	public void periodic_network(){
 		if(game_mode==-100) return;
 		// System.out.println("PeriodicNetwork");
@@ -322,7 +213,6 @@ public class Board{
 			broadcast("Start_Game");
 		}
 	}
-
 	boolean is_pseudo_server(){
 		// returns true depending on whether the current player is the pseudo server
 		if(game_mode==0) return true;
@@ -335,7 +225,6 @@ public class Board{
 			}
 		}
 	}
-
 	void broadcast(String str){
 		try{
 			if (socket != null){
@@ -348,7 +237,6 @@ public class Board{
 
 		}catch(Exception e){e.printStackTrace();}
 	}
-
 	void decode(String str){
 		String ip_temp;
 		String s[] = str.split(";");
@@ -445,7 +333,7 @@ public class Board{
 				for(Player_Info p : plr_q){
 					int index = p.joining_order - my_joining_order;
 					if(index<0) index += 4;
-					plr[index].name = p.name;
+					// plr[index].name = p.name;
 					plr[index].ip = p.ip;
 					plr[index].is_AI = false;
 					System.out.println(index + " "+plr[index].ip+" "+plr[index].name+" "+p.joining_order);
@@ -474,12 +362,7 @@ public class Board{
 			System.out.println("Get all messages null hai");
 		}		
 	}
-
-	public int getSpeed()
-	{
-		return (int)(Var.speed*(1+Var.speed_increase));
-	}
-
+//====================================== End Game function
 	public void end_game(){
 		try
 		{
@@ -499,5 +382,106 @@ public class Board{
 		catch (Exception e) {
 			System.out.println("exception inside end game method");
 		}
+	}
+//================================== Random functions made by/for ion
+	public void getConnectedPlayers()
+	{
+		String[] connectedPlayers2 = new String[4];
+		int j=0;
+		for(Player_Info p:plr_q)
+		{
+			boolean flag = true;
+			for(int i=0;i<4;i++)
+			{
+				if(connectedPlayers[i]!=null)
+					if( flag == true && connectedPlayers[i].equals("PEER"+(j+1)+":"+p.name+":"+p.ip) )
+					{
+						flag = false;
+						connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
+						j++;
+					}
+			}
+			if(flag)
+			{
+				connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
+				j++;
+			}
+		}
+		for(;j<4;j++)
+			if(connectedPlayers2[j]==null)
+				connectedPlayers2[j]="PEER"+(j+1);
+
+		for(int o=0;o<4;o++)
+			connectedPlayers[o] = connectedPlayers2[o];
+
+		if(this.isHost==1)
+		{
+			connectedPlayers[3]="PEER4:Host:"+getHostIP();
+		}
+	}
+	public int getSpeed()
+	{
+		return (int)(Var.speed*(1+Var.speed_increase));
+	}
+	public void setIndividualAILevel(int ai)
+	{
+		for(int i=0; i<4; ++i){
+			plr[i].level_AI = ai;
+		}
+	}
+	public String getHostIP(){
+		return socket.my_ip_address();
+	}
+	public String playerIName(int i)
+	{
+		//System.out.println(plr[i].name);
+		return plr[i].name;
+	}
+	public void acceptIP(String ip1)
+	{	
+		System.out.println("IP" + ip1);
+		current_ip = ip1;
+	}
+	public void setParams(int w, int h)
+	{
+		if(already_set_param){
+			// System.out.println("already_set_param");
+		}else{
+			// System.out.println("setParams");
+			Var.width = w;
+			Var.height = h;
+			Var.speed = Var.width/Var.freq*Var.speed_factor;
+			Var.speed_increase = 0;
+			epsilon = Var.speed;
+			b = new Ball(Var.width/2,Var.height/2,Math.PI/5,20);
+			plr[0] = new Player(name, null, 0);
+			plr[1] = new Player("AI_1", "", 1);
+			plr[2] = new Player("AI_2", "", 2);
+			plr[3] = new Player("AI_3", "", 3);
+			plr[0].is_AI = false;
+			already_set_param = true;
+		}	
+	}
+	public void setGameMode(int i){
+		if(game_mode==-100){
+			game_mode = i;
+			init_network();
+		}else{
+			System.out.println("BANCHO ION");
+		}
+		// 0 - single player
+		// 1 - Hosting
+		// 2 - connecting
+	}
+	//Called by host of the game when he presses game start
+	public void hostApproval(boolean b) 
+	{
+		broadcast("Start_Game");
+		game_started = true;
+	}
+	//this is polled by each client user. return true when host has started the game
+	public boolean requestForHostApproval()
+	{
+		return game_started; //true when game has started by host
 	}
 }
