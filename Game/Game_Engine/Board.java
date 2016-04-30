@@ -455,6 +455,7 @@ public class Board{
 				for(int i=0; i<4; ++i){
 					if(plr[i].ip.equals(s[1])){
 						plr[i].is_AI = false;
+						data_out.player_disconnected[i] = false;
 						break;
 					}
 				}
@@ -465,6 +466,7 @@ public class Board{
 				for(int i=0; i<4; ++i){
 					if(plr[i].ip.equals(s[1])){
 						plr[i].is_AI = true;
+						data_out.player_disconnected[i] = true;
 						break;
 					}
 				}

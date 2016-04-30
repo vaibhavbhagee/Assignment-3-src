@@ -10,6 +10,8 @@ public class DataForUI{
 	private boolean spin_ball_paddle_collide;//Like first, but spin imparted
 	private boolean power_ball_paddle_collide;//Like first, but power up hit
 
+	public boolean[] player_disconnected = new boolean[4];
+
 	public void resetAllFlags()
 	{
 		ball_paddle_collide = false;
@@ -61,6 +63,7 @@ public class DataForUI{
 			ball_paddle_collision[i]=false;
 			lives[i]=maxLives;
 			paddle_pos[i] = 0;
+			player_disconnected = false;
 		}
 	}
 
