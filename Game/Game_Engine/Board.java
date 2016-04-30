@@ -107,10 +107,10 @@ public class Board{
 	public void setParams(int w, int h)
 	{
 		if(already_set_param){
-/*			System.out.println("already_set_param");
-*/		}else{
-/*			System.out.println("setParams");
-*/			Var.width = w;
+			// System.out.println("already_set_param");
+		}else{
+			// System.out.println("setParams");
+			Var.width = w;
 			Var.height = h;
 			Var.speed = Var.width/Var.freq*Var.speed_factor;
 			Var.speed_increase = 0;
@@ -128,8 +128,8 @@ public class Board{
 	public void setGameMode(int i){
 		if(game_mode==-100){
 			game_mode = i;
-/*			System.out.println("Set gam mode " + i);
-*/			init_network();
+			// System.out.println("Set gam mode " + i);
+			init_network();
 		}else{
 			System.out.println("BANCHO ION");
 		}
@@ -204,6 +204,8 @@ public class Board{
 	}
 
 	void hit_paddle(int paddle_num, Ball b){
+		if(plr[paddle_num].is_AI) plr[paddle_num].p.set_power_up(1);
+
 		double x,l,phi;
 		//System.out.print("Previous angle: "+(b.theetha*180/Math.PI));
 		if(paddle_num%2==0) x = b.posX - (plr[paddle_num].p.d1+plr[paddle_num].p.d2)/2;

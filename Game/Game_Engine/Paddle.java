@@ -48,7 +48,7 @@ public class Paddle{
 
 	public void movePaddle(double x, double y, int level_AI){
 		if(disable) return;
-		set_power_up(level_AI);
+		//set_power_up(level_AI);
 		double center = (d1+d2)/2;
 		double factor1 = 1.9*3*Math.abs(center-x)/Var.width;
 		double factor2 = 1.9*3*Math.abs(center-y)/Var.height;
@@ -112,20 +112,56 @@ public class Paddle{
 		approveTheseValues(d1,d2,d2-d1);
 	}
 
-	void set_power_up(int level_AI){
+	public void set_power_up(int level_AI){
 		int x = (int)(Math.random()*100);
-		if(x<50-8*level_AI)
-			current_power = 0;
-		else if(x<66-9*level_AI)
-			current_power = 1;
-		else if(x<80-10*level_AI)
-			current_power = 2;
-		else if(x<90-11*level_AI)
-			current_power = 3;
-		else if(x<100-12*level_AI)
-			current_power = 4;
-		else if(x<100)
-			current_power = 5;
+		// if(x<10) current_power = 1;
+		// else current_power = 0;
+		if(level_AI==1)
+		{
+			if(x<87)
+				current_power = 0;
+			else if(x<90)
+				current_power = 1;
+			else if(x<93)
+				current_power = 2;
+			else if(x<96)
+				current_power = 3;
+			else if(x<98)
+				current_power = 4;
+			else if(x<100)
+				current_power = 5;
+		}
+		else if(level_AI==2)
+		{
+			if(x<70)
+				current_power = 0;
+			else if(x<76)
+				current_power = 1;
+			else if(x<84)
+				current_power = 2;
+			else if(x<90)
+				current_power = 3;
+			else if(x<95)
+				current_power = 4;
+			else if(x<100)
+				current_power = 5;
+		}
+		else if(level_AI ==3 )
+		{
+			if(x<50)
+				current_power = 0;
+			else if(x<73)
+				current_power = 1;
+			else if(x<82)
+				current_power = 2;
+			else if(x<87)
+				current_power = 3;
+			else if(x<96)
+				current_power = 4;
+			else if(x<100)
+				current_power = 5;
+		}
+		System.out.println("current_power: "+current_power);
 	}
 
 	public void approveTheseValues(double a,double b,double or){
