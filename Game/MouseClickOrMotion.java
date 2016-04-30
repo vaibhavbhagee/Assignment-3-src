@@ -69,7 +69,9 @@ public class MouseClickOrMotion extends JPanel implements MouseMotionListener, M
     private String playerName;
     private int individualDiff;
 
-    private boolean p2dead=false,p3dead=false,p4dead=false;
+    private boolean p1dead=false,p2dead=false,p3dead=false,p4dead=false;
+
+    private Rectangle constatus;
 
     private int gameMode=0;
     long cur=0;
@@ -106,6 +108,12 @@ long c1=0,c2=0;
                             blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
                             blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
                             //blankArea.reDraw2();
+                        String stet = "STATUS:"+"(1):"+board_b.playerIName(0)+(dfui.player_disconnected[0]?":Disconnected":":Connected");
+                            stet = stet +":(2):"+board_b.playerIName(1)+(dfui.player_disconnected[1]?":Disconnected":":Connected");
+                            stet = stet +":(3):"+board_b.playerIName(2)+(dfui.player_disconnected[2]?":Disconnected":":Connected");
+                            stet = stet +":(4):"+board_b.playerIName(3)+(dfui.player_disconnected[3]?":Disconnected":":Connected");
+
+                            blankArea.replaceStatus(new ShowString(stet,(int)(frame.getSize().getWidth()/2),(int)(frame.getSize().getHeight()/40),new Color(255,255,255,255),new Font("Serif", Font.PLAIN, 20),""));
                         }
                     }catch(Exception e){e.printStackTrace();}
                     
@@ -127,7 +135,7 @@ long c1=0,c2=0;
 
                         blankArea.addRedRectangles(5-dfui.getLife(0),5-dfui.getLife(1),5-dfui.getLife(2),5-dfui.getLife(3));
 
-                        if(p2dead && p3dead && p4dead)
+                        if(p2dead && p3dead && p4dead && !p1dead)
                         {
                         	blankArea.showGameWon();
                         	disableMouse = true;
@@ -137,6 +145,7 @@ long c1=0,c2=0;
                         {
                             disableMouse = true;
                             p1.killPaddle();
+                            p1dead = true;
                             blankArea.showGameOverLol();
                             if(soundplayed == false)
                             {
@@ -329,6 +338,9 @@ long c1=0,c2=0;
             paddle_length[3] = (int)(board_side*0.05);
             paddle_height[3] = (int)(board_side*0.25);
 
+            if(gameMode!=0)
+                blankArea.addString(new ShowString("STATUS:",(int)(frame.getSize().getWidth()/2),(int)(frame.getSize().getHeight()/40),new Color(255,255,255,255),new Font("Serif", Font.PLAIN, 20),""));
+
             blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+400,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
             blankArea.addString(new ShowString("PLAYER2:: lives="+dfui.getLife(1),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)-80,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(1)));
             blankArea.addString(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)-180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
@@ -340,8 +352,14 @@ long c1=0,c2=0;
             p2 = new Rectangle((int)(frame.getSize().getWidth()/2)+paddle_length[3]/2-board_side/2,(int)(frame.getSize().getHeight()/2),paddle_length[3],paddle_height[3],4);
 
             board = new Rectangle((int)(frame.getSize().getWidth()/2), (int)(frame.getSize().getHeight()/2), board_side, board_side,0);
+            
             board.overridecolor = 1;
             board.overridecolorwith = new Color(255,255,0,255);
+
+            constatus = new Rectangle( (int)(frame.getSize().getWidth()/2),(int)(frame.getSize().getHeight()/40),(int)(frame.getSize().getWidth()),(int)(frame.getSize().getHeight()/20),0 );
+            constatus.overridecolor = 1;
+            constatus.overridecolorwith = new Color(0,0,0,255);
+            blankArea.playerConnected = constatus;
 
             blankArea.setGameOverDim(frame.getSize(),board_side);
 

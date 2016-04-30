@@ -63,7 +63,7 @@ public class DataForUI{
 			ball_paddle_collision[i]=false;
 			lives[i]=maxLives;
 			paddle_pos[i] = 0;
-			player_disconnected = false;
+			player_disconnected[i] = false;
 		}
 	}
 

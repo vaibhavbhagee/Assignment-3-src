@@ -34,6 +34,9 @@ public class BlankArea extends JLabel {
     public Rectangle redZone2;
     public Rectangle redZone3;
     public Rectangle redZone4;
+
+    public Rectangle playerConnected=null;
+
     public boolean renderDone=true;
     int i=0;
 
@@ -173,6 +176,23 @@ public class BlankArea extends JLabel {
        
     }
 
+    public void replaceStatus(ShowString s)
+    {
+         for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
+        {
+            ShowString sz = iter.next();
+            if(sz!=null&& sz.retstr()!=null)
+            {
+                //System.out.println(sz.retstr()+":(");
+                    if(sz.retstr().length()>=6)
+                        if(sz.retstr().substring(0,6).equals("STATUS"))
+                        {
+                            sz.setstr(s.retstr());
+                        }
+            }
+        }       
+    }
+
     public void replacePeer1(ShowString s)
     {
          for(Iterator<ShowString> iter = stringsToDisplay.iterator();iter.hasNext();)
@@ -283,6 +303,10 @@ public class BlankArea extends JLabel {
             g.setColor(new Color(23,12,92,232));
             if(c1!=null)c1.draw(g);
 
+            
+            if(playerConnected !=null)
+                playerConnected.draw(g);
+
             for(ShowString s:stringsToDisplay){
                 s.draw(g);
             }
@@ -309,6 +333,7 @@ public class BlankArea extends JLabel {
                 one.draw(g);
             else if(countdown == 0)
                 start.draw(g);
+
 
 
             renderDone = true;
