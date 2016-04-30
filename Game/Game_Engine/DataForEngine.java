@@ -21,11 +21,6 @@ public class DataForEngine{
 		current_velocity = vel;
 	}
 
-	// public void setCurrentPosition(int p)
-	// {
-	// 	current_position = p;
-	// }
-
 	public void setCurrentPower(int p)
 	{
 		current_power = p;

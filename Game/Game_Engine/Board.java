@@ -35,13 +35,6 @@ public class Board{
 
 	public void getConnectedPlayers()
 	{
-		// System.out.println("getConnectedPlayers");
-		// System.out.println("Game Started (Get connectedPlayers): "+game_started);
-		//System.out.println("##############################################################################"+plr_q.size());
-		for(Player_Info p:plr_q)
-		{
-			//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+p.ip);
-		}
 		String[] connectedPlayers2 = new String[4];
 		int j=0;
 		for(Player_Info p:plr_q)
@@ -55,17 +48,13 @@ public class Board{
 						flag = false;
 						connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
 						j++;
-						//System.out.println("wow");
 					}
-				
-				//System.out.println("LOOPNE"+connectedPlayers[i]);
 			}
 			if(flag)
 			{
 				connectedPlayers2[j]="PEER"+(j+1)+":"+p.name+":"+p.ip;
 				j++;
 			}
-			//System.out.println("FUCKBHKJSBHKJSAHDLALDJFBDKGBADFGKFGVBKSAJFDBJLGHFC<JVFHKFKHBVFJKKFCZ>FbKFVGBJBSVDJFBGVSDKgbfSFgbKFGBVKBDGf"+connectedPlayers2[j-1]);
 		}
 		for(;j<4;j++)
 			if(connectedPlayers2[j]==null)
@@ -78,9 +67,6 @@ public class Board{
 		{
 			connectedPlayers[3]="PEER4:Host:"+getHostIP();
 		}
-
-				for(int c=0;c<4;c++) ;
-			//System.out.println(connectedPlayers[c]+"AOPSDIHASJHBSGBFJFSHBLFJL");
 	}
 
 	public void setIndividualAILevel(int ai)
@@ -96,7 +82,8 @@ public class Board{
 
 	public String playerIName(int i)
 	{
-		return plr[i].getName();
+		//System.out.println(plr[i].name);
+		return plr[i].name;
 	}
 
 	public void acceptIP(String ip1)
@@ -128,12 +115,10 @@ public class Board{
 	public void setGameMode(int i){
 		if(game_mode==-100){
 			game_mode = i;
-			// System.out.println("Set gam mode " + i);
 			init_network();
 		}else{
 			System.out.println("BANCHO ION");
 		}
-		
 		// 0 - single player
 		// 1 - Hosting
 		// 2 - connecting
@@ -144,7 +129,6 @@ public class Board{
 	{
 		broadcast("Start_Game");
 		game_started = true;
-		//if host approves, b is true
 	}
 
 //this is polled by each client user. return true when host has started the game
@@ -163,11 +147,9 @@ public class Board{
 		// update the position of the ball
 		// take care of reflections
 		// return an Object to render the board
-		// System.out.println("update");
+
 		++counter;
 		epsilon = Var.speed * (Var.speed_increase + 1);
-		//if(game_mode!=0) periodic_network();
-
 		{
 			if(!plr[0].p.disable){
 				plr[0].p.d1 = o.getLeftPosition();
@@ -207,7 +189,6 @@ public class Board{
 		if(plr[paddle_num].is_AI) plr[paddle_num].p.set_power_up(plr[paddle_num].level_AI);
 
 		double x,l,phi;
-		//System.out.print("Previous angle: "+(b.theetha*180/Math.PI));
 		if(paddle_num%2==0) x = b.posX - (plr[paddle_num].p.d1+plr[paddle_num].p.d2)/2;
 		else x = b.posY - (plr[paddle_num].p.d1+plr[paddle_num].p.d2)/2;
 		l = (plr[paddle_num].p.d2-plr[paddle_num].p.d1);
@@ -233,8 +214,6 @@ public class Board{
 		}
 		data_out.setBallPaddleCollide(true);
 		b.set_velocity(2*phi - b.theetha + Math.PI);
-		//System.out.println(" Final angle: "+(b.theetha*180/Math.PI));
-		//System.out.println("Phi: "+phi*180/Math.PI);
 	}
 
 	void artificial_intelligence(){
@@ -252,11 +231,8 @@ public class Board{
 			b.addSpin(plr[0].p.paddle_speed);
 			Var.speed_increase_fn(Var.level_power[plr[0].p.current_power]);		
 			//System.out.println("Paddle 0");
-			//System.out.println(plr[0].p.current_power+" "+ plr[0].p.paddle_speed);
-		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){		//w0
-			// b.velY*=-1;
+		}else if(Math.abs(b.posY-b.diameter/2) < epsilon){
 			b.theetha = 2*Math.PI - b.theetha;
-			//data_out.oneLifeLostBy(0);
 			plr[0].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(0);
@@ -270,16 +246,14 @@ public class Board{
 			b.addSpin(plr[1].p.paddle_speed);
 			Var.speed_increase_fn(Var.level_power[plr[1].p.current_power]);
 			//System.out.println("Paddle 1");
-		}else if(Math.abs(b.posX-b.diameter/2) < epsilon){		//w1
+		}else if(Math.abs(b.posX-b.diameter/2) < epsilon){
 			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI - b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
-			//data_out.oneLifeLostBy(1);
 			if(plr[1].is_AI) plr[1].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(1);
 			// System.out.println("wall 1");
-			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 		}
 
 		// w2
@@ -290,15 +264,12 @@ public class Board{
 			b.addSpin(plr[2].p.paddle_speed);
 			Var.speed_increase_fn(Var.level_power[plr[2].p.current_power]);
 			//System.out.println("Paddle 2");
-		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){	//w2
-			// b.velY*=-1;
+		}else if(Math.abs(b.posY+b.diameter/2 - Var.height) < epsilon){
 			b.theetha = 2*Math.PI - b.theetha;
-			//data_out.oneLifeLostBy(2);
 			if(plr[2].is_AI) plr[2].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(2);
 			// System.out.println("wall 2");
-			//System.out.println("Angle: "+(b.theetha*180/Math.PI));
 		}
 
 		// w3
@@ -308,11 +279,10 @@ public class Board{
 			b.addSpin(plr[3].p.paddle_speed);
 			Var.speed_increase_fn(Var.level_power[plr[2].p.current_power]);
 			//System.out.println("Paddle 3");
-		}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){	//w3
+		}else if(Math.abs(b.posX+b.diameter/2 - Var.width) < epsilon){
 			// b.velX*=-1;
 			if(b.theetha < Math.PI) b.theetha = Math.PI -b.theetha;
 			else b.theetha = 3*Math.PI - b.theetha;
-			//data_out.oneLifeLostBy(3);
 			if(plr[3].is_AI) plr[3].reduce_life();
 			data_out.setBallWallCollide(true);
 			data_out.collisionWall(3);
@@ -321,13 +291,9 @@ public class Board{
 	}
 
 	void init_network(){
-		//game_mode = Integer.parseInt(System.console().readLine("Enter Choice: "));
-		// System.out.println("init_network "+isHost+" "+current_ip+" Game Mode: "+game_mode);
 		if(game_mode!=0)
 		try{
-			//String s1 = System.console().readLine("Enter Choice: ");
 			if(socket==null){
-				// System.out.println("socket null tha");
 				socket = new Socket_handler(isHost+"");
 				t = new Thread(socket);
 				t.start();
@@ -346,24 +312,14 @@ public class Board{
 		// System.out.println("Game Started (PeriodicNetwork): "+game_started);
 		get_all_messages();
 		if(is_pseudo_server()){
-			//String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+plr[1].to_String()+plr[2].to_String()+plr[3].to_String()+Var.speed_increase+";"+my_joining_order;
 			String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+Var.speed_increase+";"+my_joining_order;
-			// String msg1 = "Message1;"+b.to_String()+plr[0].to_String()+Var.speed_increase+";"+
-			// plr[0].ip+";"+plr[0].lives+";"+	//3,4
-			// plr[1].ip+";"+plr[1].lives+";"+	//5,6
-			// plr[2].ip+";"+plr[2].lives+";"+	//7,8
-			// plr[3].ip+";"+plr[3].lives+";"+	//9,10
-			// my_joining_order;				//11
-			//System.out.println(msg1);
 			broadcast(msg1);
 		}else{
 			String msg2 = "Message2;"+plr[0].to_String()+my_joining_order;
-			//System.out.println(msg2);
 			broadcast(msg2);
 		}
 		if(game_started){ 
 			broadcast("Start_Game");
-			// System.out.println("broadcasting Start Game");
 		}
 	}
 
@@ -375,24 +331,19 @@ public class Board{
 				return socket.is_pseudo_server();
 			}catch(Exception e){
 				e.printStackTrace();
-				// System.out.println("IS PSEUDO SERVER RETURNS TRUE");
 				return true;
 			}
 		}
-
 	}
 
 	void broadcast(String str){
 		try{
-			if (socket != null)
-			{
+			if (socket != null){
 				socket.send_message_to_all(str);
 			}
-			else
-			{
-				// System.out.println("null hai socket yaar ....................................................................................");
-				// System.gc();
+			else{
 				init_network();
+				// TODO: Agar hagta hai toh yahaan dhyaan dein
 			}
 
 		}catch(Exception e){e.printStackTrace();}
@@ -408,15 +359,6 @@ public class Board{
 				ip_temp = s[2].substring(0, s[2].indexOf("#"));
 				for(int i=1; i<4; ++i) 
 					if(plr[i].ip.equals(ip_temp)) plr[i].from_String(s[2], Integer.parseInt(s[4]), my_joining_order);
-				// ip_temp = s[3].substring(0, s[3].indexOf("#"));
-				// for(int i=1; i<4; ++i) 
-				// 	if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[3], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
-				// ip_temp = s[4].substring(0, s[4].indexOf("#"));
-				// for(int i=1; i<4; ++i) 
-				// 	if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[4], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
-				// ip_temp = s[5].substring(0, s[5].indexOf("#"));
-				// for(int i=1; i<4; ++i) 
-				// 	if(plr[i].ip.equals(ip_temp) && plr[i].is_AI) plr[i].from_String(s[5], Integer.parseInt(s[7]), my_joining_order, is_pseudo_server());
 				Var.speed_increase = Double.parseDouble(s[3]);
 			}	break;
 			case "Message2" : {
@@ -442,10 +384,12 @@ public class Board{
 			case "User-Name" : {
 				System.out.println("User Name, IP: "+s[1]+" Name: "+s[2]);
 				for(Player_Info p : plr_q){
+					//System.out.println("!!!!!!!!!!!!!!!!!!!Name add hua");
 					if(p.ip.equals(s[1])) p.name = s[2];
 				}
 				for(int i=1; i<4; ++i){
 					if(plr[i].ip.equals(s[1])){
+						System.out.println("Name add hua");
 						plr[i].name = s[2];
 						break;
 					}
@@ -475,8 +419,6 @@ public class Board{
 				break;
 			}
 			case "Joining-Order" : {
-				// System.out.println("Joining order");
-				//my_joining_order = -100;
 				try{
 					for(Player_Info p : plr_q){
 						if(p.ip.equals(s[1])) 
@@ -506,7 +448,7 @@ public class Board{
 					plr[index].name = p.name;
 					plr[index].ip = p.ip;
 					plr[index].is_AI = false;
-					//System.out.println(index + " "+p.ip+" "+p.name+" "+p.joining_order);
+					System.out.println(index + " "+plr[index].ip+" "+plr[index].name+" "+p.joining_order);
 				}
 				for(int i=0; i<4;++i){
 					System.out.println("IP: "+plr[i].ip+" Name: "+plr[i].name+" AI? "+plr[i].is_AI);
@@ -516,21 +458,21 @@ public class Board{
 		}
 	}
 	void get_all_messages(){
-		try{
-			Queue<String> messageQueue = socket.ret_q();
-			for(String s : messageQueue){
-			decode(s);
-			//System.out.println(s);
-		}
-		}catch(Exception e){
-			System.out.println("Get all messages null hai");
-		}		
-
+		
 		// receive the broadcasted message from the server and decode them appropriately
 		// type of messages
 		// 1) position of ball and all players
 		// 2) position of paddle of a certain player
 		// 3) new player has been added - Get me the details of the player along with player number
+
+		try{
+			Queue<String> messageQueue = socket.ret_q();
+			for(String s : messageQueue){
+			decode(s);
+		}
+		}catch(Exception e){
+			System.out.println("Get all messages null hai");
+		}		
 	}
 
 	public int getSpeed()
@@ -552,7 +494,6 @@ public class Board{
 			game_started = false;
 			already_set_param = false;
 			setParams((int)Var.width, (int)Var.height);
-			//
 			System.out.println("Game khatam ho gaya");
 		}
 		catch (Exception e) {
