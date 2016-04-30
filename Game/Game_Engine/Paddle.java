@@ -48,7 +48,7 @@ public class Paddle{
 
 	public void movePaddle(double x, double y, int level_AI){
 		if(disable) return;
-		set_power_up();
+		set_power_up(level_AI);
 		double center = (d1+d2)/2;
 		double factor1 = 1.9*3*Math.abs(center-x)/Var.width;
 		double factor2 = 1.9*3*Math.abs(center-y)/Var.height;
@@ -112,8 +112,20 @@ public class Paddle{
 		approveTheseValues(d1,d2,d2-d1);
 	}
 
-	void set_power_up(){
+	void set_power_up(int level_AI){
 		int x = (int)(Math.random()*100);
+		if(x<50-8*level_AI)
+			current_power = 0;
+		else if(x<66-9*level_AI)
+			current_power = 1;
+		else if(x<80-10*level_AI)
+			current_power = 2;
+		else if(x<90-11*level_AI)
+			current_power = 3;
+		else if(x<100-12*level_AI)
+			current_power = 4;
+		else if(x<100)
+			current_power = 5;
 	}
 
 	public void approveTheseValues(double a,double b,double or){

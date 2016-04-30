@@ -108,9 +108,9 @@ long c1=0,c2=0;
                             blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
                             blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
                             //blankArea.reDraw2();
-                        	String stet="STATUS:";
+                        	String stet="STATUS";
                         	if(board_b.playerIName(0)!=null)
-                        	stet = stet +"(1):"+board_b.playerIName(0)+(dfui.player_disconnected[0]?":Disconnected":":Connected");
+                        	stet = stet +":(1):"+board_b.playerIName(0)+(dfui.player_disconnected[0]?":Disconnected":":Connected");
                             if(board_b.playerIName(1)!=null && board_b.playerIName(1).substring(0,2).equals("AI")==false)
                             stet = stet +":(2):"+board_b.playerIName(1)+(dfui.player_disconnected[1]?":Disconnected":":Connected");
                             if(board_b.playerIName(2)!=null && board_b.playerIName(2).substring(0,2).equals("AI")==false)
