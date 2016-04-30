@@ -1,0 +1,19 @@
+===============================
+DEVIATIONS FROM DESIGN DOCUMENT
+===============================
+
+
+Gameplay
+********
+(A) Spin and power shots were added to the game, which were originally mentioned in further scop
+
+UI Related
+**********
+(A) Deviations in existing classes
+	-class Rectangle
+	 The class was originally meant to render all rectangles on the board, including the paddles. Later, the shape of the paddles were changed to arcs, and the class' draw functions were updated to render arc-shaped paddles as well. Several functions were added to make the code in remaining classes more readable, including functions meant for paddles only, other objects on the screen etc.
+	-class BlankArea
+	 Several functions were added to manipulate the various types of rectangles, paddles, balls, string which were being displayed on the screen. Some functions like reDraw were added to improve the running of the code
+(B) New Classes Added
+	-Start, MultiOpt, StartLoad, EnterIP, JoinLoad
+	 These new classes are used for displaying intermediate screens and miscellaneous stuff.
