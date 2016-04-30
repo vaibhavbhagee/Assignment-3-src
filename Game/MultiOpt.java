@@ -36,6 +36,8 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
 	Rectangle MultiOptButtonMulti;
 	int MultiOptButton_x1m,MultiOptButton_x2m,MultiOptButton_y1m,MultiOptButton_y2m;
 
+    Rectangle BackButton;
+
 	MultiOpt(){
 		super(new GridBagLayout());
         GridBagLayout gridbag = (GridBagLayout)getLayout();
@@ -92,6 +94,7 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
     		case 0: break;
     		case 1: (new StartLoad()).launch(); MultiOpt_frame.dispose(); break;
     		case 2: (new EnterIP()).launch(); MultiOpt_frame.dispose(); break;
+            case 3: (new Start()).launch(); MultiOpt_frame.dispose(); break;
     		default: break;
     	}
     }
@@ -100,22 +103,31 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
     	if(e.getX()>MultiOptButton_x1 && e.getX()<MultiOptButton_x2 && e.getY()>MultiOptButton_y1 && e.getY()<MultiOptButton_y2)
     	{
     		MultiOptButton.overridecolorwith = new Color(33,23,200,243);
-        	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
+        	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,BackButton,null,null);
     		sel = 1;
             blankArea.reDraw();
     	}
     	else if (e.getX()>MultiOptButton_x1m && e.getX()<MultiOptButton_x2m && e.getY()>MultiOptButton_y1m && e.getY()<MultiOptButton_y2m)
     	{
     		MultiOptButtonMulti.overridecolorwith = new Color(33,23,200,243);
-        	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
+        	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,BackButton,null,null);
     		sel = 2;	
             blankArea.reDraw();
     	}
+        else if (e.getX()<60 && e.getY()<60)
+        {
+            BackButton.overridecolorwith = new Color(33,23,200,243);
+            blankArea.newRect(MultiOptButton,MultiOptButtonMulti,BackButton,null,null);
+            sel = 3;
+            blankArea.reDraw();
+
+        }
     	else
     	{
+            BackButton.overridecolorwith = new Color(33,200,200,243);
     		MultiOptButton.overridecolorwith = new Color(33,200,200,243);
     		MultiOptButtonMulti.overridecolorwith = new Color(33,200,200,243);
-        	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
+        	blankArea.newRect(MultiOptButton,MultiOptButtonMulti,BackButton,null,null);
     		sel = 0;
             blankArea.reDraw();
     	}
@@ -128,6 +140,10 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
 
         MultiOpt_frame.pack();
 
+        BackButton = new Rectangle(30,30,60,60,0);
+        BackButton.overridecolor = 1;
+        BackButton.overridecolorwith = new Color(33,200,200,243);
+
         MultiOptButton = new Rectangle((int)(MultiOpt_frame.getSize().getWidth()/2),(int)(MultiOpt_frame.getSize().getHeight()/3),(int)(MultiOpt_frame.getSize().getWidth()/5),(int)(MultiOpt_frame.getSize().getHeight()/8),0 );
         MultiOptButton.overridecolor = 1;
         MultiOptButton.overridecolorwith = new Color(33,200,200,243);
@@ -136,9 +152,10 @@ public class MultiOpt extends JPanel implements MouseMotionListener, MouseListen
         MultiOptButtonMulti.overridecolor = 1;
         MultiOptButtonMulti.overridecolorwith = new Color(33,200,200,243);
 
-        blankArea.newRect(MultiOptButton,MultiOptButtonMulti,null,null,null);
+        blankArea.newRect(MultiOptButton,MultiOptButtonMulti,BackButton,null,null);
    		blankArea.addString(new ShowString("START A GAME",(int)(MultiOpt_frame.getSize().getWidth()/2),(int)(MultiOpt_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
    		blankArea.addString(new ShowString("JOIN A GAME",(int)(MultiOpt_frame.getSize().getWidth()/2),(int)(2*MultiOpt_frame.getSize().getHeight()/3),new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
+        blankArea.addString(new ShowString("<<",30,30,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20),""));
 
         MultiOptButton_x1 = (int)(MultiOpt_frame.getSize().getWidth()/2) - (int)(MultiOpt_frame.getSize().getWidth()/5)/2;
         MultiOptButton_x2 = (int)(MultiOpt_frame.getSize().getWidth()/2) + (int)(MultiOpt_frame.getSize().getWidth()/5)/2; 
