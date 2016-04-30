@@ -108,9 +108,14 @@ long c1=0,c2=0;
                             blankArea.replaceLives3(new ShowString("PLAYER3:: lives="+dfui.getLife(2),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+120,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(2)));
                             blankArea.replaceLives4(new ShowString("PLAYER4:: lives="+dfui.getLife(3),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+180,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(3)));
                             //blankArea.reDraw2();
-                        String stet = "STATUS:"+"(1):"+board_b.playerIName(0)+(dfui.player_disconnected[0]?":Disconnected":":Connected");
+                        	String stet="STATUS:";
+                        	if(board_b.playerIName(0)!=null)
+                        	stet = stet +"(1):"+board_b.playerIName(0)+(dfui.player_disconnected[0]?":Disconnected":":Connected");
+                            if(board_b.playerIName(1)!=null && board_b.playerIName(1).substring(0,2).equals("AI")==false)
                             stet = stet +":(2):"+board_b.playerIName(1)+(dfui.player_disconnected[1]?":Disconnected":":Connected");
+                            if(board_b.playerIName(2)!=null && board_b.playerIName(2).substring(0,2).equals("AI")==false)
                             stet = stet +":(3):"+board_b.playerIName(2)+(dfui.player_disconnected[2]?":Disconnected":":Connected");
+                            if(board_b.playerIName(3)!=null && board_b.playerIName(3).substring(0,2).equals("AI")==false)
                             stet = stet +":(4):"+board_b.playerIName(3)+(dfui.player_disconnected[3]?":Disconnected":":Connected");
 
                             blankArea.replaceStatus(new ShowString(stet,(int)(frame.getSize().getWidth()/2),(int)(frame.getSize().getHeight()/40),new Color(255,255,255,255),new Font("Serif", Font.PLAIN, 20),""));
@@ -338,7 +343,7 @@ long c1=0,c2=0;
             paddle_length[3] = (int)(board_side*0.05);
             paddle_height[3] = (int)(board_side*0.25);
 
-            if(gameMode!=0)
+            //if(gameMode!=0)
                 blankArea.addString(new ShowString("STATUS:",(int)(frame.getSize().getWidth()/2),(int)(frame.getSize().getHeight()/40),new Color(255,255,255,255),new Font("Serif", Font.PLAIN, 20),""));
 
             blankArea.addString(new ShowString("PLAYER1:: lives="+dfui.getLife(0),(int)(frame.getSize().getWidth()/3-board_side/2),(int)(frame.getSize().getHeight()/3)+400,new Color(0,255,0,255),new Font("Serif", Font.PLAIN, 20), board_b.playerIName(0)));
